@@ -19,7 +19,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     ArrayList<RecyclerViewItem> mList;
     int[] imgCount = {R.drawable.sample_image1, R.drawable.sample_image2,R.drawable.sample_image3,
             R.drawable.sample_image4,R.drawable.sample_image5, R.drawable.sample_image6};
-    private Drawable mImageDrawable,mImageDrawable2,mImageDrawable3,mImageDrawable4,mImageDrawable5,mImageDrawable6;
+    private Drawable mImageDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +33,10 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
-
-        mImageDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.sample_image1, null);
-        addItem(mImageDrawable);
-        mImageDrawable2 = ResourcesCompat.getDrawable(getResources(), R.drawable.sample_image2, null);
-        addItem(mImageDrawable2);
-        mImageDrawable3 = ResourcesCompat.getDrawable(getResources(), R.drawable.sample_image3, null);
-        addItem(mImageDrawable3);
-        mImageDrawable4 = ResourcesCompat.getDrawable(getResources(), R.drawable.sample_image4, null);
-        addItem(mImageDrawable4);
-        mImageDrawable5 = ResourcesCompat.getDrawable(getResources(), R.drawable.sample_image5, null);
-        addItem(mImageDrawable5);
-        mImageDrawable6 = ResourcesCompat.getDrawable(getResources(), R.drawable.sample_image6, null);
-        addItem(mImageDrawable6);
-
-
-
+        for (int i=0;i<imgCount.length;i++){
+            mImageDrawable = ResourcesCompat.getDrawable(getResources(),imgCount[i], null);
+            addItem(mImageDrawable);
+        }
 
         mAdapter.notifyDataSetChanged();
         //뒤로가기
