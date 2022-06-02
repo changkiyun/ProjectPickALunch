@@ -6,14 +6,144 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    //dasdasdsadasassa
-    <TextView
+    <!--타이틀바-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--상단바-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+
+            android:text="Pick A Lunch"
+            android:textSize="30sp"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--검색버튼-->
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:backgroundTint="@color/white"
+            android:src="@drawable/search"
+
+            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--내 정보 버튼-->
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:backgroundTint="@color/white"
+            android:src="@drawable/person_main"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--타이틀바 구분선-->
+    <View
+        android:id="@+id/title_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/title_constraint" />
+
+    <!--메뉴피커-->
+    <Button
+        android:id="@+id/menu_picker"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+
+        android:background="@drawable/button_round"
+        android:text="오늘 \n뭐먹지?"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_line" />
+
+    <!--맛집랭킹-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ranking_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menu_picker">
+
+        <!--왕관이미지-->
+        <ImageView
+            android:id="@+id/crown_image"
+            android:layout_width="36sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="20sp"
+
+            android:src="@drawable/crown"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--맛집랭킹 텍스트-->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+
+            android:text="맛집 랭킹"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/crown_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <GridView
+        android:id="@+id/grid_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="자 이제 시작이야 내 꿈은 피카츄"
+        android:verticalSpacing="30dp"
+        android:horizontalSpacing="30dp"
+        android:layout_margin="10dp"
+        android:numColumns="3"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/ranking_constraint"
+
+        android:scrollbarStyle="insideInset"
+        android:verticalScrollbarPosition="right"
+        android:scrollbarSize="10dp"
+        android:scrollbarThumbVertical="@color/purple_500"
+        android:scrollbarTrackVertical="@color/white"
+        />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
