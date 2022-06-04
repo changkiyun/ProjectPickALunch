@@ -9,8 +9,12 @@ import android.widget.Button;
 import android.widget.GridView;
 
 public class MainActivity extends AppCompatActivity {
-    private GridView m_grid;
-    private MainGridAdapter m_gridAdt;
+    //그리드뷰
+
+    Integer[] sampleImage = {R.drawable.sample_image1, R.drawable.sample_image2,R.drawable.sample_image3,
+            R.drawable.sample_image4,R.drawable.sample_image5, R.drawable.sample_image6,R.drawable.sample_image1, R.drawable.sample_image2,R.drawable.sample_image3,
+            R.drawable.sample_image4,R.drawable.sample_image5, R.drawable.sample_image6,R.drawable.sample_image1, R.drawable.sample_image2,R.drawable.sample_image3,
+            R.drawable.sample_image4,R.drawable.sample_image5, R.drawable.sample_image6};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +31,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        m_grid = (GridView)findViewById(R.id.grid_test);
-        m_gridAdt = new MainGridAdapter(getApplicationContext() );
-
-        for (int i = 0 ; i < 100 ; i++ ) {
-            String strNo = "Num : " + i;
-            m_gridAdt.setItem(strNo);
-        }
+        final GridView mainGridView = (GridView) findViewById(R.id.main_grid_view);
+        //그리드뷰
+        MainGridAdapter mainGridAdapter = new MainGridAdapter(this);
+        mainGridView.setAdapter(mainGridAdapter);
     }
 }
