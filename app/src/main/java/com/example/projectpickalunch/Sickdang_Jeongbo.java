@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
         mAdapter.notifyDataSetChanged();
         //뒤로가기
-        Button btnReturn = (Button) findViewById(R.id.button);
+        ImageButton btnReturn = (ImageButton) findViewById(R.id.returnBtn);
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
