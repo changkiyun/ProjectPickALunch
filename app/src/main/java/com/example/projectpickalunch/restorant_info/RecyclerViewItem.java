@@ -1,4 +1,4 @@
-package com.example.projectpickalunch;
+package com.example.projectpickalunch.restorant_info;
 
 import android.graphics.drawable.Drawable;
 

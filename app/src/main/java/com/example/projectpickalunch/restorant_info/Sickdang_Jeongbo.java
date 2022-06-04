@@ -1,4 +1,4 @@
-package com.example.projectpickalunch;
+package com.example.projectpickalunch.restorant_info;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.projectpickalunch.R;
 
 import java.util.ArrayList;
 
