@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Main.MainActivity">
 
     <!--타이틀바-->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,21 +125,21 @@
     <GridView
         android:id="@+id/main_grid_view"
         android:layout_width="wrap_content"
-        android:layout_height="450sp"
-        android:verticalSpacing="30dp"
-        android:horizontalSpacing="30dp"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="17sp"
+        android:verticalSpacing="20sp"
+        android:horizontalSpacing="-10sp"
         android:numColumns="2"
+        android:gravity="center"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ranking_constraint"
 
         android:scrollbarStyle="insideInset"
         android:verticalScrollbarPosition="right"
-        android:scrollbarSize="10dp"
-        android:scrollbarThumbVertical="@color/purple_500"
+        android:scrollbarSize="5sp"
+        android:scrollbarThumbVertical="@color/mainColor"
         android:scrollbarTrackVertical="@color/white"
         />
 
