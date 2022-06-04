@@ -8,7 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.RatingBar;
 
 import com.example.projectpickalunch.R;
 
@@ -41,13 +46,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
         mAdapter.notifyDataSetChanged();
         //뒤로가기
-        Button btnReturn = (Button) findViewById(R.id.button);
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
     }
 
     private void addItem(Drawable icon) {
