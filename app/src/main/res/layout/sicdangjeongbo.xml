@@ -114,7 +114,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleIndicator"/>
+            style="?android:attr/ratingBarStyleIndicator"
+            android:isIndicator="false"
+            android:stepSize="0.5"/>
     </LinearLayout>
 
     <LinearLayout
@@ -128,7 +130,6 @@
         <EditText
             android:layout_width="280sp"
             android:layout_height="wrap_content"
-            android:text="리뷰를 등록해주세요"
             android:background="@drawable/edittext_rectangle"
             android:layout_marginLeft="16sp"
             android:id="@+id/reviewWrite"
@@ -150,44 +151,24 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/Lin3"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        >
+        android:id="@+id/Lin4"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/Lin3"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:id="@+id/Lin4">
-
-            <TextView
-                android:id="@+id/review1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="신준한 : 우동이 정말 맛있어요!          "
-                android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/Lin4"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="16sp"/>
-
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ratingBar1"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_gravity="center_vertical"
-                android:rating="5"/>
+            android:layout_height="match_parent"
+            android:id="@+id/listView"/>
 
 
-        </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
