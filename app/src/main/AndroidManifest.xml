@@ -18,7 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".restorant_info.Sickdang_Jeongbo"/>
+
+        <activity android:name=".user_information.UserInformationAfterConfirm"/>
+        <activity android:name=".user_information.UserInformationBeforeConfirm"/>
+        <activity android:name=".user_information.UserInformationConfirm"/>
     </application>
 
 </manifest>

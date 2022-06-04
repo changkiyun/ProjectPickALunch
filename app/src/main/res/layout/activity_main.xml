@@ -32,19 +32,19 @@
 
         <!--검색버튼-->
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/serchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:backgroundTint="@color/white"
             android:src="@drawable/search"
 
-            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintEnd_toStartOf="@+id/userInfoButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!--내 정보 버튼-->
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/userInfoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
