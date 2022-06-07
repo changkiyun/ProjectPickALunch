@@ -28,6 +28,8 @@
 
         <!--메뉴피커 액티비티-->
         <activity android:name=".menu_picker.MenuPicker"/>
+
+        <activity android:name=".restaurant_search.Search"/>
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
+import com.example.projectpickalunch.restaurant_search.Search;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
@@ -100,6 +101,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent menu_picker = new Intent(getApplicationContext(), MenuPicker.class);
                 startActivity(menu_picker);
+            }
+        });
+
+        //검색 버튼
+        ImageButton searchButton = (ImageButton) findViewById(R.id.serchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent search = new Intent(getApplicationContext(), Search.class);
+                startActivity(search);
             }
         });
 
