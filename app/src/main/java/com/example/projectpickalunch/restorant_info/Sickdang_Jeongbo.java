@@ -19,8 +19,11 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projectpickalunch.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -59,38 +62,25 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             }
         });
          //리뷰 텍스트
-        final ArrayList<String> reviewWriten = new ArrayList<String>();
-        ListView list1 = (ListView) findViewById(R.id.listView1);
-        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,reviewWriten);
-        list1.setAdapter(adapter1);
-        final EditText reviewWrite = (EditText) findViewById(R.id.reviewWrite);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        ListItemAdapter adapter = new ListItemAdapter();
 
-        //리뷰 평점
-        final ArrayList<String> reviewRegis = new ArrayList<String>();
-        ListView list2 = (ListView) findViewById(R.id.listView2);
-        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,reviewRegis){
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView tv = (TextView)view.findViewById(android.R.id.text1);
-                tv.setTextColor(Color.RED);
-                return view;
-            }
-        };;
-        list2.setAdapter(adapter2);
-        RatingBar rB = (RatingBar) findViewById(R.id.ratingBar);
+        EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
+        String rT = reviewWriten.getText().toString();
+
+        RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
         float rate = rB.getRating();
-        Button btnRegis = (Button) findViewById(R.id.reviewRegis);
-        btnRegis.setOnClickListener(new View.OnClickListener() {
+        String reviewScore = String.valueOf(rate);
+
+        Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
+        reviewRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reviewWriten.add("신준한 : " + reviewWrite.getText().toString());
-                reviewRegis.add("" + rB.getRating());
-                adapter1.notifyDataSetChanged();
-                adapter2.notifyDataSetChanged();
+                adapter.addItems(new ListItem("신준한 : ", rT , reviewScore));
+                listView.setAdapter(adapter);
             }
         });
+
 
     }
 
