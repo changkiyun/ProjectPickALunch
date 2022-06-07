@@ -66,17 +66,14 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         ListItemAdapter adapter = new ListItemAdapter();
 
         EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
-        String rT = reviewWriten.getText().toString();
 
         RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
-        float rate = rB.getRating();
-        String reviewScore = String.valueOf(rate);
 
         Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
         reviewRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.addItems(new ListItem("신준한 : ", rT , reviewScore));
+                adapter.addItems(new ListItem("신준한 : ", reviewWriten.getText().toString() , "" + rB.getRating()));
                 listView.setAdapter(adapter);
             }
         });
