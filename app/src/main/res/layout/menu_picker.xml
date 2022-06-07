@@ -83,12 +83,15 @@
 
     <!--카테고리 선택-->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menuPickerOptionConstraint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_line">
+
+
 
         <CheckBox
             android:id="@+id/k_food_button"
@@ -169,6 +172,7 @@
             app:layout_constraintTop_toBottomOf="@+id/c_food_button" />
 
         <ImageButton
+            android:id="@+id/menuPickerApplyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -179,8 +183,16 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etc_food_button" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/menuPickerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuPickerOptionConstraint" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
