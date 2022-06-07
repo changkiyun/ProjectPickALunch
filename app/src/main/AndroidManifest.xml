@@ -21,9 +21,13 @@
 
         <activity android:name=".restorant_info.Sickdang_Jeongbo"/>
 
+        <!--유저정보 액티비티-->
         <activity android:name=".user_information.UserInformationAfterConfirm"/>
         <activity android:name=".user_information.UserInformationBeforeConfirm"/>
         <activity android:name=".user_information.UserInformationConfirm"/>
+
+        <!--메뉴피커 액티비티-->
+        <activity android:name=".menu_picker.MenuPicker"/>
     </application>
 
 </manifest>

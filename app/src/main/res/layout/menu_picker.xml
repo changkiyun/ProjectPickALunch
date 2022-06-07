@@ -17,7 +17,7 @@
 
         <!--뒤로가기버튼-->
         <ImageButton
-            android:id="@+id/userInfoReturnButton"
+            android:id="@+id/menuPickerReturnButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
@@ -39,7 +39,7 @@
             android:textSize="30sp"
             android:textStyle="bold"
 
-            app:layout_constraintLeft_toRightOf="@id/userInfoReturnButton"
+            app:layout_constraintLeft_toRightOf="@id/menuPickerReturnButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -80,5 +80,107 @@
         app:layout_constraintLeft_toLeftOf="parent"
 
         app:layout_constraintTop_toBottomOf="@id/title_constraint" />
+
+    <!--카테고리 선택-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_line">
+
+        <CheckBox
+            android:id="@+id/k_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_korea_food"
+            android:button="@null"
+
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <CheckBox
+            android:id="@+id/j_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_china_food"
+            android:button="@null"
+
+            app:layout_constraintLeft_toRightOf="@id/k_food_button"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <CheckBox
+            android:id="@+id/c_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_japan_food"
+            android:button="@null"
+
+            app:layout_constraintLeft_toRightOf="@id/j_food_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/a_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_america_food"
+            android:button="@null"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/k_food_button" />
+
+        <CheckBox
+            android:id="@+id/fast_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_fast_food"
+            android:button="@null"
+
+            app:layout_constraintStart_toEndOf="@+id/a_food_button"
+            app:layout_constraintTop_toBottomOf="@+id/j_food_button" />
+
+        <CheckBox
+            android:id="@+id/etc_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_etc_food"
+            android:button="@null"
+
+            app:layout_constraintStart_toEndOf="@+id/fast_food_button"
+            app:layout_constraintTop_toBottomOf="@+id/c_food_button" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20sp"
+
+            android:src="@drawable/apply_button"
+            android:background="@color/white"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etc_food_button" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
