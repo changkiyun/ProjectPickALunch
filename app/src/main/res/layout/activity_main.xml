@@ -69,7 +69,7 @@
 
     <!--메뉴피커-->
     <Button
-        android:id="@+id/menu_picker"
+        android:id="@+id/menuPicker"
         android:layout_width="250sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
@@ -93,7 +93,7 @@
 
         android:layout_marginTop="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/menu_picker">
+        app:layout_constraintTop_toBottomOf="@id/menuPicker">
 
         <!--왕관이미지-->
         <ImageView
@@ -125,10 +125,11 @@
     <GridView
         android:id="@+id/main_grid_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
+        android:layout_height="450sp"
+
         android:layout_marginLeft="17sp"
         android:verticalSpacing="20sp"
+        android:layout_marginTop="10sp"
         android:horizontalSpacing="-10sp"
         android:numColumns="2"
         android:gravity="center"
