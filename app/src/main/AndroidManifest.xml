@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectPickALunch">
         <activity
-            android:name=".MainActivity"
+            android:name=".Main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".restorant_info.Sickdang_Jeongbo"/>
+
+        <!--유저정보 액티비티-->
+        <activity android:name=".user_information.UserInformationAfterConfirm"/>
+        <activity android:name=".user_information.UserInformationBeforeConfirm"/>
+        <activity android:name=".user_information.UserInformationConfirm"/>
+
+        <!--메뉴피커 액티비티-->
+        <activity android:name=".menu_picker.MenuPicker"/>
     </application>
 
 </manifest>
