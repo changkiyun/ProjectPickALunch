@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Toast Text"
-        android:layout_below="@id/item_textview"
+        android:layout_below="@id/item_button"
         android:id="@+id/item_button"/>
 
 </RelativeLayout>

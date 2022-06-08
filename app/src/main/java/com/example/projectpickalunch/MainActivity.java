@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         m_grid = (GridView)findViewById(R.id.grid_test);
-        m_gridAdt = new MainGridAdapter(getApplicationContext() );
+        m_gridAdt = new MainGridAdapter(this);
 
         for (int i = 0 ; i < 100 ; i++ ) {
             String strNo = "Num : " + i;
