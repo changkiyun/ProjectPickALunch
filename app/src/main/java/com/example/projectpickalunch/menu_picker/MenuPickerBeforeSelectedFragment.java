@@ -13,7 +13,6 @@ import com.example.projectpickalunch.R;
 
 public class MenuPickerBeforeSelectedFragment extends Fragment {
 
-
     @Override
     public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         return inflater.inflate(R.layout.menu_picker_before_selected_fragment, container, false);
