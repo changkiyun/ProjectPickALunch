@@ -1,12 +1,8 @@
 package com.example.projectpickalunch.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,12 +12,9 @@ import android.widget.ImageButton;
 
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
-import com.example.projectpickalunch.menu_picker.MenuPickerAfterSelectedFragment;
-import com.example.projectpickalunch.menu_picker.MenuPickerBeforeSelectedFragment;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
-import com.example.projectpickalunch.user_information.UserInformationConfirm;
 
 public class MainActivity extends AppCompatActivity {
     //그리드뷰

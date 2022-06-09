@@ -11,12 +11,9 @@ public class MainGridAdapter extends BaseAdapter {
         Context context;
         ArrayList<MainGridItem> mainGridItems = new ArrayList<>();
 
-        //샘플데이터 (삭제예정)
-        Integer[] sampleImage;
 
         public MainGridAdapter(Context _context){
             context = _context;
-            sampleImage = ((MainActivity)context).sampleImage;
         }
 
     @Override
@@ -38,6 +35,7 @@ public class MainGridAdapter extends BaseAdapter {
     public void addItem(MainGridItem item){
         mainGridItems.add(item);
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
