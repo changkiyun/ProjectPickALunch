@@ -16,22 +16,19 @@ import com.example.projectpickalunch.restaurant_search.Search;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
-import com.example.projectpickalunch.user_information.UserInformationConfirm;
 
 public class MainActivity extends AppCompatActivity {
     //그리드뷰
+    Integer[] sampleImage = {R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
+            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6, R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
+            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6, R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
+            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6};
 
-    Integer[] sampleImage = {R.drawable.sample_image1, R.drawable.sample_image2,R.drawable.sample_image3,
-            R.drawable.sample_image4,R.drawable.sample_image5, R.drawable.sample_image6,R.drawable.sample_image1, R.drawable.sample_image2,R.drawable.sample_image3,
-            R.drawable.sample_image4,R.drawable.sample_image5, R.drawable.sample_image6,R.drawable.sample_image1, R.drawable.sample_image2,R.drawable.sample_image3,
-            R.drawable.sample_image4,R.drawable.sample_image5, R.drawable.sample_image6};
-
-    //내 정보
+    //내 정보 전환버튼
     ImageButton userInfoButton;
-    final boolean confirmCheck = false;
+    final boolean confirmCheck = false; //학생 인증 완료여부 변수
 
-
-    //메뉴피커
+    //메뉴피커 전환버튼
     Button menuPicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,25 +71,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         //내 정보 액티비티
         //내 정보 인증유무에 따라 출력화면이 다름
         userInfoButton = (ImageButton) findViewById(R.id.userInfoButton);
         userInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(confirmCheck == true) {
+                if (confirmCheck == true) {
                     Intent user_information_after_confirm = new Intent(getApplicationContext(), UserInformationAfterConfirm.class);
                     startActivity(user_information_after_confirm);
-                }
-                else{
+                } else {
                     Intent user_information_before_confirm = new Intent(getApplicationContext(), UserInformationBeforeConfirm.class);
                     startActivity(user_information_before_confirm);
                 }
 
             }
         });
-
 
         //메뉴피커 액티비티
         menuPicker = (Button) findViewById(R.id.menuPicker);

@@ -125,7 +125,7 @@
     <GridView
         android:id="@+id/main_grid_view"
         android:layout_width="wrap_content"
-        android:layout_height="450sp"
+        android:layout_height="wrap_content"
 
         android:layout_marginLeft="17sp"
         android:verticalSpacing="20sp"
