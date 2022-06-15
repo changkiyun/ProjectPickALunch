@@ -15,9 +15,13 @@ public class ListItemAdapter extends BaseAdapter {
     ArrayList<ListItem> items = new ArrayList<ListItem>();
     Context context;
 
+    ListItemAdapter(ArrayList<ListItem> arrayList, Context _context){
+        this.items = arrayList;
+        this.context = _context;
+    }
     @Override
     public int getCount() {
-        return items.size();
+        return (items != null ? items.size() : 0);
     }
 
     @Override
@@ -44,9 +48,9 @@ public class ListItemAdapter extends BaseAdapter {
         TextView reviewText = convertView.findViewById(R.id.reviewText);
         TextView reviewScore = convertView.findViewById(R.id.reviewScore);
 
-        reviewName.setText(listItem.getName());
-        reviewText.setText(listItem.getReviewText());
-        reviewScore.setText(listItem.getReviewScore());
+        reviewName.setText(listItem.getUser_name());
+        reviewText.setText(listItem.getRestaurant_review());
+        reviewScore.setText(listItem.getReview_rate());
 
         return convertView;
     }

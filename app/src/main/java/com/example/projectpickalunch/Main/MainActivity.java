@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getApplicationContext(),itemname.get(i), Toast.LENGTH_SHORT).show();
                 Intent restorant_information = new Intent(getApplicationContext(), Sickdang_Jeongbo.class);
+                restorant_information.putExtra("itemname.get(i)",itemname.get(i));
                 startActivity(restorant_information);
             }
         });
