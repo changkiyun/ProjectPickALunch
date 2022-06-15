@@ -60,29 +60,8 @@ public class MainGridAdapter extends BaseAdapter {
         MainGridItem mainGridItem = arrayList.get(position);
         mainGridItem_view.setRestorant_name(mainGridItem.getRestorant_name());
         mainGridItem_view.setRestorant_score((mainGridItem.getRestorant_score()));
-
-        //FireStore에서 이미지 가져와서 뷰에 출력
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference();
-        StorageReference pathReference = storageReference.child("restorant_image");
-
-        if(pathReference == null){
-            Toast.makeText(context.getApplicationContext(), "저장소에 사진이 없습니다.", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            //이미지 불러오기는 되는데 child값을 변수로 지정할 수가 없음
-            String image_src = mainGridItem.getRestorant_image_src();
-            StorageReference getRestorantImage = storageReference.child("restorant_image/sample_image3.png");
-            getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(context).load(uri).into(mainGridItem_view.restorant_image);
-                }
-            });
-        }
+        mainGridItem_view.setRestorant_image_src(mainGridItem.getRestorant_image_src());
 
         return mainGridItem_view;
-
-
     }
 }
