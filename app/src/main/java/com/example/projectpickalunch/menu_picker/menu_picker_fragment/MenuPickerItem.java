@@ -1,37 +1,39 @@
 package com.example.projectpickalunch.menu_picker.menu_picker_fragment;
 
 public class MenuPickerItem {
-    String menu_picker_restorant_name;
-    String menu_picker_restorant_score;
-    int menu_picker_restorant_image_src;
+    String restorant_name;
+    String restorant_score;
+    String restorant_image_src;
 
-    public MenuPickerItem(String name, String score, int imageSrc){
-        menu_picker_restorant_name = name;
-        menu_picker_restorant_score = score;
-        menu_picker_restorant_image_src = imageSrc;
+
+    public MenuPickerItem(){
+
     }
 
-    public String getMenu_picker_restorant_name() {
-        return menu_picker_restorant_name;
+    //name
+    public String getRestorant_name() {
+        return restorant_name;
     }
 
-    public void setMenu_picker_restorant_name(String menu_picker_restorant_name) {
-        this.menu_picker_restorant_name = menu_picker_restorant_name;
+    public void setRestorant_name(String restorant_name) {
+        this.restorant_name = restorant_name;
     }
 
-    public String getMenu_picker_restorant_score() {
-        return menu_picker_restorant_score;
+    //score
+    public String getRestorant_score() {
+        return restorant_score;
     }
 
-    public void setMenu_picker_restorant_score(String menu_picker_restorant_score) {
-        this.menu_picker_restorant_score = menu_picker_restorant_score;
+    public void setRestorant_score(String restorant_score) {
+        this.restorant_score = restorant_score;
     }
 
-    public int getMenu_picker_restorant_image_src() {
-        return menu_picker_restorant_image_src;
+    //imageSrc
+    public String getRestorant_image_src() {
+        return restorant_image_src;
     }
 
-    public void setMenu_picker_restorant_image_src(int menu_picker_restorant_image_src) {
-        this.menu_picker_restorant_image_src = menu_picker_restorant_image_src;
+    public void setRestorant_image_src(String restorant_image_src) {
+        this.restorant_image_src = restorant_image_src;
     }
 }

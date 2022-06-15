@@ -96,8 +96,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300sp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/userNickname"
+        app:layout_constraintBottom_toTopOf="@id/userConfirmMessage"
         android:id="@+id/imageUploadGuideline">
 
         <ImageView
@@ -105,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/gray"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageUploadGuideline" />
 
@@ -115,8 +116,8 @@
             android:layout_height="wrap_content"
             android:text="사진 가져오기"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/confirm_image"
-            android:layout_marginRight="40sp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_image" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -163,6 +164,8 @@
         />
 
     <Button
+        android:id="@+id/userConfirmButton"
+
         android:layout_width="200sp"
         android:layout_height="wrap_content"
 
