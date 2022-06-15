@@ -2,8 +2,10 @@ package com.example.projectpickalunch.user_information;
 
 import static com.example.projectpickalunch.Main.MainActivity.confirmCheck;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -56,6 +59,8 @@ public class UserInformationConfirm extends AppCompatActivity {
         userConfirmButton = findViewById(R.id.userConfirmButton);
         confirmAgreeCheckbox = findViewById(R.id.confirmAgreeCheckbox);
 
+
+        //이미지 선택 리스너
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,9 +71,11 @@ public class UserInformationConfirm extends AppCompatActivity {
             }
         });
 
+        //이미지 업로드 버튼
         userConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //인증동의 체크여부 확인
                 if(confirmAgreeCheckbox.isChecked()) {
                     uploadFile();
                 }
@@ -107,27 +114,47 @@ public class UserInformationConfirm extends AppCompatActivity {
     private void uploadFile(){
         //업로드할 파일이 있으면 수행
         if(filePath != null){
-            FirebaseStorage storage = FirebaseStorage.getInstance();
+            //ProgressDialog
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("업로드중");
+            progressDialog.show();
 
+            //Firebase Storage Upload
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            //파일명 생성
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-            //오류났었음 두 개 중 util 선택
             Date now = new Date();
             String filename = formatter.format(now) +"png";
+            //스토리지 경로설정
             StorageReference storageRef = storage.getReferenceFromUrl("gs://pickalunch-b0ea3.appspot.com/user_confirm_upload_image/ref_image_png").child("user_confirm_upload_image/" + filename);
 
             storageRef.putFile(filePath)
+                    //업로드 성공 리스너
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
+
+                            //인증완료 변수
                             confirmCheck = true;
                             finish();
                         }
                     })
+                    //업로드 실패 리스너
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    //프로그래스다이어로그 리스너
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            double progress = (100 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                            progressDialog.setMessage("Uploaded" + ((int)progress)+"%...");
                         }
                     });
         }else{
