@@ -30,8 +30,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    //내 정보 전환버튼
-    ImageButton userInfoButton;
+    ImageButton searchButton; //검색버튼
+    ImageButton userInfoButton;//내 정보 전환버튼
     public static boolean confirmCheck = false; //학생 인증 완료여부 변수
 
     //메뉴피커 전환버튼
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     GridView mainGridView;
     MainGridItem mainGridItem;
 
+    //그리드 아이템 별로 다른 정보를 표시하기위한 String형 ArrayList
     ArrayList<String> itemname;
 
     @Override
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //검색 버튼
-        ImageButton searchButton = (ImageButton) findViewById(R.id.serchButton);
+        searchButton = (ImageButton) findViewById(R.id.serchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

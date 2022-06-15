@@ -77,8 +77,10 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/userConfirmVerifyEdt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLength="8"
             android:ems="10" />
 
         <Button
