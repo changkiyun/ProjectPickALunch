@@ -51,9 +51,8 @@ public class MenuPickerAdapter extends ArrayAdapter implements AdapterView.OnIte
         viewHolder.menu_picker_restorant_score = (TextView) convertView.findViewById(R.id.menu_picker_restorant_score);
 
         final MenuPickerItem menuPickerItem = (MenuPickerItem) list.get(position);
-        viewHolder.menu_picker_restorant_name.setText(menuPickerItem.getMenu_picker_restorant_name());
-        viewHolder.menu_picker_restorant_score.setText(menuPickerItem.getMenu_picker_restorant_score());
-        viewHolder.menu_picker_restorant_image.setImageResource(menuPickerItem.getMenu_picker_restorant_image_src());
+        viewHolder.menu_picker_restorant_name.setText(menuPickerItem.getRestorant_name());
+        viewHolder.menu_picker_restorant_score.setText(menuPickerItem.getRestorant_score());
 
         return convertView;
 
