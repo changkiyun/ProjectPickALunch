@@ -29,12 +29,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    //그리드뷰 샘플데이터 삭제예정
-    Integer[] sampleImage = {R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
-            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6, R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
-            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6, R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
-            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6};
-
     //내 정보 전환버튼
     ImageButton userInfoButton;
     final boolean confirmCheck = false; //학생 인증 완료여부 변수
@@ -82,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         mainGridAdapter = new MainGridAdapter(arrayList,this);
         mainGridView.setAdapter(mainGridAdapter);
-
 
 
         //식당 상세정보 액티비티
