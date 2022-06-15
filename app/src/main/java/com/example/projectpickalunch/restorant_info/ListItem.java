@@ -3,37 +3,40 @@ package com.example.projectpickalunch.restorant_info;
 import android.widget.TextView;
 
 public class ListItem {
-    private String name;
-    private String reviewText;
-    private String reviewScore;
+    private String user_name;
+    private String restaurant_review;
+    private String review_rate;
 
-    public String getName() {
-        return name;
+    public ListItem(){}
+
+
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
-    public String getReviewText() {
-        return reviewText;
+    public String getRestaurant_review() {
+        return restaurant_review;
     }
 
-    public void setReviewText(String reviewText) {
-        this.reviewText = reviewText;
+    public void setRestaurant_review(String restaurant_review) {
+        this.restaurant_review = restaurant_review;
     }
 
-    public String getReviewScore() {
-        return reviewScore;
+    public String getReview_rate() {
+        return review_rate;
     }
 
-    public void setReviewScore(String reviewScore) {
-        this.reviewScore = reviewScore;
+    public void setReview_rate(String review_rate) {
+        this.review_rate = review_rate;
     }
 
-    ListItem(String name,String reviewText, String reviewScore){
-        this.name = name;
-        this.reviewText = reviewText;
-        this.reviewScore = reviewScore;
+    ListItem(String user_name, String restaurant_review, String review_rate){
+        this.user_name = user_name;
+        this.restaurant_review = restaurant_review;
+        this.review_rate = review_rate;
     }
 }
