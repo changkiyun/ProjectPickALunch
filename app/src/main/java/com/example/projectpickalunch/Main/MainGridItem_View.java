@@ -56,7 +56,7 @@ public class MainGridItem_View extends ConstraintLayout {
             //이미지 불러오기는 되는데 child값을 변수로 지정할 수가 없음
 
             String imageSrc = restorant_image_src;
-            StorageReference getRestorantImage = storageReference.child(imageSrc);
+            StorageReference getRestorantImage = storageReference.child(restorant_image_src);
             getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -71,5 +71,4 @@ public class MainGridItem_View extends ConstraintLayout {
     public void setRestorant_score(String score){
         restorant_score.setText(score);
     }
-
 }

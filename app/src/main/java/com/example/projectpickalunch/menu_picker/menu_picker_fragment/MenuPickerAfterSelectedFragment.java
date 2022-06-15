@@ -60,19 +60,6 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
 
         menuPickerGridView.setAdapter(menuPickerAdapter);
 
-
-//        menuPickerItems = new ArrayList<MenuPickerItem>();
-//        menuPickerItems.add(new MenuPickerItem("1. 가타쯔무리", "5.0", R.drawable.sample_image1));
-//        menuPickerItems.add(new MenuPickerItem("1. 가타쯔무리", "5.0", R.drawable.sample_image1));
-//        menuPickerItems.add(new MenuPickerItem("1. 가타쯔무리", "5.0", R.drawable.sample_image1));
-//        menuPickerItems.add(new MenuPickerItem("1. 가타쯔무리", "5.0", R.drawable.sample_image1));
-//        menuPickerItems.add(new MenuPickerItem("1. 가타쯔무리", "5.0", R.drawable.sample_image1));
-//
-//
-//        menuPickerGridView = (GridView) rootView.findViewById(R.id.menu_picker_grid_view);
-//        menuPickerAdapter = new MenuPickerAdapter(getContext(), menuPickerItems);
-//        menuPickerGridView.setAdapter(menuPickerAdapter);
-
         menuPickerGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

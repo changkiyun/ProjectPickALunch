@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     //내 정보 전환버튼
     ImageButton userInfoButton;
-    final boolean confirmCheck = false; //학생 인증 완료여부 변수
+    public static boolean confirmCheck = false; //학생 인증 완료여부 변수
 
     //메뉴피커 전환버튼
     Button menuPicker;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<MainGridItem> arrayList;
     MainGridAdapter mainGridAdapter;
     GridView mainGridView;
+    MainGridItem mainGridItem;
+
+    ArrayList<String> itemname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Firebase
         arrayList = new ArrayList<>();
+        itemname = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
 
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){ //반복문으로 데이터 리스트를 추출
                     MainGridItem mainGridItem = snapshot.getValue(MainGridItem.class); //MainGridItem 객체에 데이터 담는다
                     arrayList.add(mainGridItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                    itemname.add(mainGridItem.getRestorant_name()); // 식당이름
                 }
                 mainGridAdapter.notifyDataSetChanged();
             }
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         mainGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(),itemname.get(i), Toast.LENGTH_SHORT).show();
                 Intent restorant_information = new Intent(getApplicationContext(), Sickdang_Jeongbo.class);
                 startActivity(restorant_information);
             }
@@ -102,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent user_information_before_confirm = new Intent(getApplicationContext(), UserInformationBeforeConfirm.class);
                     startActivity(user_information_before_confirm);
                 }
-
             }
         });
 

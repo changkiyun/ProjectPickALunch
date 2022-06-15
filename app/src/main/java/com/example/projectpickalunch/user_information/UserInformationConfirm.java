@@ -1,5 +1,7 @@
 package com.example.projectpickalunch.user_information;
 
+import static com.example.projectpickalunch.Main.MainActivity.confirmCheck;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -38,6 +41,7 @@ public class UserInformationConfirm extends AppCompatActivity {
     Button userConfirmButton;
     ImageView confrimImage;
     Button gallery;
+    CheckBox confirmAgreeCheckbox;
 
     //Firebase
     private Uri filePath;
@@ -50,6 +54,7 @@ public class UserInformationConfirm extends AppCompatActivity {
         confrimImage = findViewById(R.id.confirm_image);
         gallery = findViewById(R.id.confirm_gallery);
         userConfirmButton = findViewById(R.id.userConfirmButton);
+        confirmAgreeCheckbox = findViewById(R.id.confirmAgreeCheckbox);
 
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +69,12 @@ public class UserInformationConfirm extends AppCompatActivity {
         userConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadFile();
+                if(confirmAgreeCheckbox.isChecked()) {
+                    uploadFile();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"인증 동의에 체크해주세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -110,6 +120,8 @@ public class UserInformationConfirm extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
+                            confirmCheck = true;
+                            finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
