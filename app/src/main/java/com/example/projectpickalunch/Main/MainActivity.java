@@ -1,76 +1,95 @@
 package com.example.projectpickalunch.Main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
-import com.example.projectpickalunch.menu_picker.MenuPickerAfterSelectedFragment;
-import com.example.projectpickalunch.menu_picker.MenuPickerBeforeSelectedFragment;
+import com.example.projectpickalunch.restaurant_search.Search;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
-import com.example.projectpickalunch.user_information.UserInformationConfirm;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    //그리드뷰
-    Integer[] sampleImage = {R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
-            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6, R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
-            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6, R.drawable.sample_image1, R.drawable.sample_image2, R.drawable.sample_image3,
-            R.drawable.sample_image4, R.drawable.sample_image5, R.drawable.sample_image6};
 
     //내 정보 전환버튼
     ImageButton userInfoButton;
-    final boolean confirmCheck = false; //학생 인증 완료여부 변수
+    public static boolean confirmCheck = false; //학생 인증 완료여부 변수
 
     //메뉴피커 전환버튼
     Button menuPicker;
+
+    //FireBase
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private ArrayList<MainGridItem> arrayList;
+    MainGridAdapter mainGridAdapter;
+    GridView mainGridView;
+    MainGridItem mainGridItem;
+
+    ArrayList<String> itemname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //메인화면 그리드뷰
-        GridView mainGridView = (GridView) findViewById(R.id.main_grid_view);
-        MainGridAdapter mainGridAdapter = new MainGridAdapter(this);
+        mainGridView = (GridView) findViewById(R.id.main_grid_view);
 
-        //아이템 추가
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image1));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image2));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image2));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image2));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image2));
-        mainGridAdapter.addItem(new MainGridItem("1.가타쯔무리", "5.0", R.drawable.sample_image2));
+        //Firebase
+        arrayList = new ArrayList<>();
+        itemname = new ArrayList<>();
 
-        //어텝터 설정
+        database = FirebaseDatabase.getInstance();
+
+        databaseReference = database.getReference("식당");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                arrayList.clear(); //기존 배열리스트 초기화
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){ //반복문으로 데이터 리스트를 추출
+                    MainGridItem mainGridItem = snapshot.getValue(MainGridItem.class); //MainGridItem 객체에 데이터 담는다
+                    arrayList.add(mainGridItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                    itemname.add(mainGridItem.getRestorant_name()); // 식당이름
+                }
+                mainGridAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("MainActivity", String.valueOf(error.toException()));
+            }
+        });
+
+        mainGridAdapter = new MainGridAdapter(arrayList,this);
         mainGridView.setAdapter(mainGridAdapter);
+
 
         //식당 상세정보 액티비티
         //그리드뷰 리스너
         mainGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(),itemname.get(i), Toast.LENGTH_SHORT).show();
                 Intent restorant_information = new Intent(getApplicationContext(), Sickdang_Jeongbo.class);
                 startActivity(restorant_information);
             }
@@ -90,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent user_information_before_confirm = new Intent(getApplicationContext(), UserInformationBeforeConfirm.class);
                     startActivity(user_information_before_confirm);
                 }
-
             }
         });
 
@@ -99,10 +117,25 @@ public class MainActivity extends AppCompatActivity {
         menuPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent menu_picker = new Intent(getApplicationContext(), MenuPicker.class);
                 startActivity(menu_picker);
             }
         });
 
+
+
+        //검색 버튼
+        ImageButton searchButton = (ImageButton) findViewById(R.id.serchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent search = new Intent(getApplicationContext(), Search.class);
+                startActivity(search);
+            }
+        });
+
     }
+
+
 }

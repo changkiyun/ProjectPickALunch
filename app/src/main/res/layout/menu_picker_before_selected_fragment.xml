@@ -5,14 +5,27 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:id="@+id/imageView2"
+        android:layout_width="300sp"
+        android:layout_height="300sp"
+ 
         android:src="@drawable/crying_lion"
-
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="아직 카테고리가 \n 선택되지 않았어요."
+        android:textColor="#B5B5B5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

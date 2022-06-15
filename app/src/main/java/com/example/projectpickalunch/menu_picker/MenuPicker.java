@@ -1,10 +1,7 @@
 package com.example.projectpickalunch.menu_picker;
 
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 
@@ -14,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerAfterSelectedFragment;
 
 public class MenuPicker extends AppCompatActivity {
 

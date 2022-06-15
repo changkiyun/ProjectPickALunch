@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="8sp"
+    android:paddingLeft="8sp"
+    android:paddingRight="8sp"
+    android:paddingTop="8sp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--상단바-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/return_button"
+            android:background="#ffffff"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="3sp"
+            android:id="@+id/returnBtn"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="26sp"
+            android:layout_marginTop="4sp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintLeft_toRightOf="@id/returnBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/textView1"
+            android:text="검색" />
+
+        <EditText
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/textView1"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_toRightOf="@id/textView1"
+            android:id="@+id/editTextFilter"
+            android:textSize="22sp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--타이틀바 구분선-->
+    <View
+        android:id="@+id/title_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="5sp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/title_constraint" />
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        app:layout_constraintTop_toBottomOf="@id/title_line"
+        android:textFilterEnabled="true"
+        android:id="@+id/listview1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,12 @@
-package com.example.projectpickalunch.Main;
+package com.example.projectpickalunch.menu_picker.menu_picker_fragment;
 
-public class MainGridItem {
+public class MenuPickerItem {
     String restorant_name;
     String restorant_score;
     String restorant_image_src;
 
 
-    public MainGridItem(){
+    public MenuPickerItem(){
 
     }
 
