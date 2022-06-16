@@ -15,6 +15,10 @@
         <activity
             android:name=".Main.MainActivity"
             android:exported="true">
+
+        </activity>
+        <activity android:name=".loginpage.Google_Login"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
