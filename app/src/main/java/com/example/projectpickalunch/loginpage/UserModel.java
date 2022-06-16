@@ -2,18 +2,23 @@ package com.example.projectpickalunch.loginpage;
 
 public class UserModel {
     public String uid;
-    public boolean confirmCheck;
+    public String confirmCheck;
     public String nickname;
-    public UserModel(){}
+
+    UserModel(){}
     public String getUid() {
         return uid;
     }
 
-    public boolean isConfirmCheck() {
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getConfirmCheck() {
         return confirmCheck;
     }
 
-    public void setConfirmCheck(boolean confirmCheck) {
+    public void setConfirmCheck(String confirmCheck) {
         this.confirmCheck = confirmCheck;
     }
 
@@ -25,10 +30,7 @@ public class UserModel {
         this.nickname = nickname;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-    public UserModel(String uid, boolean confirmCheck, String nickname){
+    public UserModel(String uid, String confirmCheck, String nickname){
         this.uid = uid;
         this.confirmCheck = confirmCheck;
         this.nickname = nickname;

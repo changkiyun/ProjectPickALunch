@@ -46,7 +46,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     private Drawable mImageDrawable;
     //파이어베이스 연동
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = database.getReference();
+    private final DatabaseReference databaseReference = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
