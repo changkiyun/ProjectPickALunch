@@ -1,10 +1,12 @@
 package com.example.projectpickalunch.Main;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
     GridView mainGridView;
     MainGridItem mainGridItem;
 
+
+    //식당이름 어레이
     ArrayList<String> itemname;
+    //식당평점 어레이
+    ArrayList<MainGridItem> itemScrore=  new ArrayList<>(); // 점수어레이
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +71,11 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         databaseReference = database.getReference("식당");
+
+        Log.d("mytest", "firebase 시작");
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrayList.clear(); //기존 배열리스트 초기화
@@ -71,6 +84,27 @@ public class MainActivity extends AppCompatActivity {
                     arrayList.add(mainGridItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
                     itemname.add(mainGridItem.getRestorant_name()); // 식당이름
                 }
+                Log.d("mytest", "솔팅전");
+
+//                arrayList.sort(new Comparator<MainGridItem>() {
+//                    @Override
+//                    public int compare(MainGridItem mainGridItem0, MainGridItem mainGridItem1) {
+//                        Float item0 = Float.valueOf(mainGridItem0.getRestorant_score());
+//                        Float item1 = Float.valueOf(mainGridItem1.getRestorant_score());
+//
+//                        if(item0 == item1) return 0;
+//                        else if (item0 < item1) return 1;
+//                        else return -1;
+//                    }
+//                });
+
+                Log.d("mytest", "솔팅후");
+
+                for(int i=0; i<arrayList.size(); i++){
+                    Log.d("mytest", "for1");
+                    //itemScrore.add(arrayList.get(i));
+                }
+                Log.d("mytest", "for후");
                 mainGridAdapter.notifyDataSetChanged();
             }
 
