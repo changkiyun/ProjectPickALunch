@@ -73,19 +73,19 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         Intent intent = getIntent();
         String sickdang_title = intent.getStringExtra("itemname.get(i)");
 
-        //리사이클러 뷰로 가게 상세 사진 보여주기
-        mRecyclerView = findViewById(R.id.recycler_view);
-        mList = new ArrayList<>();
+            //리사이클러 뷰로 가게 상세 사진 보여주기
+            mRecyclerView = findViewById(R.id.recycler_view);
+            mList = new ArrayList<>();
 
-        mAdapter = new RecyclerViewAdapter(mList);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            mAdapter = new RecyclerViewAdapter(mList);
+            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
-        for (int i=0;i<imgCount.length;i++){
-            mImageDrawable = ResourcesCompat.getDrawable(getResources(),imgCount[i], null);
-            addItem(mImageDrawable);
-        }
-        mAdapter.notifyDataSetChanged();
+            for (int i = 0; i < imgCount.length; i++) {
+                mImageDrawable = ResourcesCompat.getDrawable(getResources(), imgCount[i], null);
+                addItem(mImageDrawable);
+            }
+            mAdapter.notifyDataSetChanged();
 
         //뒤로가기 버튼
         ImageButton btnReturn = (ImageButton) findViewById(R.id.returnBtn);
@@ -98,7 +98,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
         //가게 이름
         TextView sickdanTitle = (TextView)findViewById(R.id.sicdangTitle);
-        sickdanTitle.setText(sickdang_title); //여기에 받아온 가게 이름 입력
+        sickdanTitle.setText(sickdang_title);
 
 
          //리뷰 텍스트
@@ -146,17 +146,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         adapter = new ListItemAdapter(arrayList, this);
         listView.setAdapter(adapter);
 
-
-
-        //float rate_avg = rate_hap/Float.parseFloat(String.valueOf(rate_array.size()));
-        //Toast.makeText(getApplicationContext(), rate_array.get(0), Toast.LENGTH_SHORT).show();
-
-        //가게 평점
-         //여기에 받아온 가게 평점 입력
-
-
-
-        //리뷰 평점과 리뷰 내용 작성 후 리뷰등록 버튼 클릭시 하단 리스트 뷰에 리뷰 등록
         Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
         reviewRegis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +160,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     //리사이클러 뷰에 이미지 넣기
     private void addItem(Drawable icon) {
         RecyclerViewItem item = new RecyclerViewItem();
-        item.setIcon(icon);
+        item.setIconDrawable(icon);
         mList.add(item);
     }
     //리뷰 파이어베이스에 저장
@@ -184,7 +173,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     public void addScore(String restorant_score){
         Intent intent = getIntent();
         String sickdang_title = intent.getStringExtra("itemname.get(i)");
-        UpdateScore updateScore = new UpdateScore(restorant_score);
         databaseReference.child("식당").child(sickdang_title).child("restorant_score").setValue(restorant_score);
     }
 }
