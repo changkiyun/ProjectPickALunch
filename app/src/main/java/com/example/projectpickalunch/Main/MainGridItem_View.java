@@ -53,9 +53,6 @@ public class MainGridItem_View extends ConstraintLayout {
             Toast.makeText(context.getApplicationContext(), "저장소에 사진이 없습니다.", Toast.LENGTH_SHORT).show();
         }
         else{
-            //이미지 불러오기는 되는데 child값을 변수로 지정할 수가 없음
-
-            String imageSrc = restorant_image_src;
             StorageReference getRestorantImage = storageReference.child(restorant_image_src);
             getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
