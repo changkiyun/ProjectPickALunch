@@ -17,14 +17,14 @@ import java.util.ArrayList;
 
 public class MainGridAdapter extends BaseAdapter {
 
-        ArrayList<MainGridItem> arrayList;
-        Context context;
-        MainGridItem_View mainGridItem_view = null;
+    ArrayList<MainGridItem> arrayList;
+    Context context;
+    MainGridItem_View mainGridItem_view = null;
 
-        public MainGridAdapter(ArrayList<MainGridItem> arrayList, Context context){
-            this.arrayList = arrayList;
-            this.context = context;
-        }
+    public MainGridAdapter(ArrayList<MainGridItem> arrayList, Context context){
+        this.arrayList = arrayList;
+        this.context = context;
+    }
 
     @Override
     public int getCount() {

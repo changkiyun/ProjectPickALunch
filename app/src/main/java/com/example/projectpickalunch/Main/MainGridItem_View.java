@@ -53,6 +53,7 @@ public class MainGridItem_View extends ConstraintLayout {
             Toast.makeText(context.getApplicationContext(), "저장소에 사진이 없습니다.", Toast.LENGTH_SHORT).show();
         }
         else{
+            //RealTimeDatabase에 저장된 이미지 경로를 가져와서 Storage의 이미지를 참조하고 그리드뷰의 이미지뷰에 출력
             StorageReference getRestorantImage = storageReference.child(restorant_image_src);
             getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override

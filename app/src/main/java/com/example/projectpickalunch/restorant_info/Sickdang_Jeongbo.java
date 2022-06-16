@@ -166,10 +166,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                 listView.setAdapter(adapter);
             }
         });
-
-
-
-
     }
 
     //리사이클러 뷰에 이미지 넣기
