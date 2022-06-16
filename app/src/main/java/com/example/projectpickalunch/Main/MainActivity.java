@@ -1,5 +1,6 @@
 package com.example.projectpickalunch.Main;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,9 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton searchButton; //검색버튼
     ImageButton userInfoButton;//내 정보 전환버튼
-    public static boolean confirmCheck = false; //학생 인증 완료여부 변수
+    public static boolean confirmCheck; //학생 인증 완료여부 변수
 
     //메뉴피커 전환버튼
     Button menuPicker;
