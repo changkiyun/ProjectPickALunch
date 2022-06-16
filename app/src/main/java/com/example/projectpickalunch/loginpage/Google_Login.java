@@ -51,11 +51,11 @@ public class Google_Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //로그인 성공시 이후에는 로그인창을 띄우지 않음
-        if (mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(getApplication(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        //if (mAuth.getCurrentUser() != null) {
+        //    Intent intent = new Intent(getApplication(), MainActivity.class);
+         //   startActivity(intent);
+         //   finish();
+        //}
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
