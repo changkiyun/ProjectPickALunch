@@ -174,9 +174,8 @@ public class UserInformationConfirm extends AppCompatActivity {
         if(user!= null){
             String uid = user.getUid();
             String nickname = userConfirmVerifyEdt.getText().toString();
-            confirmCheck=false;
-            UserModel userModel1 = new UserModel(uid,confirmCheck,nickname);
-            mDatabase.getReference().child("users").child("uid").setValue(userModel1);
+            UserModel userModel = new UserModel(uid,"0",nickname);
+            mDatabase.getReference().child("users").child(uid).setValue(userModel);
         }
 
     }

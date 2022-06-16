@@ -83,7 +83,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30sp"
-
             android:text="윤창기 님"
             android:textSize="50sp"
             android:textStyle="bold" />
