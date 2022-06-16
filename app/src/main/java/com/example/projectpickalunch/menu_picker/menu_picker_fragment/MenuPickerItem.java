@@ -4,6 +4,7 @@ public class MenuPickerItem {
     String restorant_name;
     String restorant_score;
     String restorant_image_src;
+    String restorant_category;
 
 
     public MenuPickerItem(){
@@ -35,5 +36,13 @@ public class MenuPickerItem {
 
     public void setRestorant_image_src(String restorant_image_src) {
         this.restorant_image_src = restorant_image_src;
+    }
+
+    public String getRestorant_category() {
+        return restorant_category;
+    }
+
+    public void setRestorant_category(String restorant_category) {
+        this.restorant_category = restorant_category;
     }
 }

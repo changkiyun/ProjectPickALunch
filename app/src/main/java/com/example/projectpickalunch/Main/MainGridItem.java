@@ -7,7 +7,6 @@ public class MainGridItem {
 
 
     public MainGridItem(){
-
     }
 
     //name
@@ -36,4 +35,6 @@ public class MainGridItem {
     public void setRestorant_image_src(String restorant_image_src) {
         this.restorant_image_src = restorant_image_src;
     }
+
+
 }
