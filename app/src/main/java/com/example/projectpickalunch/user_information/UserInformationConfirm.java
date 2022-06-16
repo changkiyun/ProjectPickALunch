@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class UserInformationConfirm extends AppCompatActivity {
     ImageView confrimImage;
     Button gallery;
     CheckBox confirmAgreeCheckbox;
+    EditText userConfirmVerifyEdt;
 
     //Firebase
     private Uri filePath;
@@ -58,7 +60,7 @@ public class UserInformationConfirm extends AppCompatActivity {
         gallery = findViewById(R.id.confirm_gallery);
         userConfirmButton = findViewById(R.id.userConfirmButton);
         confirmAgreeCheckbox = findViewById(R.id.confirmAgreeCheckbox);
-
+        userConfirmVerifyEdt = findViewById(R.id.userConfirmVerifyEdt);
 
         //이미지 선택 리스너
         gallery.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +69,7 @@ public class UserInformationConfirm extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"),0);
+                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."),0);
             }
         });
 
@@ -76,11 +78,14 @@ public class UserInformationConfirm extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //인증동의 체크여부 확인
-                if(confirmAgreeCheckbox.isChecked()) {
+                if(userConfirmVerifyEdt.getText().toString().replace(" ","").equals("")){
+                    Toast.makeText(getApplicationContext(),"닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else if(confirmAgreeCheckbox.isChecked()) {
                     uploadFile();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"인증 동의에 체크해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"인증 동의에 체크해주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -107,10 +112,10 @@ public class UserInformationConfirm extends AppCompatActivity {
             }catch (IOException e){
                 e.printStackTrace();
             }
-            }
         }
+    }
 
-        //upload the file
+    //파일 업로드 메소드
     private void uploadFile(){
         //업로드할 파일이 있으면 수행
         if(filePath != null){
@@ -121,10 +126,13 @@ public class UserInformationConfirm extends AppCompatActivity {
 
             //Firebase Storage Upload
             FirebaseStorage storage = FirebaseStorage.getInstance();
-            //파일명 생성
+
+            //파일명 중복 방지를 위해 날짜 + 현재시간을 파일명으로 설정
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
             Date now = new Date();
-            String filename = formatter.format(now) +"png";
+
+            //업로드한 사용자의 정보확인을 위해 파일명에 닉네임 입력
+            String filename = formatter.format(now) + "    Nickname   :   " + userConfirmVerifyEdt.getText();
             //스토리지 경로설정
             StorageReference storageRef = storage.getReferenceFromUrl("gs://pickalunch-b0ea3.appspot.com/user_confirm_upload_image/ref_image_png").child("user_confirm_upload_image/" + filename);
 
@@ -162,6 +170,6 @@ public class UserInformationConfirm extends AppCompatActivity {
         }
     }
 
-    }
+}
 
 
