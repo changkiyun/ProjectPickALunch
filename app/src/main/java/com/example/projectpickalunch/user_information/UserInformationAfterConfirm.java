@@ -40,19 +40,20 @@ public class UserInformationAfterConfirm extends AppCompatActivity {
 
         //사용자 닉네임 받아오기
         nameList = new ArrayList<>();
-
-        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        databaseReference.child("users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                nameList.clear();
+
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    NickName listItem1 = snapshot.getValue(NickName.class);
-                    nameList.add(listItem1.getNickname());
+                    NickName nickname = snapshot.getValue(NickName.class);
+                    nameList.add(nickname.getNickname());
                     String[] name = new String[nameList.size()];
                     name = nameList.toArray(name);
-                    String nickname = String.valueOf(name[0]);
+                    String nickName = String.valueOf(name[0]);
                     userName = (TextView)findViewById(R.id.userName);
-                    userName.setText(nickname + "님");
+                    userName.setText(nickName + "님");
                 }
 
             }

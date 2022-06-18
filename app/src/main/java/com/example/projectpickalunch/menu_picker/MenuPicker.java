@@ -1,6 +1,6 @@
 package com.example.projectpickalunch.menu_picker;
 
-import static com.example.projectpickalunch.Main.MainActivity.confirmCheck;
+import static com.example.projectpickalunch.Main.MainActivity.confirmChecked;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -97,7 +97,7 @@ public class MenuPicker extends AppCompatActivity {
         userInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (confirmCheck == true) {
+                if (confirmChecked == "0") {
                     Intent user_information_after_confirm = new Intent(getApplicationContext(), UserInformationAfterConfirm.class);
                     startActivity(user_information_after_confirm);
                 } else {

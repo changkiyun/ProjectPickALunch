@@ -2,7 +2,9 @@ package com.example.projectpickalunch.user_information;
 
 public class NickName {
     private String nickname;
-public NickName(){}
+    private String uid;
+    public NickName(){}
+
     public String getNickname() {
         return nickname;
     }
@@ -10,4 +12,5 @@ public NickName(){}
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
 }

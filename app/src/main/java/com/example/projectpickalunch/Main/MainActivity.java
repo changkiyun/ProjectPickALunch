@@ -25,11 +25,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.loginpage.UserModel;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
 import com.example.projectpickalunch.restaurant_search.Search;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
+import com.example.projectpickalunch.user_information.NickName;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,11 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton searchButton; //검색버튼
     ImageButton userInfoButton;//내 정보 전환버튼
-    public static boolean confirmCheck; //학생 인증 완료여부 변수
-
+    public static String confirmChecked; //학생 인증 완료여부 변수
     //메뉴피커 전환버튼
     Button menuPicker;
-
+    String abc;
     //FireBase
     private FirebaseDatabase database;
     public static DatabaseReference databaseReference;
@@ -60,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
     //그리드 아이템 별로 다른 정보를 표시하기위한 String형 ArrayList
     ArrayList<String> itemname;
+
+    ArrayList<UserModel> permission;
+
 
     //sort를 위한 MainGridItem형 Arraylist
     private ArrayList<MainGridItem> sortedList;
@@ -143,21 +149,53 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //내 정보 액티비티
-        //내 정보 인증유무에 따라 출력화면이 다름
-        userInfoButton = (ImageButton) findViewById(R.id.userInfoButton);
-        userInfoButton.setOnClickListener(new View.OnClickListener() {
+        permission = new ArrayList<>();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        databaseReference = database.getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                if (confirmCheck == true) {
-                    Intent user_information_after_confirm = new Intent(getApplicationContext(), UserInformationAfterConfirm.class);
-                    startActivity(user_information_after_confirm);
-                } else {
-                    Intent user_information_before_confirm = new Intent(getApplicationContext(), UserInformationBeforeConfirm.class);
-                    startActivity(user_information_before_confirm);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                permission.clear();
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    UserModel usermodel = snapshot.getValue(UserModel.class);
+                    permission.add(usermodel);
                 }
+
+                for(int i =0; i<permission.size();i++){
+                    if(permission.get(i).getUid().equals(uid)){
+                        confirmChecked = String.valueOf(permission.get(i).getConfirmCheck());
+                    }
+                }
+                //내 정보 액티비티
+                //내 정보 인증유무에 따라 출력화면이 다름
+                userInfoButton = (ImageButton) findViewById(R.id.userInfoButton);
+                userInfoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (confirmChecked.equals("1")) {
+                            Intent user_information_after_confirm = new Intent(getApplicationContext(), UserInformationAfterConfirm.class);
+                            startActivity(user_information_after_confirm);
+                        } else {
+                            Intent user_information_before_confirm = new Intent(getApplicationContext(), UserInformationBeforeConfirm.class);
+                            startActivity(user_information_before_confirm);
+                        }
+                    }
+                });
+
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+
+            }
+
         });
+
+
+
+
 
         //메뉴피커 액티비티
         menuPicker = (Button) findViewById(R.id.menuPicker);
