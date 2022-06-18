@@ -1,7 +1,18 @@
 package com.example.projectpickalunch.Main;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +40,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     String abc;
     //FireBase
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    public static DatabaseReference databaseReference;
     private ArrayList<MainGridItem> arrayList;
     MainGridAdapter mainGridAdapter;
     GridView mainGridView;
@@ -49,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
     //그리드 아이템 별로 다른 정보를 표시하기위한 String형 ArrayList
     ArrayList<String> itemname;
+
     ArrayList<UserModel> permission;
+
+
+    //sort를 위한 MainGridItem형 Arraylist
+    private ArrayList<MainGridItem> sortedList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,22 +78,51 @@ public class MainActivity extends AppCompatActivity {
         //메인화면 그리드뷰
         mainGridView = (GridView) findViewById(R.id.main_grid_view);
 
+        getHashKey();
+
         //Firebase
         arrayList = new ArrayList<>();
         itemname = new ArrayList<>();
+        sortedList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
-
         databaseReference = database.getReference("식당");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrayList.clear(); //기존 배열리스트 초기화
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){ //반복문으로 데이터 리스트를 추출
                     MainGridItem mainGridItem = snapshot.getValue(MainGridItem.class); //MainGridItem 객체에 데이터 담는다
                     arrayList.add(mainGridItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-                    itemname.add(mainGridItem.getRestorant_name()); // 식당이름
+                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
                 }
+
+                //snapShot에서 받아온 아이템을 정렬 후 sortedList에 담기
+                arrayList.sort(new Comparator<MainGridItem>() {
+                    @Override
+                    public int compare(MainGridItem mainGridItem0, MainGridItem mainGridItem1) {
+                        Float item0 = Float.parseFloat(mainGridItem0.getRestorant_score());
+                        Float item1 = Float.parseFloat(mainGridItem1.getRestorant_score());
+
+                        if(item0 == item1)
+                            return 0;
+                        else if (item0 < item1)
+                            return 1;
+                        else
+                            return -1;
+                    }
+                });
+
+                for(int i=0; i<10; i++){
+                    sortedList.add(arrayList.get(i));
+                    itemname.add(arrayList.get(i).getRestorant_name()); // 식당이름
+
+                    //식당이름에 순위 출력
+                    sortedList.get(i).setRestorant_name(i+1 + ". " + sortedList.get(i).getRestorant_name());
+                }
+
                 mainGridAdapter.notifyDataSetChanged();
             }
 
@@ -83,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mainGridAdapter = new MainGridAdapter(arrayList,this);
+        mainGridAdapter = new MainGridAdapter(sortedList,this);
         mainGridView.setAdapter(mainGridAdapter);
 
 
@@ -171,6 +220,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+
+    //해시 키 구하기
+    private void getHashKey(){
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo == null)
+            Log.e("KeyHash", "KeyHash:null");
+
+        for (Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
     }
 
 

@@ -95,7 +95,9 @@
             android:layout_width="115sp"
             android:layout_height="wrap_content"
 
+
             android:layout_margin="15sp"
+
 
             android:background="@drawable/selector_category_korea_food"
             android:button="@null"
