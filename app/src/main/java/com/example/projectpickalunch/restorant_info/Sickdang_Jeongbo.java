@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.user_information.NickName;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +42,9 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     ArrayList<ListItem> arrayList;
 
     ArrayList<String> rate_array;
+
+    ArrayList<String> nameList;
+    String nickName;
     //리사이클러뷰에 들어갈 이미지
     int[] imgCount = {R.drawable.gata1, R.drawable.gata2,R.drawable.gata3,
             R.drawable.gata4,R.drawable.gata5, R.drawable.gata6};
@@ -129,12 +135,38 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         adapter = new ListItemAdapter(arrayList, this);
         listView.setAdapter(adapter);
 
+        nameList = new ArrayList<>();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        databaseReference.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    NickName nickname = snapshot.getValue(NickName.class);
+                    nameList.add(nickname.getNickname());
+                    String[] name = new String[nameList.size()];
+                    name = nameList.toArray(name);
+                    nickName = String.valueOf(name[0]);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+
+            }
+
+        });
+
         Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
         reviewRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.addItems(new ListItem("신준한", reviewWriten.getText().toString() , "" + rB.getRating()));
-                addReview(reviewWriten.getText().toString(),"신준한", String.valueOf(rB.getRating()));
+                adapter.addItems(new ListItem(nickName, reviewWriten.getText().toString() , "" + rB.getRating()));
+                addReview(reviewWriten.getText().toString(),nickName, String.valueOf(rB.getRating()));
                 listView.setAdapter(adapter);
             }
         });

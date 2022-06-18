@@ -1,6 +1,6 @@
 package com.example.projectpickalunch.user_information;
 
-import static com.example.projectpickalunch.Main.MainActivity.confirmCheck;
+import static com.example.projectpickalunch.Main.MainActivity.confirmChecked;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -141,8 +141,7 @@ public class UserInformationConfirm extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-                            //여기에 데베에 닉네임과 권한 보내는 코드 uid받아와서 권한과 닉네임 데베에 저장해야함
-                            confirmCheck =true;
+                            confirmChecked ="1";
                             // database에 저장
                             finish();
                         }
@@ -174,8 +173,8 @@ public class UserInformationConfirm extends AppCompatActivity {
         if(user!= null){
             String uid = user.getUid();
             String nickname = userConfirmVerifyEdt.getText().toString();
-            UserModel userModel = new UserModel(uid,"0",nickname);
-            mDatabase.getReference().child("users").child(uid).setValue(userModel);
+            UserModel userModel = new UserModel(uid,"1",nickname);
+            mDatabase.getReference().child("users").child(uid).child("uid").setValue(userModel);
         }
 
     }
