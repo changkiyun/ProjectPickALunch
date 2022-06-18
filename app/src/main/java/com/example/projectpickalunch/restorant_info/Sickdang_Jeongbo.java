@@ -2,8 +2,12 @@ package com.example.projectpickalunch.restorant_info;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -12,17 +16,23 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectpickalunch.Main.MainGridItem;
 import com.example.projectpickalunch.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
@@ -44,9 +54,25 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             R.drawable.gata4,R.drawable.gata5, R.drawable.gata6};
     //이미지 저장하는 Drawble
     private Drawable mImageDrawable;
-    //파이어베이스 연동
+    //리뷰파이어베이스 연동
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference databaseReference = database.getReference();
+
+    //kakaoMap
+    String url;
+    Double latitude;
+    Double longitude;
+    Button mapTest;
+
+    RestorantLocationItem restorantLocationItem;
+    ArrayList<RestorantLocationItem> locationArrayList;
+
+    FirebaseDatabase locationDatabase;
+    DatabaseReference locationReference;
+    MapPoint mapPoint;
+    MapView mapView;
+    MapPOIItem marker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +81,75 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         //인텐트 받아오기 가게 이름
         Intent intent = getIntent();
         String sickdang_title = intent.getStringExtra("itemname.get(i)");
+
+        //Kakao Map Api
+
+        //변수 초기화
+        locationArrayList = new ArrayList<>();
+
+        //식당 위도 경도 가져오기
+        locationDatabase = FirebaseDatabase.getInstance();
+        locationReference = locationDatabase.getReference("식당");
+        locationReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                locationArrayList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    RestorantLocationItem restorantLocationItem = snapshot.getValue(RestorantLocationItem.class);
+                    locationArrayList.add(restorantLocationItem);
+                    System.out.println("리스너 실행됨");
+                }
+
+
+                for(int i=0 ; i<locationArrayList.size(); i++){
+                    if(locationArrayList.get(i).getRestorant_name().equals(sickdang_title)){
+                        url = "kakaomap://place?id=" + locationArrayList.get(i).getRestorant_location_id();
+                        latitude = Double.parseDouble(locationArrayList.get(i).getRestorant_location_latitude());
+                        longitude = Double.parseDouble(locationArrayList.get(i).getRestorant_location_longitude());
+                        mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+                        mapView.setMapCenterPoint(mapPoint,true);
+                        marker.setMapPoint(mapPoint);
+                        marker.setItemName("Default Marker");
+                        marker.setTag(0);
+                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                        mapView.addPOIItem(marker);
+                    }
+                }
+            }
+                @Override
+                public void onCancelled (@NonNull DatabaseError error){
+                    Log.e("Sickdang_Jeongbo", String.valueOf(error.toException()));
+                }
+            });
+
+
+//카카오 맵 열기
+        mapTest = (Button) findViewById(R.id.mapTest);
+        mapTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent2);
+            }
+        });
+//
+         mapView = new MapView(this);
+
+        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.kakaoMapView);
+        mapViewContainer.addView(mapView);
+//
+
+         marker = new MapPOIItem();
+
+
+        //맵 포인트 위도경도 설정
+
+
+
+
+
 
             //리사이클러 뷰로 가게 상세 사진 보여주기
             mRecyclerView = findViewById(R.id.recycler_view);
