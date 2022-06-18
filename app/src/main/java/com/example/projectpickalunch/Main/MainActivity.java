@@ -7,8 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -46,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     //FireBase
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    public static DatabaseReference databaseReference;
     private ArrayList<MainGridItem> arrayList;
     MainGridAdapter mainGridAdapter;
     GridView mainGridView;
@@ -66,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         //메인화면 그리드뷰
         mainGridView = (GridView) findViewById(R.id.main_grid_view);
 
+        getHashKey();
+
         //Firebase
         arrayList = new ArrayList<>();
         itemname = new ArrayList<>();
@@ -81,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){ //반복문으로 데이터 리스트를 추출
                     MainGridItem mainGridItem = snapshot.getValue(MainGridItem.class); //MainGridItem 객체에 데이터 담는다
                     arrayList.add(mainGridItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
                 }
 
@@ -173,6 +182,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+
+    //해시 키 구하기
+    private void getHashKey(){
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo == null)
+            Log.e("KeyHash", "KeyHash:null");
+
+        for (Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
     }
 
 
