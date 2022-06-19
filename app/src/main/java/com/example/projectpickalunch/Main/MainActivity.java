@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     //sort를 위한 MainGridItem형 Arraylist
     private ArrayList<MainGridItem> sortedList;
 
+    //test
+    String nickname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){ //반복문으로 데이터 리스트를 추출
                     MainGridItem mainGridItem = snapshot.getValue(MainGridItem.class); //MainGridItem 객체에 데이터 담는다
                     arrayList.add(mainGridItem); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
                 }
 
                 //snapShot에서 받아온 아이템을 정렬 후 sortedList에 담기
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                for(int i=0; i<10; i++){
+                for(int i=0; i<arrayList.size(); i++){
                     sortedList.add(arrayList.get(i));
                     itemname.add(arrayList.get(i).getRestorant_name()); // 식당이름
 
@@ -148,25 +149,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        FirebaseDatabase confirmDatabase =  FirebaseDatabase.getInstance();
         permission = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
-        databaseReference = database.getReference("users");
+        databaseReference = confirmDatabase.getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 permission.clear();
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    UserModel usermodel = snapshot.getValue(UserModel.class);
-                    permission.add(usermodel);
+                    UserModel userModel = snapshot.getValue(UserModel.class);
+                    permission.add(userModel);
+
+                }
+                for(int i=0; i<permission.size(); i++){
+                    confirmChecked = String.valueOf(permission.get(i).getConfirmCheck());
                 }
 
-                for(int i =0; i<permission.size();i++){
-                    if(permission.get(i).getUid().equals(uid)){
-                        confirmChecked = String.valueOf(permission.get(i).getConfirmCheck());
-                    }
-                }
                 //내 정보 액티비티
                 //내 정보 인증유무에 따라 출력화면이 다름
                 userInfoButton = (ImageButton) findViewById(R.id.userInfoButton);
