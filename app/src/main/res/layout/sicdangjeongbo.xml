@@ -16,57 +16,49 @@
 
         <!--상단바-->
         <ImageButton
+            android:id="@+id/returnBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/return_button"
-            android:background="#ffffff"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="10sp"
-            android:id="@+id/returnBtn"/>
+            android:background="#ffffff"
+            android:src="@drawable/return_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--타이틀바 구분선-->
-    <View
-        android:id="@+id/title_line"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_marginTop="5sp"
-        android:background="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/title_constraint" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-35sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_line"
-        android:layout_marginTop="5sp"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline3" />
 
     <LinearLayout
+        android:id="@+id/Lin1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view"
-        app:layout_constraintRight_toRightOf="parent"
+
+        android:layout_marginTop="10sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:id="@+id/Lin1">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view">
 
         <TextView
             android:id="@+id/sicdangTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="12sp"
             android:text="가타쯔무리"
+            android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_view"
-            android:layout_marginLeft="12sp"
-            android:textColor="#000000"/>
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
 
         <TextView
             android:id="@+id/pyeongJeom"
@@ -82,94 +74,119 @@
     </LinearLayout>
 
 
-
-    <ImageView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/kakaoMapView"
+        android:layout_width="match_parent"
         android:layout_height="200sp"
-        android:id="@+id/kakaoMap"
-        android:src="@drawable/map"
-        app:layout_constraintTop_toBottomOf="@+id/Lin1"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Lin1">
+
+        <Button
+            android:id="@+id/mapTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="15sp"
+            android:background="@drawable/button_round_hard"
+            android:text="길찾기"
+            android:textColor="@color/white"
+
+            android:textSize="18sp"
+            android:textStyle="bold"
+
+            />
+    </RelativeLayout>
 
 
     <LinearLayout
+        android:id="@+id/Lin2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/kakaoMap"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:id="@+id/Lin2">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kakaoMapView">
 
         <TextView
             android:id="@+id/reviewText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
             android:text="리뷰"
-            android:textSize="28sp"
-            app:layout_constraintTop_toBottomOf="@id/kakaoMap"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="10sp"/>
+            android:textSize="28sp" />
 
         <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ratingBar"
             style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:isIndicator="false"
-            android:stepSize="0.5"/>
+            android:stepSize="0.5" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/Lin3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/Lin2"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:id="@+id/Lin3">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Lin2">
 
         <EditText
+            android:id="@+id/reviewWrite"
             android:layout_width="280sp"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_rectangle"
             android:layout_marginLeft="16sp"
-            android:id="@+id/reviewWrite"
-            android:textSize="22sp"
-            android:textStyle="bold"
             android:layout_marginTop="5sp"
-            ></EditText>
+            android:background="@drawable/edittext_rectangle"
+            android:textSize="22sp"
+            android:textStyle="bold"></EditText>
+
         <Button
+            android:id="@+id/reviewRegis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/reviewRegis"
-            app:layout_constraintLeft_toRightOf="@+id/reviewWrite"
-            app:layout_constraintRight_toRightOf="@id/Lin3"
+            android:layout_marginLeft="20sp"
             android:text="리뷰등록"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginLeft="20sp"/>
+            app:layout_constraintLeft_toRightOf="@+id/reviewWrite"
+            app:layout_constraintRight_toRightOf="@id/Lin3" />
 
     </LinearLayout>
 
 
-        <ScrollView
+    <ScrollView
+        android:id="@+id/Lin4"
+        android:layout_width="match_parent"
+        android:layout_height="157sp"
+        android:fillViewport="true"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Lin3">
+
+        <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="157sp"
-            app:layout_constraintTop_toBottomOf="@+id/Lin3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:id="@+id/Lin4"
-            android:orientation="horizontal"
-            android:fillViewport="true"
-            >
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/listView"
-                android:dividerHeight="4dp"
-                android:divider="#ffffff" />
+            android:layout_height="match_parent"
+            android:divider="#ffffff"
+            android:dividerHeight="4dp" />
 
-        </ScrollView>
+    </ScrollView>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="691dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

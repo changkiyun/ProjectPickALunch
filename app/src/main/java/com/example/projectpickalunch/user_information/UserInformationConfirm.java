@@ -1,16 +1,13 @@
 package com.example.projectpickalunch.user_information;
 
-import static com.example.projectpickalunch.Main.MainActivity.confirmCheck;
+import static com.example.projectpickalunch.Main.MainActivity.confirmChecked;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,20 +20,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.projectpickalunch.R;
-import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.example.projectpickalunch.loginpage.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,6 +43,7 @@ public class UserInformationConfirm extends AppCompatActivity {
     Button gallery;
     CheckBox confirmAgreeCheckbox;
     EditText userConfirmVerifyEdt;
+    private FirebaseDatabase mDatabase;
 
     //Firebase
     private Uri filePath;
@@ -55,7 +52,7 @@ public class UserInformationConfirm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_information_confirm);
-
+        mDatabase = FirebaseDatabase.getInstance();
         confrimImage = findViewById(R.id.confirm_image);
         gallery = findViewById(R.id.confirm_gallery);
         userConfirmButton = findViewById(R.id.userConfirmButton);
@@ -82,6 +79,7 @@ public class UserInformationConfirm extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else if(confirmAgreeCheckbox.isChecked()) {
+                    addPermission();
                     uploadFile();
                 }
                 else{
@@ -143,9 +141,8 @@ public class UserInformationConfirm extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
-
-                            //인증완료 변수
-                            confirmCheck = true;
+                            confirmChecked ="1";
+                            // database에 저장
                             finish();
                         }
                     })
@@ -170,6 +167,17 @@ public class UserInformationConfirm extends AppCompatActivity {
         }
     }
 
+    public void addPermission(){
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!= null){
+            String uid = user.getUid();
+            String nickname = userConfirmVerifyEdt.getText().toString();
+            UserModel userModel = new UserModel(uid,"1",nickname);
+            mDatabase.getReference().child("users").child(uid).child("uid").setValue(userModel);
+        }
+
+    }
 }
 
 

@@ -1,12 +1,13 @@
 package com.example.projectpickalunch.menu_picker;
 
-import static com.example.projectpickalunch.Main.MainActivity.confirmCheck;
+import static com.example.projectpickalunch.Main.MainActivity.confirmChecked;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,15 +16,22 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerAfterSelectedFragment;
+import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerItem;
 import com.example.projectpickalunch.restaurant_search.Search;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
+
+import java.util.ArrayList;
 
 public class MenuPicker extends AppCompatActivity {
 
     ImageButton searchButton; //검색버튼
     ImageButton userInfoButton; //내정보 버튼
     ImageButton menuPickerReturnButton; //돌아가기 버튼
+
+    //sortingTest
+    MenuPickerAfterSelectedFragment menuPickerAfterSelectedFragment = new MenuPickerAfterSelectedFragment();
+    ArrayList<MenuPickerItem> pickerItems = new ArrayList<>();
 
     //메뉴피커
     FragmentManager menuPickerFragmentManager;
@@ -62,6 +70,8 @@ public class MenuPicker extends AppCompatActivity {
         menuPickerFragmentTransaction.add(R.id.menuPickerFragment, new MenuPickerBeforeSelectedFragment());
         menuPickerFragmentTransaction.commit();
 
+        //sortingTest
+
         //적용 버튼 클릭 시 프래그먼트 교체
         ImageButton menuPickerApplyButton = (ImageButton) findViewById(R.id.menuPickerApplyButton);
         menuPickerApplyButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +97,7 @@ public class MenuPicker extends AppCompatActivity {
         userInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (confirmCheck == true) {
+                if (confirmChecked == "0") {
                     Intent user_information_after_confirm = new Intent(getApplicationContext(), UserInformationAfterConfirm.class);
                     startActivity(user_information_after_confirm);
                 } else {
@@ -101,6 +111,8 @@ public class MenuPicker extends AppCompatActivity {
     //프래그먼트 변경 함수
     public void switchFragment(){
         Fragment fr;
+        //Bundle로 Fragment에 값 전달을 위한 boolean변수
+       boolean[] selectCategoryCheck = {kFoodButton.isChecked(),jFoodButton.isChecked(),cFoodButton.isChecked(),aFoodButton.isChecked(),fastFoodButton.isChecked(),etcFoodButton.isChecked()};
 
         if(kFoodButton.isChecked() || jFoodButton.isChecked() || cFoodButton.isChecked() ||
                 aFoodButton.isChecked() || fastFoodButton.isChecked() || etcFoodButton.isChecked()){
@@ -112,6 +124,10 @@ public class MenuPicker extends AppCompatActivity {
 
         menuPickerFragmentManager = getSupportFragmentManager();
         menuPickerFragmentTransaction = menuPickerFragmentManager.beginTransaction();
+        //Bundle로 값 전달
+        Bundle bundle = new Bundle();
+        bundle.putBooleanArray("selectCategoryCheck", selectCategoryCheck);
+        fr.setArguments(bundle);
         menuPickerFragmentTransaction.replace(R.id.menuPickerFragment, fr);
         menuPickerFragmentTransaction.commit();
 

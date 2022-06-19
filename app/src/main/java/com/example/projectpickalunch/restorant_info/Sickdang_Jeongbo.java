@@ -1,69 +1,88 @@
 package com.example.projectpickalunch.restorant_info;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Bundle;
-import android.renderscript.Sampler;
-import android.text.style.UpdateAppearance;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
+import com.example.projectpickalunch.Main.MainGridItem;
 import com.example.projectpickalunch.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.projectpickalunch.user_information.NickName;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
 public class Sickdang_Jeongbo extends AppCompatActivity {
     //상단 리사이클러뷰
-    RecyclerView mRecyclerView = null;
+    RecyclerView mRecyclerView;
     //상단 리사이클러뷰 어뎁터
-    RecyclerViewAdapter mAdapter = null;
+    RecyclerViewAdapter mAdapter;
     //상단 리사이클러뷰 값 저장할 ArrayList
     ArrayList<RecyclerViewItem> mList;
+    ArrayList<String> testName;
+
+    //식당 이름 받아올 리스트
+    ArrayList<RecyclerViewItem> resNameList;
     //리뷰에 쓰이는 리스트아이템 어뎁터
     ListItemAdapter adapter;
     //리스트뷰 값 저장할 ArrayLiset
     ArrayList<ListItem> arrayList;
 
     ArrayList<String> rate_array;
+
+    ArrayList<String> nameList;
+    String nickName;
     //리사이클러뷰에 들어갈 이미지
     int[] imgCount = {R.drawable.gata1, R.drawable.gata2,R.drawable.gata3,
             R.drawable.gata4,R.drawable.gata5, R.drawable.gata6};
     //이미지 저장하는 Drawble
     private Drawable mImageDrawable;
-    //파이어베이스 연동
+    //리뷰파이어베이스 연동
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = database.getReference();
+    private final DatabaseReference databaseReference = database.getReference();
+
+    //kakaoMap
+    String url;
+    Double latitude;
+    Double longitude;
+    Button mapTest;
+
+    RestorantLocationItem restorantLocationItem;
+    ArrayList<RestorantLocationItem> locationArrayList;
+
+    FirebaseDatabase locationDatabase;
+    DatabaseReference locationReference;
+    MapPoint mapPoint;
+    MapView mapView;
+    MapPOIItem marker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,19 +92,106 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         Intent intent = getIntent();
         String sickdang_title = intent.getStringExtra("itemname.get(i)");
 
-        //리사이클러 뷰로 가게 상세 사진 보여주기
-        mRecyclerView = findViewById(R.id.recycler_view);
-        mList = new ArrayList<>();
+        //Kakao Map Api
 
-        mAdapter = new RecyclerViewAdapter(mList);
+        //변수 초기화
+        locationArrayList = new ArrayList<>();
+
+        //식당 위도 경도 가져오기
+        locationDatabase = FirebaseDatabase.getInstance();
+        locationReference = locationDatabase.getReference("식당");
+        locationReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                locationArrayList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    RestorantLocationItem restorantLocationItem = snapshot.getValue(RestorantLocationItem.class);
+                    locationArrayList.add(restorantLocationItem);
+                    System.out.println("리스너 실행됨");
+                }
+
+
+                for(int i=0 ; i<locationArrayList.size(); i++){
+                    if(locationArrayList.get(i).getRestorant_name().equals(sickdang_title)){
+                        url = "kakaomap://place?id=" + locationArrayList.get(i).getRestorant_location_id();
+                        latitude = Double.parseDouble(locationArrayList.get(i).getRestorant_location_latitude());
+                        longitude = Double.parseDouble(locationArrayList.get(i).getRestorant_location_longitude());
+                        mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+                        mapView.setMapCenterPoint(mapPoint,true);
+                        marker.setMapPoint(mapPoint);
+                        marker.setItemName("Default Marker");
+                        marker.setTag(0);
+                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                        mapView.addPOIItem(marker);
+                    }
+                }
+            }
+                @Override
+                public void onCancelled (@NonNull DatabaseError error){
+                    Log.e("Sickdang_Jeongbo", String.valueOf(error.toException()));
+                }
+            });
+
+
+//카카오 맵 열기
+        mapTest = (Button) findViewById(R.id.mapTest);
+        mapTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent2);
+            }
+        });
+//
+         mapView = new MapView(this);
+
+        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.kakaoMapView);
+        mapViewContainer.addView(mapView);
+//
+
+         marker = new MapPOIItem();
+
+
+        //맵 포인트 위도경도 설정
+
+
+            //리사이클러 뷰로 가게 상세 사진 보여주기
+            mRecyclerView = findViewById(R.id.recycler_view); //
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            testName = new ArrayList<>();
+            mList = new ArrayList<>();
+            resNameList = new ArrayList<>();
+            DatabaseReference detailReference = database.getReference("식당");
+        detailReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    RecyclerViewItem recyclerViewItem = snapshot.getValue(RecyclerViewItem.class);
+                    mList.add(recyclerViewItem);
+                }
+                for(int i=0; i<mList.size(); i++){
+                    if(String.valueOf(mList.get(i).getRestorant_name()).equals(sickdang_title)){
+                        testName.add(mList.get(i).getDetail_image_1());
+                        testName.add(mList.get(i).getDetail_image_2());
+                        testName.add(mList.get(i).getDetail_image_3());
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("sickdang", String.valueOf(error.toException()));
+            }
+        });
+
+        mAdapter = new RecyclerViewAdapter(resNameList, this);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
-        for (int i=0;i<imgCount.length;i++){
-            mImageDrawable = ResourcesCompat.getDrawable(getResources(),imgCount[i], null);
-            addItem(mImageDrawable);
-        }
-        mAdapter.notifyDataSetChanged();
+
 
         //뒤로가기 버튼
         ImageButton btnReturn = (ImageButton) findViewById(R.id.returnBtn);
@@ -98,7 +204,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
         //가게 이름
         TextView sickdanTitle = (TextView)findViewById(R.id.sicdangTitle);
-        sickdanTitle.setText(sickdang_title); //여기에 받아온 가게 이름 입력
+        sickdanTitle.setText(sickdang_title);
 
 
          //리뷰 텍스트
@@ -146,34 +252,45 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         adapter = new ListItemAdapter(arrayList, this);
         listView.setAdapter(adapter);
 
+        nameList = new ArrayList<>();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    NickName nickname = snapshot.getValue(NickName.class);
+                    nameList.add(nickname.getNickName());
+                    String[] name = new String[nameList.size()];
+                    name = nameList.toArray(name);
+                    nickName = String.valueOf(name[0]);
 
-        //float rate_avg = rate_hap/Float.parseFloat(String.valueOf(rate_array.size()));
-        //Toast.makeText(getApplicationContext(), rate_array.get(0), Toast.LENGTH_SHORT).show();
+                }
 
-        //가게 평점
-         //여기에 받아온 가게 평점 입력
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
 
+            }
 
-        //리뷰 평점과 리뷰 내용 작성 후 리뷰등록 버튼 클릭시 하단 리스트 뷰에 리뷰 등록
+        });
+
         Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
         reviewRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.addItems(new ListItem("신준한", reviewWriten.getText().toString() , "" + rB.getRating()));
-                addReview(reviewWriten.getText().toString(),"신준한", String.valueOf(rB.getRating()));
+                adapter.addItems(new ListItem(nickName, reviewWriten.getText().toString() , "" + rB.getRating()));
+                addReview(reviewWriten.getText().toString(),nickName, String.valueOf(rB.getRating()));
                 listView.setAdapter(adapter);
             }
         });
     }
 
     //리사이클러 뷰에 이미지 넣기
-    private void addItem(Drawable icon) {
-        RecyclerViewItem item = new RecyclerViewItem();
-        item.setIcon(icon);
-        mList.add(item);
-    }
+
     //리뷰 파이어베이스에 저장
     public void addReview(String restaurant_review, String user_name, String review_rate){
         Intent intent = getIntent();
@@ -184,7 +301,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     public void addScore(String restorant_score){
         Intent intent = getIntent();
         String sickdang_title = intent.getStringExtra("itemname.get(i)");
-        UpdateScore updateScore = new UpdateScore(restorant_score);
         databaseReference.child("식당").child(sickdang_title).child("restorant_score").setValue(restorant_score);
     }
 }

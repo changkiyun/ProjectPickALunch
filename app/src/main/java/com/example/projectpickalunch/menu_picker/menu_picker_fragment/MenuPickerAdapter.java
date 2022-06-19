@@ -1,6 +1,7 @@
 package com.example.projectpickalunch.menu_picker.menu_picker_fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.projectpickalunch.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +58,30 @@ public class MenuPickerAdapter extends ArrayAdapter implements AdapterView.OnIte
         final MenuPickerItem menuPickerItem = (MenuPickerItem) list.get(position);
         viewHolder.menu_picker_restorant_name.setText(menuPickerItem.getRestorant_name());
         viewHolder.menu_picker_restorant_score.setText(menuPickerItem.getRestorant_score());
+
+        //FireStore에서 이미지 가져와서 뷰에 출력
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference pathReference = storageReference.child("restorant_image");
+        String restorant_image_src = menuPickerItem.getRestorant_image_src();
+
+        if(pathReference == null){
+            Toast.makeText(context.getApplicationContext(), "저장소에 사진이 없습니다.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            //RealTimeDatabase에 저장된 이미지 경로를 가져와서 Storage의 이미지를 참조하고 그리드뷰의 이미지뷰에 출력
+            StorageReference getRestorantImage = storageReference.child(restorant_image_src);
+            getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context.getApplicationContext())
+                            .load(uri)
+                            .override(300,300)
+                            .centerCrop()
+                            .into(viewHolder.menu_picker_restorant_image);
+                }
+            });
+        }
 
         return convertView;
 
