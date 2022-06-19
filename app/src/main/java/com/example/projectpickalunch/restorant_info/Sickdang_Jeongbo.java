@@ -41,11 +41,15 @@ import java.util.ArrayList;
 
 public class Sickdang_Jeongbo extends AppCompatActivity {
     //상단 리사이클러뷰
-    RecyclerView mRecyclerView = null;
+    RecyclerView mRecyclerView;
     //상단 리사이클러뷰 어뎁터
-    RecyclerViewAdapter mAdapter = null;
+    RecyclerViewAdapter mAdapter;
     //상단 리사이클러뷰 값 저장할 ArrayList
     ArrayList<RecyclerViewItem> mList;
+    ArrayList<String> testName;
+
+    //식당 이름 받아올 리스트
+    ArrayList<RecyclerViewItem> resNameList;
     //리뷰에 쓰이는 리스트아이템 어뎁터
     ListItemAdapter adapter;
     //리스트뷰 값 저장할 ArrayLiset
@@ -153,23 +157,41 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         //맵 포인트 위도경도 설정
 
 
-
-
-
-
             //리사이클러 뷰로 가게 상세 사진 보여주기
-            mRecyclerView = findViewById(R.id.recycler_view);
-            mList = new ArrayList<>();
-
-            mAdapter = new RecyclerViewAdapter(mList);
-            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView = findViewById(R.id.recycler_view); //
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
-            for (int i = 0; i < imgCount.length; i++) {
-                mImageDrawable = ResourcesCompat.getDrawable(getResources(), imgCount[i], null);
-                addItem(mImageDrawable);
+            testName = new ArrayList<>();
+            mList = new ArrayList<>();
+            resNameList = new ArrayList<>();
+            DatabaseReference detailReference = database.getReference("식당");
+        detailReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    RecyclerViewItem recyclerViewItem = snapshot.getValue(RecyclerViewItem.class);
+                    mList.add(recyclerViewItem);
+                }
+                for(int i=0; i<mList.size(); i++){
+                    if(String.valueOf(mList.get(i).getRestorant_name()).equals(sickdang_title)){
+                        testName.add(mList.get(i).getDetail_image_1());
+                        testName.add(mList.get(i).getDetail_image_2());
+                        testName.add(mList.get(i).getDetail_image_3());
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
             }
-            mAdapter.notifyDataSetChanged();
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("sickdang", String.valueOf(error.toException()));
+            }
+        });
+
+        mAdapter = new RecyclerViewAdapter(resNameList, this);
+        mRecyclerView.setAdapter(mAdapter);
+
+
 
         //뒤로가기 버튼
         ImageButton btnReturn = (ImageButton) findViewById(R.id.returnBtn);
@@ -233,13 +255,13 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         nameList = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
-        databaseReference.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     NickName nickname = snapshot.getValue(NickName.class);
-                    nameList.add(nickname.getNickname());
+                    nameList.add(nickname.getNickName());
                     String[] name = new String[nameList.size()];
                     name = nameList.toArray(name);
                     nickName = String.valueOf(name[0]);
@@ -268,11 +290,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     }
 
     //리사이클러 뷰에 이미지 넣기
-    private void addItem(Drawable icon) {
-        RecyclerViewItem item = new RecyclerViewItem();
-        item.setIconDrawable(icon);
-        mList.add(item);
-    }
+
     //리뷰 파이어베이스에 저장
     public void addReview(String restaurant_review, String user_name, String review_rate){
         Intent intent = getIntent();

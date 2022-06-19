@@ -29,8 +29,8 @@ public class UserInformationAfterConfirm extends AppCompatActivity {
     ImageButton userInfoReturnButton;
     TextView userName;
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = mDatabase.getReference();
-    ArrayList<String> nameList;
+    private DatabaseReference databaseReference;
+    ArrayList<NickName> nameList;
 
 
     @Override
@@ -42,18 +42,25 @@ public class UserInformationAfterConfirm extends AppCompatActivity {
         nameList = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
-        databaseReference.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        databaseReference = mDatabase.getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     NickName nickname = snapshot.getValue(NickName.class);
-                    nameList.add(nickname.getNickname());
-                    String[] name = new String[nameList.size()];
-                    name = nameList.toArray(name);
-                    String nickName = String.valueOf(name[0]);
-                    userName = (TextView)findViewById(R.id.userName);
-                    userName.setText(nickName + "님");
+                    nameList.add(nickname);
+//                    String[] name = new String[nameList.size()];
+//                    name = nameList.toArray(name);
+//                    String nickName = String.valueOf(name[0]);
+
+                }
+                for(int i=0; i<nameList.size(); i++){
+                    if(nameList.get(i).getUid().equals(uid)){
+                        String testname = nameList.get(i).getNickName();
+                        userName = (TextView)findViewById(R.id.userName);
+                        userName.setText(String.valueOf(nameList.get(i).getNickName()));
+                    }
                 }
 
             }

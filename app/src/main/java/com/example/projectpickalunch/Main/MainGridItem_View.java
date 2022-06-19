@@ -58,7 +58,11 @@ public class MainGridItem_View extends ConstraintLayout {
             getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Glide.with(context).load(uri).into(restorant_image);
+                    Glide.with(context)
+                            .load(uri)
+                            .override(300,300)
+                            .centerCrop()
+                            .into(restorant_image);
                 }
             });
         }

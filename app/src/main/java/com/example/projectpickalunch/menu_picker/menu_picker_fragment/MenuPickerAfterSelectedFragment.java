@@ -94,6 +94,9 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                         }
                     }
                 }
+
+                
+
                 for(int i=0; i<pickedMenuList.size(); i++){
                     //아이템 별 다른 식당 출력을 위한 식당이름 입력
                     itemname.add(arrayList.get(i).getRestorant_name());

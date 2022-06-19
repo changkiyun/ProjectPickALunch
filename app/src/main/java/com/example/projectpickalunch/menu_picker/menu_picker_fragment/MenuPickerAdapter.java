@@ -74,7 +74,11 @@ public class MenuPickerAdapter extends ArrayAdapter implements AdapterView.OnIte
             getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Glide.with(context.getApplicationContext()).load(uri).into(viewHolder.menu_picker_restorant_image);
+                    Glide.with(context.getApplicationContext())
+                            .load(uri)
+                            .override(300,300)
+                            .centerCrop()
+                            .into(viewHolder.menu_picker_restorant_image);
                 }
             });
         }
