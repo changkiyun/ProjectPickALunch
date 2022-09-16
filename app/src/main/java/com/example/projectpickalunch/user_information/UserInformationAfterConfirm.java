@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.loginpage.UserModel;
 import com.example.projectpickalunch.restorant_info.ListItem;
 import com.example.projectpickalunch.restorant_info.Review_Rate;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;

@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.loginpage.UserModel;
+//import com.example.projectpickalunch.loginpage.UserModel;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
 import com.example.projectpickalunch.restaurant_search.Search;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     //메뉴피커 전환버튼
     Button menuPicker;
     String abc;
+
     //FireBase
     private FirebaseDatabase database;
     public static DatabaseReference databaseReference;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     //그리드 아이템 별로 다른 정보를 표시하기위한 String형 ArrayList
     ArrayList<String> itemname;
 
-    ArrayList<UserModel> permission;
+//    ArrayList<UserModel> permission;
 
 
     //sort를 위한 MainGridItem형 Arraylist
@@ -107,23 +108,15 @@ public class MainActivity extends AppCompatActivity {
                         Float item0 = Float.parseFloat(mainGridItem0.getRestorant_score());
                         Float item1 = Float.parseFloat(mainGridItem1.getRestorant_score());
 
-                        if(item0 == item1)
-                            return 0;
-                        else if (item0 < item1)
-                            return 1;
-                        else
-                            return -1;
+                        return item1.compareTo(item0);
                     }
                 });
-
                 for(int i=0; i<arrayList.size(); i++){
                     sortedList.add(arrayList.get(i));
                     itemname.add(arrayList.get(i).getRestorant_name()); // 식당이름
-
                     //식당이름에 순위 출력
                     sortedList.get(i).setRestorant_name(i+1 + ". " + sortedList.get(i).getRestorant_name());
                 }
-
                 mainGridAdapter.notifyDataSetChanged();
             }
 
@@ -150,22 +143,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FirebaseDatabase confirmDatabase =  FirebaseDatabase.getInstance();
-        permission = new ArrayList<>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+//        permission = new ArrayList<>();
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        String uid = user.getUid();
         databaseReference = confirmDatabase.getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                permission.clear();
-                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    UserModel userModel = snapshot.getValue(UserModel.class);
-                    permission.add(userModel);
-
-                }
-                for(int i=0; i<permission.size(); i++){
-                    confirmChecked = String.valueOf(permission.get(i).getConfirmCheck());
-                }
+//                permission.clear();
+//                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+//                    UserModel userModel = snapshot.getValue(UserModel.class);
+//                    permission.add(userModel);
+//
+//                }
+//                for(int i=0; i<permission.size(); i++){
+//                    confirmChecked = String.valueOf(permission.get(i).getConfirmCheck());
+//                }
 
                 //내 정보 액티비티
                 //내 정보 인증유무에 따라 출력화면이 다름
@@ -188,13 +181,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-
             }
-
         });
-
-
-
 
 
         //메뉴피커 액티비티
