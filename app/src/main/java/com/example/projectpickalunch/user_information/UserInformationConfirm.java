@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.loginpage.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -173,8 +172,6 @@ public class UserInformationConfirm extends AppCompatActivity {
         if(user!= null){
             String uid = user.getUid();
             String nickname = userConfirmVerifyEdt.getText().toString();
-            UserModel userModel = new UserModel(uid,"1",nickname);
-            mDatabase.getReference().child("users").child(uid).child("uid").setValue(userModel);
         }
 
     }
