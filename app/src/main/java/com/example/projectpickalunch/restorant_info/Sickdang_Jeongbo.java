@@ -32,11 +32,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 
 public class Sickdang_Jeongbo extends AppCompatActivity {
@@ -82,6 +85,11 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     MapPoint mapPoint;
     MapView mapView;
     MapPOIItem marker;
+
+    //YJW 리사이클러뷰
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    StorageReference detailReference;
 
 
     @Override
@@ -159,12 +167,23 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
             //리사이클러 뷰로 가게 상세 사진 보여주기
             mRecyclerView = findViewById(R.id.recycler_view); //
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            //mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(layoutManager);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+
+
             testName = new ArrayList<>();
             mList = new ArrayList<>();
             resNameList = new ArrayList<>();
+
+            //YJW
+            detailReference = storageReference.child(sickdang_title);
+
+
+            //기존 준한이 코드
             DatabaseReference detailReference = database.getReference("식당");
-        detailReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            detailReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mList.clear();
@@ -188,7 +207,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             }
         });
 
-        mAdapter = new RecyclerViewAdapter(resNameList, this);
+        mAdapter = new RecyclerViewAdapter(mList, this);
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -254,7 +273,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
         nameList = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+        //String uid = user.getUid();
         databaseReference.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
