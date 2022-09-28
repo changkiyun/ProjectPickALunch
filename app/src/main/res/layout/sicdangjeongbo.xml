@@ -10,7 +10,6 @@
         android:id="@+id/title_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -34,6 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-35sp"
+        android:scrollbars="horizontal"
+        android:scrollbarFadeDuration="@integer/material_motion_duration_short_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline3" />
