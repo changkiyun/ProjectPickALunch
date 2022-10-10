@@ -14,7 +14,7 @@ import com.example.projectpickalunch.R;
 
 import java.util.ArrayList;
 
-
+//식당 세부사진 리사이클러뷰 어댑터
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdapter.ImageViewHolder> {
 
     Context context;
