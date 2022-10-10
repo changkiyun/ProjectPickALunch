@@ -16,7 +16,7 @@
 
         <!--뒤로가기버튼-->
         <ImageButton
-            android:id="@+id/restorantAddReturnButton"
+            android:id="@+id/restorant_add_return_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
@@ -39,7 +39,7 @@
             android:textStyle="bold"
 
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/restorantAddReturnButton"
+            app:layout_constraintLeft_toRightOf="@id/restorant_add_return_button"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/restorant_name_edit_text">
 
         <EditText
-            android:id="@+id/restorant_rocation_edit_text"
+            android:id="@+id/restorant_address_edit_text"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
 
@@ -242,6 +242,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
+        android:id="@+id/restorant_add_registration_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="50dp"
