@@ -14,8 +14,8 @@ import com.example.projectpickalunch.R;
 
 import java.util.ArrayList;
 
-
-public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdapter.TestViewHolder> {
+//식당 세부사진 리사이클러뷰 어댑터
+public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdapter.ImageViewHolder> {
 
     Context context;
 
@@ -28,14 +28,14 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 
     @NonNull
     @Override
-    public TestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_item, parent, false);
 
-        return new TestViewHolder(view);
+        return new ImageViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Glide.with(context).load(imglist.get(position).getImageUrl()).into(holder.mImageView);
     }
 
@@ -44,10 +44,10 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
         return imglist.size();
     }
 
-    class TestViewHolder extends RecyclerView.ViewHolder{
+    class ImageViewHolder extends RecyclerView.ViewHolder{
         ImageView mImageView;
 
-        public TestViewHolder(@NonNull View itemView) {
+        public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mImageView = itemView.findViewById(R.id.item_image);
