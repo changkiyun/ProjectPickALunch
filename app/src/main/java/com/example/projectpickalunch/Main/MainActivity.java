@@ -28,10 +28,12 @@ import com.example.projectpickalunch.R;
 //import com.example.projectpickalunch.loginpage.UserModel;
 import com.example.projectpickalunch.menu_picker.MenuPicker;
 import com.example.projectpickalunch.restaurant_search.Search;
+import com.example.projectpickalunch.restorant_add.RestorantAdd;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.example.projectpickalunch.user_information.NickName;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     //메뉴피커 전환버튼
     Button menuPicker;
     String abc;
+    FloatingActionButton mainFloatingButton;
 
     //FireBase
     private FirebaseDatabase database;
@@ -205,6 +208,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent search = new Intent(getApplicationContext(), Search.class);
                 startActivity(search);
+            }
+        });
+
+        //식당 추가버튼 (플로팅 액션 버튼)
+        mainFloatingButton = findViewById(R.id.main_floating_button);
+        mainFloatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent restorantAdd = new Intent(getApplicationContext(), RestorantAdd.class);
+                startActivity(restorantAdd);
             }
         });
 
