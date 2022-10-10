@@ -28,7 +28,7 @@
             android:id="@+id/s_dt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="식당 이름으로 검색해 보세요"
+            android:hint="검색한거?.."
             android:textSize="20sp"
             android:background="null"
             app:layout_constraintBottom_toBottomOf="parent"
