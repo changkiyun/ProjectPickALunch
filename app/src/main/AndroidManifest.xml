@@ -47,6 +47,10 @@
 
         <!--검색 액티비티-->
         <activity android:name=".restaurant_search.Search"/>
+
+<!--        식당 추가 액티비티-->
+        <activity android:name=".restorant_add.RestorantAdd"/>
+
     </application>
 
 </manifest>
