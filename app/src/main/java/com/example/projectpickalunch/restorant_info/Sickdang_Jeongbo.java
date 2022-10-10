@@ -83,7 +83,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     MapView mapView;
     MapPOIItem marker;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,7 +157,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
 
             //리사이클러 뷰로 가게 상세 사진 보여주기
-            mRecyclerView = findViewById(R.id.recycler_view); //
+            mRecyclerView = findViewById(R.id.recycler_view);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
             testName = new ArrayList<>();
             mList = new ArrayList<>();
@@ -205,7 +204,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         //가게 이름
         TextView sickdanTitle = (TextView)findViewById(R.id.sicdangTitle);
         sickdanTitle.setText(sickdang_title);
-
 
          //리뷰 텍스트
         ListView listView = (ListView) findViewById(R.id.listView);
