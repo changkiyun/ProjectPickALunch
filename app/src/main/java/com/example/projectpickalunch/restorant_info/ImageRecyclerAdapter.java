@@ -19,11 +19,11 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 
     Context context;
 
-    ArrayList<RecyclerImageItem> testlist = new ArrayList<>();
+    ArrayList<RecyclerImageItem> imglist = new ArrayList<>();
 
     public ImageRecyclerAdapter(Context context, ArrayList<RecyclerImageItem> testlist) {
         this.context = context;
-        this.testlist = testlist;
+        this.imglist = testlist;
     }
 
     @NonNull
@@ -36,12 +36,12 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
     }
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
-        Glide.with(context).load(testlist.get(position).getImageUrl()).into(holder.mImageView);
+        Glide.with(context).load(imglist.get(position).getImageUrl()).into(holder.mImageView);
     }
 
     @Override
     public int getItemCount() {
-        return testlist.size();
+        return imglist.size();
     }
 
     class TestViewHolder extends RecyclerView.ViewHolder{
