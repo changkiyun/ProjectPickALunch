@@ -68,12 +68,11 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-35sp"
         android:scrollbars="horizontal"
         android:scrollbarFadeDuration="@integer/material_motion_duration_short_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline3" />
+        app:layout_constraintTop_toBottomOf="@id/title_constraint" />
 
     <LinearLayout
         android:id="@+id/Lin1"
@@ -90,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12sp"
-            android:text="가타쯔무리"
+            android:text="식당이름"
             android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -102,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="25sp"
-            android:text="4.8"
+            android:text="점수"
             android:textAlignment="textEnd"
             android:textColor="@color/mainColor"
             android:textSize="35sp"
