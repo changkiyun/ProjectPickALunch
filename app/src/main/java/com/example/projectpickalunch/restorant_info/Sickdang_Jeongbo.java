@@ -29,9 +29,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.restorant_add.RestorantAdd;
+import com.example.projectpickalunch.review_add.ReviewAdd;
 import com.example.projectpickalunch.user_information.NickName;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -260,14 +263,17 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         sickdanTitle.setText(sickdang_title);
 
 
+
         //
         TextView sickdangScore = (TextView)findViewById(R.id.pyeongJeom);
         sickdangScore.setText(String.format("%.1f", sickdang_score));
         
         //Todo: 오류 확인 후 삭제
+
 //        ListView listView = (ListView) findViewById(R.id.listView);
 //        EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
 //        RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
+
 
 
         //파이어 베이스에서 리뷰 가져와서 리스트뷰에 출력하기
@@ -275,6 +281,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 //        rate_array = new ArrayList<>();
 
         //데베에서 리뷰 가져오기
+
 //        restaurantReference.child(sickdang_title).child("restorant_review").addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -345,7 +352,15 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 //                listView.setAdapter(adapter);
 //            }
 //        });
-    }
+
+
+
+
+
+
+
+
+//Todo: 오류 확인 후 삭제 (oncreate 밖에 위치 )
 
 //    //리사이클러 뷰에 이미지 넣기
 //
@@ -360,6 +375,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 //        Intent intent = getIntent();
 //        String sickdang_title = intent.getStringExtra("itemname.get(i)");
 //        restaurantReference.child(sickdang_title).child("restorant_score").setValue(restorant_score);
+
 //    }
 
     //유저의 이름을 받아오는 메소드
@@ -432,5 +448,3 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                 }
             });
 }
-
-

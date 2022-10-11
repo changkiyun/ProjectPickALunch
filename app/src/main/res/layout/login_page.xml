@@ -19,7 +19,7 @@
         android:textSize="70sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,16 +27,14 @@
         android:layout_centerHorizontal="true"
         />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/signInButton"
+    <ImageView
+        android:id="@+id/kakao_login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/appTitle"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:layout_centerHorizontal="true"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appTitle" />
+        android:layout_marginTop="70dp"
 
+        android:src="@drawable/kakao_login_medium_wide"
+
+        android:layout_below="@id/appTitle"
+        />
 </RelativeLayout>

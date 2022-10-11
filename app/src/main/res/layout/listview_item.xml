@@ -20,6 +20,7 @@
         android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/tV1"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:layout_width="300sp"
         android:layout_height="wrap_content"

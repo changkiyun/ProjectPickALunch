@@ -34,6 +34,7 @@ import com.example.projectpickalunch.restaurant_search.Search;
 import com.example.projectpickalunch.restorant_add.RestorantAdd;
 import com.example.projectpickalunch.restorant_info.ImageRecyclerAdapter;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
+import com.example.projectpickalunch.review_add.ReviewAdd;
 import com.example.projectpickalunch.user_information.NickName;
 import com.example.projectpickalunch.user_information.UserInformationAfterConfirm;
 import com.example.projectpickalunch.user_information.UserInformationBeforeConfirm;
@@ -188,13 +189,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //식당 추가버튼 (플로팅 액션 버튼)
+        //YCK 식당 추가버튼 (플로팅 액션 버튼)
         mainFloatingButton = findViewById(R.id.main_floating_button);
         mainFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent restorantAdd = new Intent(getApplicationContext(), RestorantAdd.class);
                 startActivity(restorantAdd);
+            }
+        });
+
+        //YCK 리뷰쓰기 액티비티로 전환 (임시버튼 식당 상세정보화면으로 이동 예정)
+        FloatingActionButton review_floating_button;
+        review_floating_button = findViewById(R.id.review_floating_button);
+
+        review_floating_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent reviewAdd = new Intent(getApplicationContext(), ReviewAdd.class);
+                startActivity(reviewAdd);
             }
         });
 
