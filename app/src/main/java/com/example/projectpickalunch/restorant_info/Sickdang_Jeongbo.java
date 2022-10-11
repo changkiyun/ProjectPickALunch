@@ -259,101 +259,108 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         TextView sickdanTitle = (TextView)findViewById(R.id.sicdangTitle);
         sickdanTitle.setText(sickdang_title);
 
+
         //
         TextView sickdangScore = (TextView)findViewById(R.id.pyeongJeom);
         sickdangScore.setText(String.format("%.1f", sickdang_score));
+        
+        //Todo: 오류 확인 후 삭제
+//        ListView listView = (ListView) findViewById(R.id.listView);
+//        EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
+//        RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
 
-         //리뷰 텍스트
-        ListView listView = (ListView) findViewById(R.id.listView);
-        EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
-        RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
 
         //파이어 베이스에서 리뷰 가져와서 리스트뷰에 출력하기
-        arrayList = new ArrayList<>();
-        rate_array = new ArrayList<>();
+//        arrayList = new ArrayList<>();
+//        rate_array = new ArrayList<>();
+
         //데베에서 리뷰 가져오기
-        restaurantReference.child(sickdang_title).child("restorant_review").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arrayList.clear();
-                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    ListItem listItem = snapshot.getValue(ListItem.class);
-                    arrayList.add(listItem); // 리뷰 가져옴
-                    Review_Rate listItem1 = snapshot.getValue(Review_Rate.class);
-                    rate_array.add(listItem1.getReview_rate());
-
-                    String[] rate_string = new String[rate_array.size()];
-                    rate_string = rate_array.toArray(rate_string);
-
-                    float rate_hap=0;
-                    for(int i=0;i<rate_string.length;i++){
-                        rate_hap += Float.parseFloat(rate_string[i]);
-                    }
-                    float rate_avg = rate_hap/Float.parseFloat(String.valueOf(rate_array.size()));
-                    addScore(String.valueOf(rate_avg));
-                    sickdangScore.setText(String.format("%.1f", rate_avg));
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-
-            }
-
-        });
-        adapter = new ListItemAdapter(arrayList, this);
-        listView.setAdapter(adapter);
-
-        nameList = new ArrayList<>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //String uid = user.getUid();
-        usersReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    NickName nickname = snapshot.getValue(NickName.class);
-                    nameList.add(nickname.getNickName());
-                    String[] name = new String[nameList.size()];
-                    name = nameList.toArray(name);
-                    nickName = String.valueOf(name[0]);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-
-            }
-
-        });
-
-        Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
-        reviewRegis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter.addItems(new ListItem(nickName, reviewWriten.getText().toString() , "" + rB.getRating()));
-                addReview(reviewWriten.getText().toString(),nickName, String.valueOf(rB.getRating()));
-                listView.setAdapter(adapter);
-            }
-        });
+//        restaurantReference.child(sickdang_title).child("restorant_review").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                arrayList.clear();
+//                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+//                    ListItem listItem = snapshot.getValue(ListItem.class);
+//                    arrayList.add(listItem); // 리뷰 가져옴
+//                    Review_Rate listItem1 = snapshot.getValue(Review_Rate.class);
+//                    rate_array.add(listItem1.getReview_rate());
+//
+//                    String[] rate_string = new String[rate_array.size()];
+//                    rate_string = rate_array.toArray(rate_string);
+//
+//                    float rate_hap=0;
+//                    for(int i=0;i<rate_string.length;i++){
+//                        rate_hap += Float.parseFloat(rate_string[i]);
+//                    }
+//                    float rate_avg = rate_hap/Float.parseFloat(String.valueOf(rate_array.size()));
+//                    addScore(String.valueOf(rate_avg));
+//                    TextView pyeongJeom = (TextView)findViewById(R.id.pyeongJeom);
+//                    pyeongJeom.setText(String.valueOf(rate_avg));
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+//
+//            }
+//
+//        });
+//        adapter = new ListItemAdapter(arrayList, this);
+//        listView.setAdapter(adapter);
+//
+//        nameList = new ArrayList<>();
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        //String uid = user.getUid();
+//        usersReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+//                    NickName nickname = snapshot.getValue(NickName.class);
+//                    nameList.add(nickname.getNickName());
+//                    String[] name = new String[nameList.size()];
+//                    name = nameList.toArray(name);
+//                    nickName = String.valueOf(name[0]);
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+//
+//            }
+//
+//        });
+//
+//        Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
+//        reviewRegis.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                adapter.addItems(new ListItem(nickName, reviewWriten.getText().toString() , "" + rB.getRating()));
+//                addReview(reviewWriten.getText().toString(),nickName, String.valueOf(rB.getRating()));
+//                listView.setAdapter(adapter);
+//            }
+//        });
     }
 
-    //리사이클러 뷰에 이미지 넣기
-
-    //리뷰 파이어베이스에 저장
-    public void addReview(String restaurant_review, String user_name, String review_rate){
-        Intent intent = getIntent();
-        ListItem listItem = new ListItem(user_name,restaurant_review,review_rate);
-        restaurantReference.child(sickdang_title).child("restorant_review").child(user_name).setValue(listItem);
-    }
-    public void addScore(String restorant_score){
-        restaurantReference.child(sickdang_title).child("restorant_score").setValue(restorant_score);
-    }
+//    //리사이클러 뷰에 이미지 넣기
+//
+//    //리뷰 파이어베이스에 저장
+//    public void addReview(String restaurant_review, String user_name, String review_rate){
+//        Intent intent = getIntent();
+//        String sickdang_title = intent.getStringExtra("itemname.get(i)");
+//        ListItem listItem = new ListItem(user_name,restaurant_review,review_rate);
+//        restaurantReference.child(sickdang_title).child("restorant_review").child(user_name).setValue(listItem);
+//    }
+//    public void addScore(String restorant_score){
+//        Intent intent = getIntent();
+//        String sickdang_title = intent.getStringExtra("itemname.get(i)");
+//        restaurantReference.child(sickdang_title).child("restorant_score").setValue(restorant_score);
+//    }
 
     //유저의 이름을 받아오는 메소드
     //TODO : 유저 다시 생기면 다시 만들어야함

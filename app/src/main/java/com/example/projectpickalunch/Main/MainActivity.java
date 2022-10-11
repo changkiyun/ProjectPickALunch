@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        confirmChecked = "1";
+        confirmChecked = "0";
 
         //메인화면 그리드뷰
         rankingGridView = findViewById(R.id.main_grid_view);
