@@ -54,7 +54,7 @@ import java.util.Date;
 
 public class Sickdang_Jeongbo extends AppCompatActivity {
     //파이어베이스 참조
-    //Todo: 이미지 삭제 기능 추가 필요, 기존 이미지 저장 경로 삭제, 이미지 크롭
+    //TODO: 이미지 삭제 기능 추가 필요, 기존 이미지 저장 경로 삭제, 이미지 크롭
     private final FirebaseDatabase root = FirebaseDatabase.getInstance(); //파이어베이스 Root
     private final DatabaseReference usersDatabase = root.getReference("users"); //유저 db
     private final DatabaseReference usersReference = root.getReference().child("users"); //유저 db Child
@@ -68,8 +68,9 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     private DatabaseReference locationReference;    //식당 위치 db
     private DatabaseReference imgReference; //식당 세부 사진 저장을 위한 경로 db
 
-    //식당 이름을 저장할 변수
+    //식당 정보를 저장할 변수
     String sickdang_title;
+    Float sickdang_score;
 
     //상단 리사이클러뷰에 사용될 변수 :YJW
     RecyclerView imageRecyclerView;
@@ -116,7 +117,8 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         setContentView(R.layout.sicdangjeongbo);
         //인텐트 받아오기 가게 이름
         Intent intent = getIntent();
-        sickdang_title = intent.getStringExtra("itemname.get(i)");
+        sickdang_title = intent.getStringExtra("restorant_name");
+        sickdang_score = Float.parseFloat(intent.getStringExtra("restorant_score"));
 
         //Kakao Map Api
 
@@ -257,6 +259,9 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         TextView sickdanTitle = (TextView)findViewById(R.id.sicdangTitle);
         sickdanTitle.setText(sickdang_title);
 
+        //
+        TextView sickdangScore = (TextView)findViewById(R.id.pyeongJeom);
+        sickdangScore.setText(String.format("%.1f", sickdang_score));
 
          //리뷰 텍스트
         ListView listView = (ListView) findViewById(R.id.listView);
@@ -286,8 +291,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                     }
                     float rate_avg = rate_hap/Float.parseFloat(String.valueOf(rate_array.size()));
                     addScore(String.valueOf(rate_avg));
-                    TextView pyeongJeom = (TextView)findViewById(R.id.pyeongJeom);
-                    pyeongJeom.setText(String.valueOf(rate_avg));
+                    sickdangScore.setText(String.format("%.1f", rate_avg));
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -344,13 +348,10 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     //리뷰 파이어베이스에 저장
     public void addReview(String restaurant_review, String user_name, String review_rate){
         Intent intent = getIntent();
-        String sickdang_title = intent.getStringExtra("itemname.get(i)");
         ListItem listItem = new ListItem(user_name,restaurant_review,review_rate);
         restaurantReference.child(sickdang_title).child("restorant_review").child(user_name).setValue(listItem);
     }
     public void addScore(String restorant_score){
-        Intent intent = getIntent();
-        String sickdang_title = intent.getStringExtra("itemname.get(i)");
         restaurantReference.child(sickdang_title).child("restorant_score").setValue(restorant_score);
     }
 
