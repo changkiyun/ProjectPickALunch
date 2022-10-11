@@ -1,12 +1,18 @@
 package com.example.projectpickalunch.Main;
 
-public class MainGridItem {
+public class RankingGridItem {
     String restorant_name;
     String restorant_score;
     String restorant_image_src;
 
+    RankingGridItem() {
 
-    public MainGridItem(){
+    }
+
+    public RankingGridItem(String restorant_name, String restorant_score, String restorant_image_src){
+        this.restorant_name = restorant_name;
+        this.restorant_image_src = restorant_image_src;
+        this.restorant_score = restorant_score;
     }
 
     //name
@@ -35,6 +41,4 @@ public class MainGridItem {
     public void setRestorant_image_src(String restorant_image_src) {
         this.restorant_image_src = restorant_image_src;
     }
-
-
 }

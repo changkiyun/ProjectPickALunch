@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.projectpickalunch.Main.MainGridAdapter;
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.google.firebase.database.DataSnapshot;

@@ -15,7 +15,7 @@ public class RecyclerImageItem {
         return imageUrl;
     }
 
-    public void setImageUri(String imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 }
