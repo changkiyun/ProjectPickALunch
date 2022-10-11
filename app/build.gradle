@@ -53,6 +53,11 @@ dependencies {
 
     //Floating Action Button
     implementation 'com.google.android.material:material:1.1.0-beta01'
-
     implementation 'com.google.android.material:material:1.4.0'
+
+    //Costom Rating Bar
+    implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
+
+    //kakaoLogin Api
+    implementation "com.kakao.sdk:v2-user:2.4.2"
 }

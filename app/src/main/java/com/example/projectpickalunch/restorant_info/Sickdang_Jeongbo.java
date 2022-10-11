@@ -29,9 +29,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.restorant_add.RestorantAdd;
+import com.example.projectpickalunch.review_add.ReviewAdd;
 import com.example.projectpickalunch.user_information.NickName;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -265,15 +268,87 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         TextView sickdanTitle = (TextView)findViewById(R.id.sicdangTitle);
         sickdanTitle.setText(sickdang_title);
 
-        //Todo: 오류 확인 후 삭제
+        //Todo: 오류 확인 후 삭제 들어갈 위치
+
+
+
+
+    }
+
+    //사진을 데이터베이스와 스토리지에 저장하는 메소드
+    private void uploadToFireBase(Uri uri) {
+        imgReference = restaurantDatabase.child(sickdang_title).child("restorant_detail_image");
+        restaurantStorage = storage.getReference(sickdang_title);
+        StorageReference fileRef = restaurantStorage.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        RecyclerImageItem model = new RecyclerImageItem(uri.toString());
+                        String modelid = imgReference.push().getKey();
+                        imgReference.child(modelid).setValue(model);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(Sickdang_Jeongbo.this, "업로드 성공", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Sickdang_Jeongbo.this, "업로드 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //파일 타입을 가져오는 메소드
+    private String getFileExtension(Uri uri) {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+
+        return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+    //사진 가져오기
+    ActivityResultLauncher<Intent> activityResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        imageUri = result.getData().getData();
+                        testImg.setImageURI(imageUri);
+                    }
+                }
+            });
+}
+
+
+
+
+
+
+
+
+
+
+
+//Todo: 오류 확인 후 삭제
+
 //        ListView listView = (ListView) findViewById(R.id.listView);
 //        EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
 //        RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
 
-        //파이어 베이스에서 리뷰 가져와서 리스트뷰에 출력하기
+//파이어 베이스에서 리뷰 가져와서 리스트뷰에 출력하기
 //        arrayList = new ArrayList<>();
 //        rate_array = new ArrayList<>();
-        //데베에서 리뷰 가져오기
+//데베에서 리뷰 가져오기
 //        restaurantReference.child(sickdang_title).child("restorant_review").addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -344,7 +419,15 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 //                listView.setAdapter(adapter);
 //            }
 //        });
-    }
+
+
+
+
+
+
+
+
+//Todo: 오류 확인 후 삭제 (oncreate 밖에 위치 )
 
 //    //리사이클러 뷰에 이미지 넣기
 //
@@ -360,59 +443,3 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 //        String sickdang_title = intent.getStringExtra("itemname.get(i)");
 //        restaurantReference.child(sickdang_title).child("restorant_score").setValue(restorant_score);
 //    }
-
-    //사진을 데이터베이스와 스토리지에 저장하는 메소드
-    private void uploadToFireBase(Uri uri) {
-        imgReference = restaurantDatabase.child(sickdang_title).child("restorant_detail_image");
-        restaurantStorage = storage.getReference(sickdang_title);
-        StorageReference fileRef = restaurantStorage.child(System.currentTimeMillis() + "." + getFileExtension(uri));
-        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        RecyclerImageItem model = new RecyclerImageItem(uri.toString());
-                        String modelid = imgReference.push().getKey();
-                        imgReference.child(modelid).setValue(model);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(Sickdang_Jeongbo.this, "업로드 성공", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Sickdang_Jeongbo.this, "업로드 실패", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //파일 타입을 가져오는 메소드
-    private String getFileExtension(Uri uri) {
-        ContentResolver cr = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-
-        return mime.getExtensionFromMimeType(cr.getType(uri));
-    }
-
-    //사진 가져오기
-    ActivityResultLauncher<Intent> activityResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        imageUri = result.getData().getData();
-                        testImg.setImageURI(imageUri);
-                    }
-                }
-            });
-}
-
-
