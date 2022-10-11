@@ -56,24 +56,25 @@ public class Search extends AppCompatActivity {
         });
 
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.search_sample),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata1),
                 "가타쯔무리") ;
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.search_sample),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata2),
                 "Bryan Adams") ;
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.search_sample),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata3),
                 "Eric Clapton") ;
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.search_sample),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata4),
                 "Gary Moore") ;
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.search_sample),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata5),
                 "Helloween") ;
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.search_sample),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata6),
                 "Adele") ;
 
+        //입력받은 값 filter처리해서 자동완성 기능
         EditText editTextFilter = (EditText)findViewById(R.id.editTextFilter) ;
         editTextFilter.addTextChangedListener(new TextWatcher() {
             @Override

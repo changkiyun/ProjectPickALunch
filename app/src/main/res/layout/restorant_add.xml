@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--타이틀바-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/restorant_add_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--뒤로가기버튼-->
+        <ImageButton
+            android:id="@+id/restorant_add_return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+
+            android:background="@color/white"
+            android:src="@drawable/return_button"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--타이틀바 텍스트-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="식당등록"
+            android:textSize="30sp"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/restorant_add_return_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--타이틀바 구분선-->
+    <View
+        android:id="@+id/title_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+
+        android:layout_below="@id/restorant_add_constraint"
+
+        android:background="@color/black"
+
+        app:layout_constraintBottom_toBottomOf="@+id/restorant_add_constraint"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <EditText
+        android:id="@+id/restorant_name_edit_text"
+        android:layout_width="314dp"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="30dp"
+
+        android:hint="식당이름 (예: 명지돈)"
+        android:textSize="20dp"
+        android:textColorHint="@color/mainColor"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_line" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="354dp"
+        android:layout_height="51dp"
+
+        android:orientation="horizontal"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restorant_name_edit_text">
+
+        <EditText
+            android:id="@+id/restorant_address_edit_text"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="40dp"
+
+            android:hint="지역 및 위치 선택"
+            android:textColorHint="@color/mainColor"
+
+            android:textSize="20dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restorant_name_edit_text" />
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="@color/white"
+            android:src="@drawable/ic_baseline_location_on_24" />
+    </LinearLayout>
+
+<!--    식당 전화번호-->
+    <EditText
+        android:id="@+id/restorant_tel_edit_text"
+        android:layout_width="314dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="30dp"
+
+        android:hint="전화번호 (예: 02)123-4567)"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+
+    <TextView
+        android:id="@+id/restorant_add_category_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+
+        android:text="음식 종류 선택"
+        android:textSize="30dp"
+
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restorant_tel_edit_text" />
+
+<!--    카테고리선택-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menuPickerOptionConstraint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restorant_add_category_text">
+
+
+        <CheckBox
+            android:id="@+id/k_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_korea_food"
+            android:button="@null"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/j_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_china_food"
+            android:button="@null"
+
+            app:layout_constraintLeft_toRightOf="@id/k_food_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/c_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_japan_food"
+            android:button="@null"
+
+            app:layout_constraintLeft_toRightOf="@id/j_food_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/a_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_america_food"
+            android:button="@null"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/k_food_button" />
+
+        <CheckBox
+            android:id="@+id/fast_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_fast_food"
+            android:button="@null"
+
+            app:layout_constraintStart_toEndOf="@+id/a_food_button"
+            app:layout_constraintTop_toBottomOf="@+id/j_food_button" />
+
+        <CheckBox
+            android:id="@+id/etc_food_button"
+            android:layout_width="115sp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15sp"
+
+            android:background="@drawable/selector_category_etc_food"
+            android:button="@null"
+
+            app:layout_constraintStart_toEndOf="@+id/fast_food_button"
+            app:layout_constraintTop_toBottomOf="@+id/c_food_button" />
+
+        <ImageButton
+            android:id="@+id/menuPickerApplyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20sp"
+
+            android:background="@color/white"
+            android:src="@drawable/apply_button"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etc_food_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/restorant_add_registration_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="50dp"
+        android:layout_marginBottom="30dp"
+
+        android:background="@drawable/button_round_hard"
+        android:text="등록"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:enabled="false"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
