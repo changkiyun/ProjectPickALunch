@@ -89,22 +89,18 @@
             android:id="@+id/restorant_rocation_edit_text"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="40dp"
-
             android:hint="지역 및 위치 선택"
             android:textColorHint="@color/mainColor"
-
             android:textSize="20dp"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/restorant_name_edit_text" />
 
 
         <ImageButton
+            android:id="@+id/add_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:background="@color/white"
             android:src="@drawable/ic_baseline_location_on_24" />
     </LinearLayout>

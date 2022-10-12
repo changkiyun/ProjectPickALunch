@@ -20,6 +20,9 @@
 
         <!--kakaoMap-->
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="3cb2b71f4f777ccb2db062d17cd3060a"/>
+        <!--googleMap-->
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBGvJEVTnZmvZgQm7azMRO8sP5n9lEpi28"/>
+
 
 <!--        <activity-->
 <!--            android:name=".Main.MainActivity"-->
@@ -50,6 +53,8 @@
 
 <!--        식당 추가 액티비티-->
         <activity android:name=".restorant_add.RestorantAdd"/>
+        <!-- 구글 맵 -->
+        <activity android:name=".restorant_add.RestorantMap"/>
 
     </application>
 
