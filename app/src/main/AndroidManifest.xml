@@ -16,7 +16,7 @@
         android:theme="@style/Theme.ProjectPickALunch"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:name=".login_api.kakaoApplication"
+        android:name=".login_api.GlobalApplication"
         >
 
         <!--kakaoMap-->
@@ -44,12 +44,15 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>-->
 <!--        <activity-->
 <!--            android:name=".Main.MainActivity"-->
 <!--            android:exported="true">-->
 <!--        </activity>-->
 
+
+        <!--메인 액티비티-->
         <activity android:name=".Main.MainActivity"
             android:exported="true">
             <intent-filter>
