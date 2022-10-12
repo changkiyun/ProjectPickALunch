@@ -151,12 +151,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ranking_constraint"
         android:horizontalSpacing="10sp"
-        android:scrollbars="vertical"
         android:scrollbarFadeDuration="@integer/material_motion_duration_short_1"
         android:scrollbarSize="5sp"
         android:scrollbarStyle="insideInset"
         android:scrollbarThumbVertical="@color/mainColor"
-        android:scrollbarTrackVertical="@color/white">
+        android:scrollbarTrackVertical="@color/white"
+        android:scrollbars="vertical">
 
     </androidx.recyclerview.widget.RecyclerView>
 

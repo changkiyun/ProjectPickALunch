@@ -39,6 +39,10 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
         this.restauranatlist = restauranatlist;
     }
 
+    public void preload(String string) {
+
+    }
+
     @NonNull
     @Override
     public RankingGridAdapter.RankingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -36,23 +36,29 @@
             </intent-filter>
         </activity>
 
+        <!--TODO : 로그인 화면 임시로 연결 해제, 바로 메인액티비티로 넘어감-->
 <!--        로그인 액티비티-->
-        <activity android:name=".login_api.KakaoLoginActivity"
+        <!--<activity android:name=".login_api.KakaoLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-        </activity>
+        </activity>-->
+<!--        <activity-->
+<!--            android:name=".Main.MainActivity"-->
+<!--            android:exported="true">-->
+<!--        </activity>-->
+
 
         <!--메인 액티비티-->
         <activity android:name=".Main.MainActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!--식당 상세정보 액티비티-->
