@@ -80,7 +80,7 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                 }
 
 
-                // 카테고리 선택 알고리즘 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                 // 카테고리의 개수만큼 반복
                 for(int i=0; i<selectCategoryCheck.length; i++) {
                     if (selectCategoryCheck[i]) {

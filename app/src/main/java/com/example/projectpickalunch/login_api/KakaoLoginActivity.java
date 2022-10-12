@@ -39,12 +39,12 @@ public class KakaoLoginActivity extends AppCompatActivity {
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
                 // 이때 토큰이 전달이 되면 로그인이 성공한 것이고 토큰이 전달되지 않았다면 로그인 실패
                 if (oAuthToken != null) {
-
+                    Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(main);
                 }
                 if (throwable != null) {
 
                 }
-                updateKakaoLoginUi();
                 return null;
             }
         };
@@ -53,15 +53,13 @@ public class KakaoLoginActivity extends AppCompatActivity {
         kakao_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(KakaoLoginActivity.this)) {
-                    UserApiClient.getInstance().loginWithKakaoTalk(KakaoLoginActivity.this, callback);
+                if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(getApplicationContext())) {
+                    UserApiClient.getInstance().loginWithKakaoTalk(getApplicationContext(), callback);
                 } else {
-                    UserApiClient.getInstance().loginWithKakaoAccount(KakaoLoginActivity.this, callback);
+                    UserApiClient.getInstance().loginWithKakaoAccount(getApplicationContext(), callback);
                 }
             }
-
         });
-
     }
 
     private void updateKakaoLoginUi() {

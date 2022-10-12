@@ -6,6 +6,8 @@ dependencyResolutionManagement {
 
         //Contom Rating Bar
         maven { url 'https://jitpack.io' }
+
+        //kakaoLogin
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }

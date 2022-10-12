@@ -134,20 +134,20 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 locationArrayList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     RestorantLocationItem restorantLocationItem = snapshot.getValue(RestorantLocationItem.class);
                     locationArrayList.add(restorantLocationItem);
                     System.out.println("리스너 실행됨");
                 }
 
 
-                for(int i=0 ; i<locationArrayList.size(); i++){
-                    if(locationArrayList.get(i).getRestorant_name().equals(sickdang_title)){
+                for (int i = 0; i < locationArrayList.size(); i++) {
+                    if (locationArrayList.get(i).getRestorant_name().equals(sickdang_title)) {
                         url = "kakaomap://place?id=" + locationArrayList.get(i).getRestorant_location_id();
                         latitude = Double.parseDouble(locationArrayList.get(i).getRestorant_location_latitude());
                         longitude = Double.parseDouble(locationArrayList.get(i).getRestorant_location_longitude());
                         mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude);
-                        mapView.setMapCenterPoint(mapPoint,true);
+                        mapView.setMapCenterPoint(mapPoint, true);
                         marker.setMapPoint(mapPoint);
                         marker.setItemName("Default Marker");
                         marker.setTag(0);
@@ -158,11 +158,12 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                     }
                 }
             }
-                @Override
-                public void onCancelled (@NonNull DatabaseError error){
-                    Log.e("Sickdang_Jeongbo", String.valueOf(error.toException()));
-                }
-            });
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Sickdang_Jeongbo", String.valueOf(error.toException()));
+            }
+        });
 
 
         //카카오 맵 열기
@@ -175,13 +176,13 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             }
         });
         //
-         mapView = new MapView(this);
+        mapView = new MapView(this);
 
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.kakaoMapView);
         mapViewContainer.addView(mapView);
         //
 
-         marker = new MapPOIItem();
+        marker = new MapPOIItem();
 
 
         //맵 포인트 위도경도 설정
@@ -205,7 +206,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 imageList.clear();
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RecyclerImageItem model = dataSnapshot.getValue(RecyclerImageItem.class);
                     imageList.add(model);
                 }
@@ -241,9 +242,9 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         testUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imageUri != null) {
+                if (imageUri != null) {
                     uploadToFireBase(imageUri);
-                }else {
+                } else {
                     Toast.makeText(Sickdang_Jeongbo.this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -259,21 +260,19 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         });
 
         //가게 이름
-        TextView sickdanTitle = (TextView)findViewById(R.id.sicdangTitle);
+        TextView sickdanTitle = (TextView) findViewById(R.id.sicdangTitle);
         sickdanTitle.setText(sickdang_title);
 
 
-
         //
-        TextView sickdangScore = (TextView)findViewById(R.id.pyeongJeom);
+        TextView sickdangScore = (TextView) findViewById(R.id.pyeongJeom);
         sickdangScore.setText(String.format("%.1f", sickdang_score));
-        
+
         //Todo: 오류 확인 후 삭제
 
 //        ListView listView = (ListView) findViewById(R.id.listView);
 //        EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
 //        RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
-
 
 
         //파이어 베이스에서 리뷰 가져와서 리스트뷰에 출력하기
@@ -354,12 +353,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 //        });
 
 
-
-
-
-
-
-
 //Todo: 오류 확인 후 삭제 (oncreate 밖에 위치 )
 
 //    //리사이클러 뷰에 이미지 넣기
@@ -377,7 +370,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 //        restaurantReference.child(sickdang_title).child("restorant_score").setValue(restorant_score);
 
 //    }
-
+    }
     //유저의 이름을 받아오는 메소드
     //TODO : 유저 다시 생기면 다시 만들어야함
     private String getUserName() {
