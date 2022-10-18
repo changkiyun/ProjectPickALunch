@@ -320,7 +320,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String score = snapshot.getValue(String.class);
-                    float avgScore = Float.parseFloat(score);
                     sickdangScore.setText(String.format("%.1f", Float.parseFloat(score)));
             }
 

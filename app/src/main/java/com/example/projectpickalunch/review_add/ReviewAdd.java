@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.restorant_info.Review_Rate;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -83,7 +79,7 @@ public class ReviewAdd extends AppCompatActivity {
         review_add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HHmmss");
                 Date now = new Date();
                 ReviewItem reviewItem = new ReviewItem(
                         testEdit.getText().toString(),                  //유저이름
@@ -140,81 +136,3 @@ public class ReviewAdd extends AppCompatActivity {
         });
     }
 }
-
-//예전코드 쓰려면 복사해서 쓸것
-//파이어 베이스에서 리뷰 가져와서 리스트뷰에 출력하기
-        /*arrayList = new ArrayList<>();
-        rate_array = new ArrayList<>();*/
-
-//데베에서 리뷰 가져오기
-
-//        restaurantReference.child(sickdang_title).child("restorant_review").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                arrayList.clear();
-//                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-//                    ListItem listItem = snapshot.getValue(ListItem.class);
-//                    arrayList.add(listItem); // 리뷰 가져옴
-//                    Review_Rate listItem1 = snapshot.getValue(Review_Rate.class);
-//                    rate_array.add(listItem1.getReview_rate());
-//
-//                    String[] rate_string = new String[rate_array.size()];
-//                    rate_string = rate_array.toArray(rate_string);
-//
-//                    float rate_hap=0;
-//                    for(int i=0;i<rate_string.length;i++){
-//                        rate_hap += Float.parseFloat(rate_string[i]);
-//                    }
-//                    float rate_avg = rate_hap/Float.parseFloat(String.valueOf(rate_array.size()));
-//                    addScore(String.valueOf(rate_avg));
-//                    TextView pyeongJeom = (TextView)findViewById(R.id.pyeongJeom);
-//                    pyeongJeom.setText(String.valueOf(rate_avg));
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-//
-//            }
-//
-//        });
-//        adapter = new ListItemAdapter(arrayList, this);
-//        listView.setAdapter(adapter);
-//
-//        nameList = new ArrayList<>();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        //String uid = user.getUid();
-//        usersReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-//                    NickName nickname = snapshot.getValue(NickName.class);
-//                    nameList.add(nickname.getNickName());
-//                    String[] name = new String[nameList.size()];
-//                    name = nameList.toArray(name);
-//                    nickName = String.valueOf(name[0]);
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-//
-//            }
-//
-//        });
-//
-//        Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
-//        reviewRegis.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                adapter.addItems(new ListItem(nickName, reviewWriten.getText().toString() , "" + rB.getRating()));
-//                addReview(reviewWriten.getText().toString(),nickName, String.valueOf(rB.getRating()));
-//                listView.setAdapter(adapter);
-//            }
-//        });

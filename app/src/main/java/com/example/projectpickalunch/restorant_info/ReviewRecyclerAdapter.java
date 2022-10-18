@@ -1,11 +1,13 @@
 package com.example.projectpickalunch.restorant_info;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,7 +52,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
     public void onBindViewHolder(@NonNull ReviewRecyclerAdapter.ReviewViewHolder holder, int pos) {
         holder.userName.setText(reviewlist.get(pos).getUser_name());
         holder.score.setText(reviewlist.get(pos).getReview_rate());
-        holder.reviewDate.setText(reviewlist.get(pos).getReview_date());
+        holder.reviewDate.setText(reviewlist.get(pos).getReview_date().substring(0, reviewlist.get(pos).getReview_date().indexOf(":")));
         holder.mainText.setText(reviewlist.get(pos).getRestaurant_review());
 
         holder.reviewImageRecyclerView.setAdapter(reviewImageAdapter);
@@ -83,10 +85,21 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
             reviewImageRecyclerView.setHasFixedSize(true);
             layoutManager3.setOrientation(RecyclerView.HORIZONTAL);
 
-            if (pos != RecyclerView.NO_POSITION) {
-
-                //TODO : 리뷰 아이템 내 리뷰 이미지 리사이클러 만들어야하고, 식당정보에서 db연결해야함 :YJW
-            }
+            reviewView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition() ;
+                    if (pos != RecyclerView.NO_POSITION) {
+                        Intent fullReview = new Intent(context, FullReviewActivity.class);
+                        fullReview.putExtra("userName",reviewlist.get(pos).getUser_name());
+                        fullReview.putExtra("score",reviewlist.get(pos).getReview_rate());
+                        fullReview.putExtra("mainText",reviewlist.get(pos).getRestaurant_review());
+                        fullReview.putExtra("reviewDate", reviewlist.get(pos).getReview_date());
+                        fullReview.putExtra("restaurantName", sickdang_title);
+                        context.startActivity(fullReview);
+                    }
+                }
+            });
         }
     }
 }
