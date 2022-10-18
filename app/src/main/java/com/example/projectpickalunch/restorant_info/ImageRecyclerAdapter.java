@@ -21,9 +21,9 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 
     ArrayList<RecyclerImageItem> imglist = new ArrayList<>();
 
-    public ImageRecyclerAdapter(Context context, ArrayList<RecyclerImageItem> testlist) {
+    public ImageRecyclerAdapter(Context context, ArrayList<RecyclerImageItem> imglist) {
         this.context = context;
-        this.imglist = testlist;
+        this.imglist = imglist;
     }
 
     @NonNull

@@ -80,6 +80,9 @@
 
 <!--        리뷰 추가 액티비티-->
         <activity android:name=".review_add.ReviewAdd"/>
+
+        <!--리뷰 전체 액티비티-->
+        <activity android:name=".restorant_info.FullReviewActivity"/>
     </application>
 
 </manifest>
