@@ -33,15 +33,20 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();
+    Uri imageUri;
+    Float score;
 
     public RankingGridAdapter(Context context, ArrayList<RankingGridItem> restauranatlist) {
         this.context = context;
         this.restauranatlist = restauranatlist;
+        this.imageUri = imageUri;
+    }
+    public RankingGridAdapter(Context context, ArrayList<RankingGridItem> restauranatlist, Uri imageUri) {
+        this.context = context;
+        this.restauranatlist = restauranatlist;
+        this.imageUri = imageUri;
     }
 
-    public void preload(String string) {
-
-    }
 
     @NonNull
     @Override
@@ -54,7 +59,7 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
 
     @Override
     public void onBindViewHolder(@NonNull RankingGridAdapter.RankingViewHolder holder, int position) {
-        Float score = Float.parseFloat(restauranatlist.get(position).getRestorant_score());
+        score = Float.parseFloat(restauranatlist.get(position).getRestorant_score());
         StorageReference getRestorantImage = storageReference.child(restauranatlist.get(position).getRestorant_image_src());
         getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -84,6 +89,8 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
         TextView scoreTextView;
         TextView rankTextView;
 
+        Float score;
+
         public RankingViewHolder(@NonNull View rankingView) {
             super(rankingView);
 
@@ -100,7 +107,6 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
                         Toast.makeText(context ,restauranatlist.get(pos).getRestorant_name(), Toast.LENGTH_SHORT).show();
                         Intent restorant_information = new Intent(context, Sickdang_Jeongbo.class);
                         restorant_information.putExtra("restorant_name",restauranatlist.get(pos).getRestorant_name());
-                        restorant_information.putExtra("restorant_score",restauranatlist.get(pos).getRestorant_score());
                         context.startActivity(restorant_information);
                     }
                 }

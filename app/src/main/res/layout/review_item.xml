@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="320sp"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="10sp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="20sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/round">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/userLayout"
@@ -35,12 +37,17 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reviewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/userLayout">
     <TextView
         android:id="@+id/mainText"
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="5sp"
-        app:layout_constraintTop_toBottomOf="@id/userLayout"
+        app:layout_constraintTop_toTopOf="parent"
         android:textSize="15sp"
         android:maxLines="4"
         android:ellipsize="end"
@@ -49,8 +56,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewImageRecyclerView"
+        android:layout_marginTop = "20sp"
         android:layout_width="match_parent"
-        android:layout_height="150sp"
+        android:layout_height="wrap_content"
         android:scrollbars="horizontal"
         android:scrollbarFadeDuration="@integer/material_motion_duration_short_1"
         app:layout_constraintTop_toBottomOf="@id/mainText" />
@@ -64,5 +72,6 @@
         android:textColor="@color/mainColor"
         android:text="YYYY-MM-DD"
         />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
