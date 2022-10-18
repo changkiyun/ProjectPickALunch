@@ -29,6 +29,11 @@ public class KakaoLoginActivity extends AppCompatActivity {
     private ImageButton kakao_login_button;
     private static final String TAG = "LoginActivity";
 
+    //TODO : 수정 할수도 있음
+    public static long userID;
+    public static String userEmail;
+    public static String userNickName;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +82,13 @@ public class KakaoLoginActivity extends AppCompatActivity {
                     // 유저의 아이디
                     Log.d(TAG, "invoke: id" + user.getId());
                     // 유저의 어카운트정보에 이메일
-                    Log.d(TAG, "invoke: nickname" + user.getKakaoAccount().getEmail());
+                    Log.d(TAG, "invoke: email : " + user.getKakaoAccount().getEmail());
                     // 유저의 어카운트 정보의 프로파일에 닉네임
-                    Log.d(TAG, "invoke: email" + user.getKakaoAccount().getProfile().getNickname());
+                    Log.d(TAG, "invoke: Nickname : " + user.getKakaoAccount().getProfile().getNickname());
+
+                    userID = user.getId();
+                    userEmail = user.getKakaoAccount().getEmail();
+                    userNickName = user.getKakaoAccount().getProfile().getNickname();
 
                     Intent main = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(main);

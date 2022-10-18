@@ -46,6 +46,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kakao.sdk.user.model.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -74,10 +75,7 @@ public class MainActivity extends AppCompatActivity {
     //그리드 아이템 별로 다른 정보를 표시하기위한 String형 ArrayList
     ArrayList<String> itemname;
 
-    //ArrayList<UserModel> permission;
-
-    //test
-    String nickname;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -179,7 +179,7 @@
     <EditText
         android:id="@+id/editTestName"
         android:layout_width="150sp"
-        android:layout_height="40sp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/testName"
         app:layout_constraintTop_toBottomOf="@id/imageRecyclerLayout"
         android:textSize="30sp"

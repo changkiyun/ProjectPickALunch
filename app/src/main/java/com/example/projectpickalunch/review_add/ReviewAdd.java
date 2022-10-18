@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.login_api.KakaoLoginActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,8 +46,6 @@ public class ReviewAdd extends AppCompatActivity {
 
     //가게이름, 유저 정보
     String restaurantName;
-    String userID;
-    String userName;
 
     //전체 리뷰 평점을 받아올 리스트
     ArrayList<String> scoreList = new ArrayList<String>();
@@ -72,6 +71,7 @@ public class ReviewAdd extends AppCompatActivity {
 
         //TODO : 삭제예정
         testEdit = findViewById(R.id.editTestName);
+        testEdit.setText(KakaoLoginActivity.userNickName);
 
         //이미지 추가 버튼
 
@@ -103,7 +103,7 @@ public class ReviewAdd extends AppCompatActivity {
     }
 
     public void addReview(ReviewItem reviewItem){
-        restaurantReference.child(restaurantName).child("restorant_review").child(testEdit.getText().toString()).setValue(reviewItem);
+        restaurantReference.child(restaurantName).child("restorant_review").child(KakaoLoginActivity.userNickName).setValue(reviewItem);
     }
 
     public void setAvgScore() {
