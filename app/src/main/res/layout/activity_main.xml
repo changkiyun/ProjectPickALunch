@@ -151,12 +151,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ranking_constraint"
         android:horizontalSpacing="10sp"
-        android:scrollbars="vertical"
         android:scrollbarFadeDuration="@integer/material_motion_duration_short_1"
         android:scrollbarSize="5sp"
         android:scrollbarStyle="insideInset"
         android:scrollbarThumbVertical="@color/mainColor"
-        android:scrollbarTrackVertical="@color/white">
+        android:scrollbarTrackVertical="@color/white"
+        android:scrollbars="vertical">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -173,23 +173,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="40dp"
         android:layout_marginRight="30dp"
-
-        />
-
-    <!--    리뷰등록 임시버튼-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/review_floating_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="40dp"
-
-        android:elevation="6dp"
-        android:src="@drawable/ic_baseline_add_24"
-        app:fabSize="normal"
-
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
 
         />
 

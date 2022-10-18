@@ -16,11 +16,18 @@
         android:theme="@style/Theme.ProjectPickALunch"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:name=".login_api.kakaoApplication"
+        android:name=".login_api.GlobalApplication"
         >
 
         <!--kakaoMap-->
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="3cb2b71f4f777ccb2db062d17cd3060a"/>
+
+<!--        naverMap-->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="a56e4ni2yw" />
+        <activity android:name=".restorant_add.RestorantAddNaverMap"/>
+
 
 <!--        kakaoLogin-->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -32,23 +39,27 @@
 
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
                 <data android:host="oauth"
-                    android:scheme="66003ba03f17d26728f7de955b64634a" />
+                    android:scheme="kakao66003ba03f17d26728f7de955b64634a" />
             </intent-filter>
         </activity>
 
+        <!--TODO : 로그인 화면 임시로 연결 해제, 바로 메인액티비티로 넘어감-->
 <!--        로그인 액티비티-->
         <activity android:name=".login_api.KakaoLoginActivity"
-            android:exported="true">
+        android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 <!--        <activity-->
 <!--            android:name=".Main.MainActivity"-->
 <!--            android:exported="true">-->
 <!--        </activity>-->
 
+
+        <!--메인 액티비티-->
         <activity android:name=".Main.MainActivity"
             android:exported="true">
 <!--            <intent-filter>-->
@@ -76,6 +87,9 @@
 
 <!--        리뷰 추가 액티비티-->
         <activity android:name=".review_add.ReviewAdd"/>
+
+        <!--리뷰 전체 액티비티-->
+        <activity android:name=".restorant_info.FullReviewActivity"/>
     </application>
 
 </manifest>

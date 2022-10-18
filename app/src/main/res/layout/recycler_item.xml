@@ -3,6 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5sp"
+    android:background="@drawable/squar_border"
+    android:padding="5sp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -10,15 +12,12 @@
         android:layout_height="match_parent"
         android:id="@+id/recycler_layout">
     <ImageView
-        android:layout_width="150sp"
-        android:layout_height="150sp"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
         android:id="@+id/item_image"
-        android:layout_marginRight="10sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
-
-
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

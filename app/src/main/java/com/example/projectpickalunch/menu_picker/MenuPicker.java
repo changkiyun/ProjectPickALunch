@@ -112,7 +112,8 @@ public class MenuPicker extends AppCompatActivity {
     public void switchFragment(){
         Fragment fr;
         //Bundle로 Fragment에 값 전달을 위한 boolean변수
-       boolean[] selectCategoryCheck = {kFoodButton.isChecked(),jFoodButton.isChecked(),cFoodButton.isChecked(),aFoodButton.isChecked(),fastFoodButton.isChecked(),etcFoodButton.isChecked()};
+       boolean[] selectCategoryCheck = {kFoodButton.isChecked(),jFoodButton.isChecked(),cFoodButton.isChecked(),aFoodButton.isChecked()
+               ,fastFoodButton.isChecked(),etcFoodButton.isChecked()};
 
         if(kFoodButton.isChecked() || jFoodButton.isChecked() || cFoodButton.isChecked() ||
                 aFoodButton.isChecked() || fastFoodButton.isChecked() || etcFoodButton.isChecked()){

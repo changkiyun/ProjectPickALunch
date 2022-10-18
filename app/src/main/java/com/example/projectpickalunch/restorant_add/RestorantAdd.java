@@ -1,5 +1,6 @@
 package com.example.projectpickalunch.restorant_add;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,8 +25,9 @@ import java.util.Map;
 public class RestorantAdd extends AppCompatActivity {
     //뷰
     EditText restorant_name_edit_text, restorant_address_edit_text, restorant_tel_edit_text;
-    ImageButton restorant_add_return_button;
+    ImageButton restorant_add_return_button, restorant_add_naver_map;
     public Button restorant_add_registration_button;
+
 
     //RealtimeDatabase 선언
     private DatabaseReference RestorantAddReference;
@@ -96,6 +98,17 @@ public class RestorantAdd extends AppCompatActivity {
                 toRestornatAddInformation = restorantAddInformation.toMap();
                 //"식당" restorant_name으로 참조한 위치 아래 정보 저장
                 RestorantAddReference.child("식당").child(restorant_name).updateChildren(toRestornatAddInformation);
+            }
+        });
+
+
+        //네이버 맵
+        restorant_add_naver_map =findViewById(R.id.restorant_add_naver_map);
+        restorant_add_naver_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent naverMap = new Intent(getApplicationContext(), RestorantAddNaverMap.class);
+                startActivity(naverMap);
             }
         });
 

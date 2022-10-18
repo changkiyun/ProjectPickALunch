@@ -1,5 +1,6 @@
 package com.example.projectpickalunch.login_api;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +26,7 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
 public class KakaoLoginActivity extends AppCompatActivity {
-    private ImageView kakao_login_button;
+    private ImageButton kakao_login_button;
     private static final String TAG = "LoginActivity";
 
     @Override
@@ -39,12 +40,13 @@ public class KakaoLoginActivity extends AppCompatActivity {
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
                 // 이때 토큰이 전달이 되면 로그인이 성공한 것이고 토큰이 전달되지 않았다면 로그인 실패
                 if (oAuthToken != null) {
-
+                    updateKakaoLoginUi();
+                    Log.v("aaa", "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
                 }
                 if (throwable != null) {
-
+                    //updateKakaoLoginUi();
+                    Log.v("aaa", "로그인 실패 " + throwable.getLocalizedMessage());
                 }
-                updateKakaoLoginUi();
                 return null;
             }
         };
@@ -53,15 +55,15 @@ public class KakaoLoginActivity extends AppCompatActivity {
         kakao_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(KakaoLoginActivity.this)) {
+                if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(getApplicationContext())) {
+                    Log.v("aaa", "aaaa");
                     UserApiClient.getInstance().loginWithKakaoTalk(KakaoLoginActivity.this, callback);
                 } else {
+                    Log.v("aaa", "bbbb");
                     UserApiClient.getInstance().loginWithKakaoAccount(KakaoLoginActivity.this, callback);
                 }
             }
-
         });
-
     }
 
     private void updateKakaoLoginUi() {
