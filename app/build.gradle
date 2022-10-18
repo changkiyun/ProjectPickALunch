@@ -60,4 +60,10 @@ dependencies {
 
     //kakaoLogin Api
     implementation "com.kakao.sdk:v2-user:2.4.2"
+
+    //naverMap
+    implementation 'com.naver.maps:map-sdk:3.13.0'
+
+    //TedPermission 위치권한 요청
+    implementation 'io.github.ParkSangGwon:tedpermission-rx3:3.3.0'
 }
