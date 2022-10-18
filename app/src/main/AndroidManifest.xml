@@ -46,7 +46,7 @@
         <!--TODO : 로그인 화면 임시로 연결 해제, 바로 메인액티비티로 넘어감-->
 <!--        로그인 액티비티-->
         <activity android:name=".login_api.KakaoLoginActivity"
-            android:exported="true">
+        android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
