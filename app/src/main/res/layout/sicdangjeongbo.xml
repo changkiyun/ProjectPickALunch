@@ -61,7 +61,7 @@
         <!--사진 업로드 테스트용-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/reviewScroll"
         android:layout_width="match_parent"
         android:layout_height="0sp"
@@ -174,7 +174,7 @@
                 />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 
