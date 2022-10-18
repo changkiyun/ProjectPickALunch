@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.example.projectpickalunch.user_information.NickName;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.common.collect.ArrayTable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -70,31 +72,28 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     private DatabaseReference detail_images;    //식당 세부사진 db
     private DatabaseReference locationReference;    //식당 위치 db
     private DatabaseReference imgReference; //식당 세부 사진 저장을 위한 경로 db
+    private DatabaseReference reviewReference;
+    private DatabaseReference review_images;
 
     //식당 정보를 저장할 변수
     String sickdang_title;
-    Float sickdang_score;
 
-    //상단 리사이클러뷰에 사용될 변수 :YJW
+    //상단,하단 리사이클러뷰에 사용될 변수 :YJW
     RecyclerView imageRecyclerView;
+    RecyclerView reviewRecyclerView;
     ProgressBar progressBar;
     Uri imageUri;
-    ArrayList<RecyclerImageItem> imageList;
 
-    //상단 리사이클러뷰 어댑터 :YJW
+    ArrayList<RecyclerImageItem> imageList;
+    ArrayList<ReviewRecyclerItem> reviewList;
+    ArrayList<RecyclerImageItem> reviewImageList;
+
     ImageRecyclerAdapter imageAdapter;
+    ReviewRecyclerAdapter reviewRecyclerAdapter;
+    ImageRecyclerAdapter reviewImageAdapter;
 
     //사진 추가에 사용되는 테스트용 이미지 뷰 :YJW
     ImageView testImg;
-
-    //리뷰에 쓰이는 리스트아이템 어뎁터
-    ListItemAdapter adapter;
-
-    //리스트뷰 값 저장할 ArrayList
-    ArrayList<ListItem> arrayList;
-    ArrayList<String> rate_array;
-    ArrayList<String> nameList;
-    String nickName;
 
     //이미지 저장하는 Drawble
     private Drawable mImageDrawable;
@@ -118,10 +117,14 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sicdangjeongbo);
+
         //인텐트 받아오기 가게 이름
         Intent intent = getIntent();
         sickdang_title = intent.getStringExtra("restorant_name");
-        sickdang_score = Float.parseFloat(intent.getStringExtra("restorant_score"));
+
+        //가게 정보
+        TextView sickdanTitle = (TextView) findViewById(R.id.sicdangTitle);
+        sickdanTitle.setText(sickdang_title);
 
         //Kakao Map Api
 
@@ -189,17 +192,17 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
 
         //리사이클러 뷰로 가게 상세 사진 보여주기
-        imageRecyclerView = findViewById(R.id.recycler_view); //
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        imageRecyclerView = findViewById(R.id.recycler_view); //
         imageRecyclerView.setLayoutManager(layoutManager);
         imageRecyclerView.setHasFixedSize(true);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
 
         imageList = new ArrayList<>();
 
-
         imageAdapter = new ImageRecyclerAdapter(Sickdang_Jeongbo.this, imageList);
         imageRecyclerView.setAdapter(imageAdapter);
+
         detail_images = restaurantReference.child(sickdang_title).child("restorant_detail_image").getRef();
 
         detail_images.addValueEventListener(new ValueEventListener() {
@@ -218,6 +221,57 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
             }
         });
+
+        //리뷰
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
+        reviewRecyclerView = findViewById(R.id.reviewRecyclerView);
+        reviewRecyclerView.setLayoutManager(layoutManager2);
+        reviewRecyclerView.setHasFixedSize(true);
+
+        reviewList = new ArrayList<>();
+        reviewImageList = new ArrayList<>();
+
+        reviewImageAdapter = new ImageRecyclerAdapter(Sickdang_Jeongbo.this, reviewImageList);
+        reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageAdapter);
+        reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
+
+        reviewReference = restaurantReference.child(sickdang_title).child("restorant_review").getRef();
+        review_images = restaurantReference.child(sickdang_title).child("restorant_detail_image").getRef();
+
+        reviewReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reviewList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    ReviewRecyclerItem model = dataSnapshot.getValue(ReviewRecyclerItem.class);
+                    reviewList.add(model);
+                }
+                reviewRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        review_images.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reviewImageList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RecyclerImageItem model = dataSnapshot.getValue(RecyclerImageItem.class);
+                    reviewImageList.add(model);
+                }
+                reviewImageAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                reviewImageList.clear();
+            }
+        });
+
 
         //사진 업로드 테스트
         //TODO: 리뷰 및 이미지 업로드 기능 정식으로 추가할 떄 사용할 가능성 있음
@@ -259,117 +313,36 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             }
         });
 
-        //가게 이름
-        TextView sickdanTitle = (TextView) findViewById(R.id.sicdangTitle);
-        sickdanTitle.setText(sickdang_title);
-
-
-        //
+        //가게 점수 가져오기
         TextView sickdangScore = (TextView) findViewById(R.id.pyeongJeom);
-        sickdangScore.setText(String.format("%.1f", sickdang_score));
+        restaurantReference.child(sickdang_title).child("restorant_score").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String score = snapshot.getValue(String.class);
+                    float avgScore = Float.parseFloat(score);
+                    sickdangScore.setText(String.format("%.1f", Float.parseFloat(score)));
+            }
 
-        //Todo: 오류 확인 후 삭제
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-//        ListView listView = (ListView) findViewById(R.id.listView);
-//        EditText reviewWriten =(EditText) findViewById(R.id.reviewWrite);
-//        RatingBar rB = (RatingBar)findViewById(R.id.ratingBar);
+            }
+        });
 
+        ScrollView reviewScroll = findViewById(R.id.reviewScroll);
+        reviewScroll.fullScroll(ScrollView.FOCUS_DOWN);
 
-        //파이어 베이스에서 리뷰 가져와서 리스트뷰에 출력하기
-//        arrayList = new ArrayList<>();
-//        rate_array = new ArrayList<>();
+        //리뷰 추가 버튼
+        Button newReviewBtn = findViewById(R.id.new_review_btn);
+        newReviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent reviewAdd = new Intent(getApplicationContext(), ReviewAdd.class);
+                reviewAdd.putExtra("restorant_name", sickdang_title);
+                startActivity(reviewAdd);
+            }
+        });
 
-        //데베에서 리뷰 가져오기
-
-//        restaurantReference.child(sickdang_title).child("restorant_review").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                arrayList.clear();
-//                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-//                    ListItem listItem = snapshot.getValue(ListItem.class);
-//                    arrayList.add(listItem); // 리뷰 가져옴
-//                    Review_Rate listItem1 = snapshot.getValue(Review_Rate.class);
-//                    rate_array.add(listItem1.getReview_rate());
-//
-//                    String[] rate_string = new String[rate_array.size()];
-//                    rate_string = rate_array.toArray(rate_string);
-//
-//                    float rate_hap=0;
-//                    for(int i=0;i<rate_string.length;i++){
-//                        rate_hap += Float.parseFloat(rate_string[i]);
-//                    }
-//                    float rate_avg = rate_hap/Float.parseFloat(String.valueOf(rate_array.size()));
-//                    addScore(String.valueOf(rate_avg));
-//                    TextView pyeongJeom = (TextView)findViewById(R.id.pyeongJeom);
-//                    pyeongJeom.setText(String.valueOf(rate_avg));
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-//
-//            }
-//
-//        });
-//        adapter = new ListItemAdapter(arrayList, this);
-//        listView.setAdapter(adapter);
-//
-//        nameList = new ArrayList<>();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        //String uid = user.getUid();
-//        usersReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-//                    NickName nickname = snapshot.getValue(NickName.class);
-//                    nameList.add(nickname.getNickName());
-//                    String[] name = new String[nameList.size()];
-//                    name = nameList.toArray(name);
-//                    nickName = String.valueOf(name[0]);
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                //Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-//
-//            }
-//
-//        });
-//
-//        Button reviewRegis = (Button) findViewById(R.id.reviewRegis);
-//        reviewRegis.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                adapter.addItems(new ListItem(nickName, reviewWriten.getText().toString() , "" + rB.getRating()));
-//                addReview(reviewWriten.getText().toString(),nickName, String.valueOf(rB.getRating()));
-//                listView.setAdapter(adapter);
-//            }
-//        });
-
-
-//Todo: 오류 확인 후 삭제 (oncreate 밖에 위치 )
-
-//    //리사이클러 뷰에 이미지 넣기
-//
-//    //리뷰 파이어베이스에 저장
-//    public void addReview(String restaurant_review, String user_name, String review_rate){
-//        Intent intent = getIntent();
-//        String sickdang_title = intent.getStringExtra("itemname.get(i)");
-//        ListItem listItem = new ListItem(user_name,restaurant_review,review_rate);
-//        restaurantReference.child(sickdang_title).child("restorant_review").child(user_name).setValue(listItem);
-//    }
-//    public void addScore(String restorant_score){
-//        Intent intent = getIntent();
-//        String sickdang_title = intent.getStringExtra("itemname.get(i)");
-//        restaurantReference.child(sickdang_title).child("restorant_score").setValue(restorant_score);
-
-//    }
     }
     //유저의 이름을 받아오는 메소드
     //TODO : 유저 다시 생기면 다시 만들어야함

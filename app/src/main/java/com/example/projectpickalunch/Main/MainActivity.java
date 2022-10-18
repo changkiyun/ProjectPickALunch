@@ -198,19 +198,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(restorantAdd);
             }
         });
-
-        //YCK 리뷰쓰기 액티비티로 전환 (임시버튼 식당 상세정보화면으로 이동 예정)
-        FloatingActionButton review_floating_button;
-        review_floating_button = findViewById(R.id.review_floating_button);
-
-        review_floating_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent reviewAdd = new Intent(getApplicationContext(), ReviewAdd.class);
-                startActivity(reviewAdd);
-            }
-        });
-
     }
 
 
