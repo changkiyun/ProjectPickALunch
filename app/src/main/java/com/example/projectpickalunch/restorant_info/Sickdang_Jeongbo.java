@@ -26,6 +26,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -329,8 +330,8 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             }
         });
 
-        ScrollView reviewScroll = findViewById(R.id.reviewScroll);
-        reviewScroll.fullScroll(ScrollView.FOCUS_DOWN);
+        NestedScrollView reviewScroll = findViewById(R.id.reviewScroll);
+        reviewScroll.fullScroll(ScrollView.FOCUS_UP);
 
         //리뷰 추가 버튼
         Button newReviewBtn = findViewById(R.id.new_review_btn);
