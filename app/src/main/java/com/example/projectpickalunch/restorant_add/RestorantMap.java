@@ -12,14 +12,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.projectpickalunch.Main.MainActivity;
 import com.example.projectpickalunch.R;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.libraries.places.api.Places;
-import com.google.type.LatLng;
+
 
 
 
