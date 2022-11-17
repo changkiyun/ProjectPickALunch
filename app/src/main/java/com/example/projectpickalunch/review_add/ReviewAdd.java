@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.willy.ratingbar.ScaleRatingBar;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,12 +39,31 @@ public class ReviewAdd extends AppCompatActivity {
 
     //뷰 선언
     ImageButton review_add_return_button;
-    ScaleRatingBar review_ratingBar;
-    EditText review_text;
     Button review_add_button;
-    ImageButton reviewImageAddButton;
-    ConstraintLayout noImageLayout;
-    RecyclerView addReviewImageRecyclerView;
+    Button menuPlusButton;
+    Button imagePlusButton;
+    TextView restaurantNameTextView;
+    ScaleRatingBar tasteRatingBar;
+    ScaleRatingBar kindnessRatingBar;
+    ScaleRatingBar cleanRatingBar;
+    ScaleRatingBar priceRatingBar;
+    RecyclerView menuDetailReviewRecyclerView;
+    RecyclerView imageReviewRecyclerView;
+    EditText commentEditText;
+
+    //평가 내용,점수
+    private String userName;
+    private float tasteRate;
+    private float kindRate;
+    private float cleanRate;
+    private float priceRate;
+    private float avgRate;
+    private String comment;
+    private ArrayList<String> imgUris;
+    private int menuReviewCount = 0;
+
+    //이미지, 메뉴 평가 ArrayList
+
 
     //가게이름, 유저 정보
     String restaurantName;
@@ -60,32 +81,51 @@ public class ReviewAdd extends AppCompatActivity {
 
         Intent intent = getIntent();
         restaurantName = intent.getStringExtra("restorant_name");
+        userName = KakaoLoginActivity.userNickName;
 
-        review_ratingBar = findViewById(R.id.review_ratingBar);
-        review_text = findViewById(R.id.review_text);
-        noImageLayout = findViewById(R.id.noImage);
-        addReviewImageRecyclerView = findViewById(R.id.addReviewImageRecyclerView);
-        reviewImageAddButton = findViewById(R.id.review_image_add_button);
-        review_add_button = findViewById(R.id.review_add_button);
         review_add_return_button = findViewById(R.id.review_add_return_button);
+        review_add_button = findViewById(R.id.review_add_button);
+        menuPlusButton = findViewById(R.id.menuPlusButton);
+        imagePlusButton = findViewById(R.id.imagePlusButton);
+        restaurantNameTextView = findViewById(R.id.restaurantNameTextView);
+        priceRatingBar = findViewById(R.id.priceRatingBar);
+        tasteRatingBar = findViewById(R.id.tasteRatingBar);
+        cleanRatingBar = findViewById(R.id.cleanRatingBar);
+        kindnessRatingBar = findViewById(R.id.kindnessRatingBar);
+        menuDetailReviewRecyclerView = findViewById(R.id.menuDetailReviewRecyclerView);
+        imageReviewRecyclerView = findViewById(R.id.imageReviewRecyclerView);
+        commentEditText = findViewById(R.id.commentEditText);
 
-        //TODO : 삭제예정
-        testEdit = findViewById(R.id.editTestName);
-        testEdit.setText(KakaoLoginActivity.userNickName);
+        restaurantNameTextView.setText(restaurantName);
+        tasteRate = tasteRatingBar.getRating();
+        cleanRate = cleanRatingBar.getRating();
+        kindRate = kindnessRatingBar.getRating();
+        priceRate = priceRatingBar.getRating();
+        comment = commentEditText.getText().toString();
+        avgRate = getAvg(new float[]{tasteRate, cleanRate, kindRate, priceRate});
+        
 
-        //이미지 추가 버튼
 
-        //리뷰추가 버튼
+        //리뷰추가 버튼 TODO : 수정전
         review_add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HHmmss");
                 Date now = new Date();
                 ReviewItem reviewItem = new ReviewItem(
-                        testEdit.getText().toString(),                  //유저이름
-                        review_text.getText().toString(),               //리뷰 본문
-                        Float.toString(review_ratingBar.getRating()),   //점수
-                        dateFormat.format(now)                          //등록시간
+                       userName,                         //유저이름
+                        comment,                         //리뷰 본문
+                        String.valueOf(tasteRate),
+                        String.valueOf(kindRate),
+                        String.valueOf(cleanRate),
+                        String.valueOf(priceRate),
+                        String.valueOf(avgRate),         //점수
+                        dateFormat.format(now),
+                        getMenuDetailReview(),
+                        getImgUris()
+                        
+
+                        //등록시간
                 );
                 addReview(reviewItem);
                 setAvgScore();
@@ -100,12 +140,71 @@ public class ReviewAdd extends AppCompatActivity {
                 finish();
             }
         });
+        
+        //이미지 추가 버튼
+        imagePlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
+
+        menuPlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addMenuCount();
+            }
+        });
     }
 
+    //메뉴 리뷰 추가할 시 카운트+
+    public void addMenuCount()
+    {
+        menuReviewCount++;
+    }
+
+    //메뉴 리뷰 추가할 시 카운트-
+    public void subMenuCount()
+    {
+        if(menuReviewCount >= 1)
+            menuReviewCount--;
+        else
+            return;
+    }
+
+    //메뉴 리뷰
+    public ArrayList<MenuReviewItem> getMenuDetailReview()
+    {
+        ArrayList<MenuReviewItem> menuReviewItems = new ArrayList<MenuReviewItem>();
+        
+        return  menuReviewItems;
+    }
+
+    public ArrayList<String> getImgUris()
+    {
+        ArrayList<String> ImgUris = new ArrayList<String>();
+        return  ImgUris;
+    }
+
+    // 유저 이름으로 리뷰 등록하는 함수 TODO : 수정전
     public void addReview(ReviewItem reviewItem){
-        restaurantReference.child(restaurantName).child("restorant_review").child(KakaoLoginActivity.userNickName).setValue(reviewItem);
+        restaurantReference.child(restaurantName).child("restorant_review").child(userName).setValue(reviewItem);
     }
 
+    //평균 계산 해주는 함수
+    private float getAvg(float[] scores) {
+     float avg = 0;
+     float sum = 0;
+
+     for (float score : scores)
+     {
+         sum += score;
+     }
+     avg = sum/scores.length;
+     return avg;
+    }
+
+    //평균 점수 내는 함수 TODO : 수정전
     public void setAvgScore() {
         restaurantReference.child(restaurantName).child("restorant_review").getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -179,13 +179,13 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
-        //
+        
+        //TODO : 액티비티 실행시 맵뷰 꺼지는거
         mapView = new MapView(this);
 
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.kakaoMapView);
         mapViewContainer.addView(mapView);
-        //
-
+        
         marker = new MapPOIItem();
 
 

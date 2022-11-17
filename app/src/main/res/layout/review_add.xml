@@ -51,46 +51,198 @@
         app:layout_constraintBottom_toBottomOf="@+id/review_add_constraint"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/rating_linear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_add_constraint">
+    <!--메인-->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/reviewScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        app:layout_constraintTop_toBottomOf="@id/title_line">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_marginHorizontal="30sp"
+            android:orientation="vertical"
+            android:id="@+id/rating_linear"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="식당이름"
-            android:textSize="30dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/review_add_constraint" />
+            app:layout_constraintTop_toBottomOf="@+id/review_add_constraint">
 
-        <com.willy.ratingbar.ScaleRatingBar
-            android:id="@+id/review_ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            app:srb_starPadding="4dp"
+            <TextView
+                android:id="@+id/restaurantNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="식당이름"
+                android:textSize="30dp" />
 
-            />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="10sp"
+                android:orientation="horizontal"
+                android:id="@+id/tasteRatingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="맛"
+                    android:textSize="30dp"/>
+
+                <com.willy.ratingbar.ScaleRatingBar
+                    android:layout_weight="2"
+                    android:id="@+id/tasteRatingBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    app:srb_starPadding="4dp"
+                    app:srb_stepSize="0.5"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="10sp"
+                android:orientation="horizontal"
+                android:id="@+id/kindnessRatingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="친절도"
+                    android:textSize="30dp"/>
+
+                <com.willy.ratingbar.ScaleRatingBar
+                    android:layout_weight="2"
+                    android:id="@+id/kindnessRatingBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    app:srb_starPadding="4dp"
+                    app:srb_stepSize="0.5"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="10sp"
+                android:orientation="horizontal"
+                android:id="@+id/cleanRatingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="청결도"
+                    android:textSize="30dp"/>
+
+                <com.willy.ratingbar.ScaleRatingBar
+                    android:layout_weight="2"
+                    android:id="@+id/cleanRatingBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    app:srb_starPadding="4dp"
+                    app:srb_stepSize="0.5"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/priceRatingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="가격"
+                    android:textSize="30dp"/>
+
+                <com.willy.ratingbar.ScaleRatingBar
+                    android:layout_weight="2"
+                    android:id="@+id/priceRatingBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    app:srb_starPadding="4dp"
+                    app:srb_stepSize="0.5"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/black" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imageReviewRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                android:scrollbarFadeDuration="@integer/material_motion_duration_short_1"/>
+
+            <Button
+                android:id="@+id/imagePlusButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사진 첨부하기"
+                />
+
+            <EditText
+                android:id="@+id/commentEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:lines="5"
+                android:maxLines="5"
+                android:gravity="top"
+                android:hint="쳥결도와 친절도 등 식당에 대한 솔직한 리뷰를 남겨주세요. (선택)"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"/>
+
+
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/black" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/menuDetailReviewRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/menuPlusButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="메뉴 추가 (선택)"
+                />
+
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/black" />
+
+
+
+
+
+        </LinearLayout>
+
+        
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <!--레이팅바 구분선-->
-    <View
-        android:id="@+id/ratingBar_line"
-        android:layout_width="350dp"
-        android:layout_height="1.5dp"
-        android:layout_marginTop="12dp"
-        android:layout_below="@id/review_add_constraint"
-        android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rating_linear" />
 
-    <EditText
+
+    <!--<EditText
         android:id="@+id/review_text"
         android:layout_width="match_parent"
         android:layout_height="200sp"
@@ -101,7 +253,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ratingBar_line"
         />
 
-    <!--레이팅바 구분선-->
+    &lt;!&ndash;레이팅바 구분선&ndash;&gt;
     <View
         android:id="@+id/review_text_line"
         android:layout_width="350dp"
@@ -183,9 +335,10 @@
         app:layout_constraintLeft_toRightOf="@id/testName"
         app:layout_constraintTop_toBottomOf="@id/imageRecyclerLayout"
         android:textSize="30sp"
-        />
+        />-->
 
     <Button
+        android:layout_marginTop="50sp"
         android:id="@+id/review_add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -195,6 +348,7 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         android:text="등록"
+        app:layout_constraintTop_toBottomOf="@id/reviewScrollView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
