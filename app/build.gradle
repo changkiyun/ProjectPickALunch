@@ -66,4 +66,5 @@ dependencies {
 
     //TedPermission 위치권한 요청
     implementation 'io.github.ParkSangGwon:tedpermission-rx3:3.3.0'
+
 }

@@ -41,6 +41,8 @@ public class MenuPicker extends AppCompatActivity {
     //카테고리 버튼
     CheckBox kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, etcFoodButton;
 
+    CheckBox[] categorySelectButton = {kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, fastFoodButton};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,6 @@ public class MenuPicker extends AppCompatActivity {
         aFoodButton = (CheckBox) findViewById(R.id.a_food_button);
         fastFoodButton = (CheckBox) findViewById(R.id.fast_food_button);
         etcFoodButton = (CheckBox) findViewById(R.id.etc_food_button);
-
 
         //메인화면으로 돌아가기
         menuPickerReturnButton = (ImageButton) findViewById(R.id.menuPickerReturnButton);
@@ -70,8 +71,56 @@ public class MenuPicker extends AppCompatActivity {
         menuPickerFragmentTransaction.add(R.id.menuPickerFragment, new MenuPickerBeforeSelectedFragment());
         menuPickerFragmentTransaction.commit();
 
-        //sortingTest
+        //Todo: 반복문으로 바꾸기
+        kFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
 
+        });
+        jFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        cFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        aFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        fastFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        etcFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+
+        //반복문 적용시 널포인터 오류생김
+/*        for(int i=0; i<categorySelectButton.length; i++){
+            categorySelectButton[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switchFragment();
+                }
+            });
+        }*/
+
+/*
         //적용 버튼 클릭 시 프래그먼트 교체
         ImageButton menuPickerApplyButton = (ImageButton) findViewById(R.id.menuPickerApplyButton);
         menuPickerApplyButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +129,7 @@ public class MenuPicker extends AppCompatActivity {
                 switchFragment();
             }
         });
+*/
 
         //검색 버튼
         searchButton = (ImageButton) findViewById(R.id.serchButton);
@@ -125,6 +175,7 @@ public class MenuPicker extends AppCompatActivity {
 
         menuPickerFragmentManager = getSupportFragmentManager();
         menuPickerFragmentTransaction = menuPickerFragmentManager.beginTransaction();
+
         //Bundle로 값 전달
         Bundle bundle = new Bundle();
         bundle.putBooleanArray("selectCategoryCheck", selectCategoryCheck);
