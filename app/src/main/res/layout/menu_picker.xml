@@ -284,7 +284,7 @@
 
                 android:background="@drawable/selector_category_korea_food"
                 android:button="@null"
-                android:text="매콤한"
+                android:text="칼칼한"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_category_txt_color"
                 android:textSize="15sp"
@@ -301,25 +301,7 @@
 
                 android:background="@drawable/selector_category_korea_food"
                 android:button="@null"
-                android:text="매콤한"
-                android:textAlignment="center"
-                android:textColor="@drawable/selector_category_txt_color"
-                android:textSize="15sp"
-                android:textStyle="bold"
-
-                app:layout_constraintStart_toEndOf="@+id/fast_food_button"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <CheckBox
-
-                android:layout_width="81dp"
-                android:layout_height="40dp"
-                android:layout_marginVertical="10sp"
-                android:layout_marginHorizontal="6dp"
-
-                android:background="@drawable/selector_category_korea_food"
-                android:button="@null"
-                android:text="매콤한"
+                android:text="얼큰한"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_category_txt_color"
                 android:textSize="15sp"
@@ -337,7 +319,7 @@
 
                 android:background="@drawable/selector_category_korea_food"
                 android:button="@null"
-                android:text="매콤한"
+                android:text="고소한"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_category_txt_color"
                 android:textSize="15sp"
@@ -355,7 +337,7 @@
 
                 android:background="@drawable/selector_category_korea_food"
                 android:button="@null"
-                android:text="매콤한"
+                android:text="달콤한"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_category_txt_color"
                 android:textSize="15sp"
@@ -373,7 +355,25 @@
 
                 android:background="@drawable/selector_category_korea_food"
                 android:button="@null"
-                android:text="매콤한"
+                android:text="싱싱한"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_category_txt_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@+id/fast_food_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+
+                android:layout_width="81dp"
+                android:layout_height="40dp"
+                android:layout_marginVertical="10sp"
+                android:layout_marginHorizontal="6dp"
+
+                android:background="@drawable/selector_category_korea_food"
+                android:button="@null"
+                android:text="느끼한"
                 android:textAlignment="center"
                 android:textColor="@drawable/selector_category_txt_color"
                 android:textSize="15sp"

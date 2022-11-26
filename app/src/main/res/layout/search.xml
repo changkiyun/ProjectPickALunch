@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,68 +10,59 @@
     android:paddingTop="8sp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/title_constraint"
+
+    <!--타이틀바 구분선-->
+    <LinearLayout
+        android:id="@+id/search_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!--상단바-->
+        >
         <ImageButton
+            android:id="@+id/search_return_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/return_button"
-            android:background="#ffffff"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="10sp"
-            android:layout_marginTop="3sp"
-            android:id="@+id/returnBtn"/>
+            android:layout_marginTop="4dp"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:layout_marginTop="4sp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintLeft_toRightOf="@id/returnBtn"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/textView1"
-            android:text="검색" />
-
+            android:src="@drawable/return_cmong"
+            android:background="@color/white"
+            />
         <EditText
-            android:layout_width="300sp"
+            android:id="@+id/search_editText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/textView1"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_toRightOf="@id/textView1"
-            android:id="@+id/editTextFilter"
-            android:textSize="22sp"/>
+            android:layout_marginLeft="8dp"
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:ems="18"
+            android:background="@null"
+            android:hint="식당 이름으로 검색해보세요."
+            />
+    </LinearLayout>
 
     <!--타이틀바 구분선-->
     <View
-        android:id="@+id/title_line"
+        android:id="@+id/search_line"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_marginTop="5sp"
-        android:background="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginVertical="5dp"
 
-        app:layout_constraintTop_toBottomOf="@id/title_constraint" />
+        android:background="#F3F3F3"
+
+        android:layout_below="@id/search_linear"
+
+
+        />
 
 
 
     <ListView
+        android:id="@+id/listview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5sp"
-        app:layout_constraintTop_toBottomOf="@id/title_line"
-        android:textFilterEnabled="true"
-        android:id="@+id/listview1"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textFilterEnabled="true"
+
+        android:layout_below="@id/search_line"
+        />
+
+</RelativeLayout>

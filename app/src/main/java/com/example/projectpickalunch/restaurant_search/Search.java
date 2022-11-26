@@ -1,96 +1,98 @@
 package com.example.projectpickalunch.restaurant_search;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.Index;
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 public class Search extends AppCompatActivity {
-    ListView listview = null ;
+    EditText searchEdt;
+
+    String searchText;
+    String hits = "hits";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        //뒤로가기
-        ImageButton btnReturn = (ImageButton) findViewById(R.id.returnBtn);
-        btnReturn.setOnClickListener(new View.OnClickListener() {
+        searchEdt = findViewById(R.id.search_editText);
+
+        Client client = new Client("49JNIHFN0A", "2083bbdd34fe14f3ce84ea94897e0a59");
+
+        Index index = client.initIndex("test");
+
+
+//        var handler = CompletionHandler{content , error ->
+//                println(content)
+//
+//            var list = ArrayList<Apt>()
+//
+//            var jsonArray  = content?.getJSONArray("hits")
+//            if (jsonArray != null) {
+//                for(i in 1 until jsonArray.length()) {
+//                    var json = jsonArray?.getJSONObject(i)
+//                    var apt = Apt(json.getString("aptName"),json.getString("doroJuso"))
+//                    list.add(apt)
+//                }
+//                adapter.list = list
+//                adapter.resetting()
+//            }
+//
+//        }
+
+//        try {
+//        CompletionHandler completionHandler = new CompletionHandler() {
+//            @Override
+//            public void requestCompleted(@Nullable JSONObject jsonObject, @Nullable AlgoliaException e) {
+//                Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+//
+//                    JSONArray jsonArray = jsonObject.getJSONArray(hits);
+//
+//            }
+//        };
+//        }catch (JSONException ex){
+//            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//        catch (AlgoliaException e){
+//            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+
+        //index.searchAsync(new Query("t"),completionHandler);
+
+
+//        searchEdt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                index.searchAsync(new Query(searchText), completionHandler);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+
+
+        //뒤로가기 버튼
+        ImageButton searchReturnButton = findViewById(R.id.search_return_button);
+        searchReturnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
-        ListViewAdapter adapter;
-
-        // Adapter 생성
-        adapter = new ListViewAdapter() ;
-
-        // 리스트뷰 참조 및 Adapter달기
-        listview = (ListView) findViewById(R.id.listview1);
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent restorant_information = new Intent(getApplicationContext(), Sickdang_Jeongbo.class);
-                startActivity(restorant_information);
-            }
-        });
-
-
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata1),
-                "가타쯔무리") ;
-
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata2),
-                "Bryan Adams") ;
-
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata3),
-                "Eric Clapton") ;
-
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata4),
-                "Gary Moore") ;
-
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata5),
-                "Helloween") ;
-
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.gata6),
-                "Adele") ;
-
-        //입력받은 값 filter처리해서 자동완성 기능
-        EditText editTextFilter = (EditText)findViewById(R.id.editTextFilter) ;
-        editTextFilter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString() ;
-                ((ListViewAdapter)listview.getAdapter()).getFilter().filter(filterText) ;
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        }) ;
     }
 }
 

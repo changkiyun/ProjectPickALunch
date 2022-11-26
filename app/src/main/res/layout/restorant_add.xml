@@ -139,108 +139,149 @@
         app:layout_constraintTop_toBottomOf="@+id/restorant_tel_edit_text" />
 
 <!--    카테고리선택-->
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <HorizontalScrollView
         android:id="@+id/menuPickerOptionConstraint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-
-
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_below="@id/title_line"
+        android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restorant_add_category_text">
 
-
-        <CheckBox
-            android:id="@+id/k_food_button"
-            android:layout_width="115sp"
-            android:layout_height="wrap_content"
-            android:layout_margin="15sp"
-
-            android:background="@drawable/selector_category_korea_food"
-            android:button="@null"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/j_food_button"
-            android:layout_width="115sp"
-            android:layout_height="wrap_content"
-
-            android:layout_margin="15sp"
-
-            android:background="@drawable/selector_category_china_food"
-            android:button="@null"
-
-            app:layout_constraintLeft_toRightOf="@id/k_food_button"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/c_food_button"
-            android:layout_width="115sp"
-            android:layout_height="wrap_content"
-
-            android:layout_margin="15sp"
-
-            android:background="@drawable/selector_category_japan_food"
-            android:button="@null"
-
-            app:layout_constraintLeft_toRightOf="@id/j_food_button"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/a_food_button"
-            android:layout_width="115sp"
-            android:layout_height="wrap_content"
-
-            android:layout_margin="15sp"
-
-            android:background="@drawable/selector_category_america_food"
-            android:button="@null"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/k_food_button" />
-
-        <CheckBox
-            android:id="@+id/fast_food_button"
-            android:layout_width="115sp"
-            android:layout_height="wrap_content"
-
-            android:layout_margin="15sp"
-
-            android:background="@drawable/selector_category_fast_food"
-            android:button="@null"
-
-            app:layout_constraintStart_toEndOf="@+id/a_food_button"
-            app:layout_constraintTop_toBottomOf="@+id/j_food_button" />
-
-        <CheckBox
-            android:id="@+id/etc_food_button"
-            android:layout_width="115sp"
-            android:layout_height="wrap_content"
-
-            android:layout_margin="15sp"
-
-            android:background="@drawable/selector_category_etc_food"
-            android:button="@null"
-
-            app:layout_constraintStart_toEndOf="@+id/fast_food_button"
-            app:layout_constraintTop_toBottomOf="@+id/c_food_button" />
-
-        <ImageButton
-            android:id="@+id/menuPickerApplyButton"
+        <!--카테고리 선택-->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
 
-            android:layout_marginTop="20sp"
 
-            android:background="@color/white"
-            android:src="@drawable/apply_button"
+            <CheckBox
+                android:id="@+id/k_food_button"
+                android:layout_width="67dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginVertical="10sp"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etc_food_button" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:background="@drawable/selector_category_korea_food"
+                android:button="@null"
+                android:text="밥"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_category_txt_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/j_food_button"
+                android:layout_width="67dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginVertical="10sp"
+
+                android:background="@drawable/selector_category_korea_food"
+                android:button="@null"
+                android:text="면"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_category_txt_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+                app:layout_constraintLeft_toRightOf="@id/k_food_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/c_food_button"
+                android:layout_width="67dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginVertical="10sp"
+
+                android:background="@drawable/selector_category_korea_food"
+                android:button="@null"
+                android:text="찌개"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_category_txt_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+                app:layout_constraintLeft_toRightOf="@id/j_food_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/a_food_button"
+                android:layout_width="67dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginVertical="10sp"
+
+                android:background="@drawable/selector_category_korea_food"
+                android:button="@null"
+                android:text="튀김"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_category_txt_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@+id/c_food_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/fast_food_button"
+                android:layout_width="67dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginVertical="10sp"
+
+
+                android:background="@drawable/selector_category_korea_food"
+                android:button="@null"
+                android:text="빵"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_category_txt_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@+id/a_food_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/etc_food_button"
+                android:layout_width="67dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginVertical="10sp"
+
+                android:background="@drawable/selector_category_korea_food"
+                android:button="@null"
+                android:text="구이"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_category_txt_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@+id/fast_food_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <!--        <ImageButton-->
+            <!--            android:id="@+id/menuPickerApplyButton"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+
+            <!--            android:layout_marginTop="20sp"-->
+
+            <!--            android:background="@color/white"-->
+            <!--            android:src="@drawable/apply_button"-->
+
+            <!--            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--            app:layout_constraintTop_toBottomOf="@+id/etc_food_button" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+
 
     <Button
         android:id="@+id/restorant_add_registration_button"
