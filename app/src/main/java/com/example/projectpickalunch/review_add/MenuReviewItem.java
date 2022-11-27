@@ -1,13 +1,17 @@
 package com.example.projectpickalunch.review_add;
 
+import java.util.ArrayList;
+
 public class MenuReviewItem {
 
     String menuName;
-    String menuReview;
+    ArrayList<MenuRatingItem> menuRatingItems;
 
-    MenuReviewItem(String menuName, String menuReview){
+    MenuReviewItem(){}
+
+    MenuReviewItem(String menuName, ArrayList<MenuRatingItem> menuRatingItems){
         this.menuName = menuName;
-        this.menuReview = menuReview;
+        this.menuRatingItems = menuRatingItems;
     }
 
     public void setMenuName(String menuName) {
@@ -18,11 +22,11 @@ public class MenuReviewItem {
         return menuName;
     }
 
-    public void setMenuReview(String menuReview) {
-        this.menuReview = menuReview;
+    public ArrayList<MenuRatingItem> getMenuRatingItems() {
+        return menuRatingItems;
     }
 
-    public String getMenuReview() {
-        return menuReview;
+    public void setMenuRatingItems(ArrayList<MenuRatingItem> menuRatingItems) {
+        this.menuRatingItems = menuRatingItems;
     }
 }

@@ -239,7 +239,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         reviewReference = restaurantReference.child(sickdang_title).child("restorant_review").getRef();
         review_images = restaurantReference.child(sickdang_title).child("restorant_detail_image").getRef();
 
-        reviewReference.addValueEventListener(new ValueEventListener() {
+        /*reviewReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 reviewList.clear();
@@ -254,7 +254,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         review_images.addValueEventListener(new ValueEventListener() {
             @Override
@@ -273,37 +273,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             }
         });
 
-
-        //사진 업로드 테스트
-        //TODO: 리뷰 및 이미지 업로드 기능 정식으로 추가할 떄 사용할 가능성 있음
-        Button testUploadBtn = findViewById(R.id.testBtn);
-        Button testSelectBtn = findViewById(R.id.testSelectBtn);
-        testImg = findViewById(R.id.testImg);
-        progressBar = findViewById(R.id.testbar);
-        progressBar.setVisibility(View.INVISIBLE);
-
-        //사진 선택 버튼 리스너
-        testSelectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent gallaryIntent = new Intent();
-                gallaryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                gallaryIntent.setType("image/");
-                activityResult.launch(gallaryIntent);
-            }
-        });
-
-        //사진 업로드 버튼 리스너
-        testUploadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (imageUri != null) {
-                    uploadToFireBase(imageUri);
-                } else {
-                    Toast.makeText(Sickdang_Jeongbo.this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         //뒤로가기 버튼
         ImageButton btnReturn = (ImageButton) findViewById(R.id.returnBtn);
@@ -353,64 +322,4 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         return TestName;
     }
 
-    //사진을 데이터베이스와 스토리지에 저장하는 메소드
-    private void uploadToFireBase(Uri uri) {
-        imgReference = restaurantDatabase.child(sickdang_title).child("restorant_detail_image");
-        restaurantStorage = storage.getReference(sickdang_title);
-
-        //현재 시간
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'_'HHmmss");
-        Date now = new Date();
-
-        //사진 이름을 "식당이름_유저이름_날짜.확장자"로 저장
-        StorageReference fileRef = restaurantStorage.child(getUserName())
-                .child(sickdang_title + "_" + getUserName() + "_" + dateFormat.format(now) + "." + getFileExtension(uri));
-        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        RecyclerImageItem model = new RecyclerImageItem(uri.toString());
-                        String modelid = imgReference.push().getKey();
-                        imgReference.child(modelid).setValue(model);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(Sickdang_Jeongbo.this, "업로드 성공", Toast.LENGTH_SHORT).show();
-                        testImg.setImageResource(0);
-                    }
-                });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Sickdang_Jeongbo.this, "업로드 실패", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //파일 타입을 가져오는 메소드
-    private String getFileExtension(Uri uri) {
-        ContentResolver cr = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-
-        return mime.getExtensionFromMimeType(cr.getType(uri));
-    }
-
-    //사진 가져오기
-    private ActivityResultLauncher<Intent> activityResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        imageUri = result.getData().getData();
-                        testImg.setImageURI(imageUri);
-                    }
-                }
-            });
 }

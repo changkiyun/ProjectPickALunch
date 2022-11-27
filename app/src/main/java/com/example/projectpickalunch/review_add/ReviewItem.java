@@ -1,5 +1,7 @@
 package com.example.projectpickalunch.review_add;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 public class ReviewItem {
@@ -12,12 +14,9 @@ public class ReviewItem {
     private String priceRate;
     private String avgRate;
     private String review_date;
-    private ArrayList<MenuReviewItem> menuReviewItems;
-    private ArrayList<String> imgUris;
 
     ReviewItem(String user_name, String restaurant_review, String review_date,
-               String tasteRate, String kindRate, String cleanRate, String priceRate, String avgRate,
-               ArrayList<MenuReviewItem> menuReviewItems, ArrayList<String> imgUris)
+               String tasteRate, String kindRate, String cleanRate, String priceRate, String avgRate)
     {
         this.user_name = user_name;
         this.restaurant_review = restaurant_review;
@@ -27,8 +26,6 @@ public class ReviewItem {
         this.priceRate = priceRate;
         this.avgRate = avgRate;
         this.review_date = review_date;
-        this.menuReviewItems = menuReviewItems;
-        this.imgUris = imgUris;
     }
 
     public String getUser_name() {
@@ -47,6 +44,45 @@ public class ReviewItem {
         this.restaurant_review = restaurant_review;
     }
 
+    public String getTasteRate() {
+        return tasteRate;
+    }
+
+    public void setTasteRate(String tasteRate) {
+        this.tasteRate = tasteRate;
+    }
+
+    public String getKindRate() {
+        return kindRate;
+    }
+
+    public void setKindRate(String kindRate) {
+        this.kindRate = kindRate;
+    }
+
+    public String getCleanRate() {
+        return cleanRate;
+    }
+
+    public void setCleanRate(String cleanRate) {
+        this.cleanRate = cleanRate;
+    }
+
+    public String getPriceRate() {
+        return priceRate;
+    }
+
+    public void setPriceRate(String priceRate) {
+        this.priceRate = priceRate;
+    }
+
+    public String getAvgRate() {
+        return avgRate;
+    }
+
+    public void setAvgRate(String avgRate) {
+        this.avgRate = avgRate;
+    }
 
     public String getReview_date() {
         return review_date;

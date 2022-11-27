@@ -3,11 +3,10 @@ package com.example.projectpickalunch.review_add;
 public class MenuRatingItem {
 
     String rateName;
-    String rating;
+    float rate;
 
-    MenuRatingItem(String rateName, String rating){
+    MenuRatingItem(String rateName){
         this.rateName = rateName;
-        this.rating = rating;
     }
 
     public void setRateName(String rateName) {
@@ -18,11 +17,11 @@ public class MenuRatingItem {
         return rateName;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 
-    public String getRating() {
-        return rating;
+    public float getRate() {
+        return rate;
     }
 }

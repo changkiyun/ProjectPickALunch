@@ -40,6 +40,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="invisible"
         android:id="@+id/menuDetailReviewLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -126,8 +127,15 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menuRatingRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/menuReviewSaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="저장"/>
 
 
     </LinearLayout>
