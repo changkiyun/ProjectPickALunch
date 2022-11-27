@@ -125,7 +125,9 @@ public class FullReviewActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //리뷰 삭제및 토스트메시지 출력
                         Toast.makeText(FullReviewActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                        deleteReview();
+                        restaurantReference.child(restaurantName).child("restorant_review").child(userName).setValue(null);
+                        getAvgScore();
+                        //isNoReview();
                         finish();
                     }
                 });
@@ -144,20 +146,15 @@ public class FullReviewActivity extends AppCompatActivity {
         });
     }
 
-    public void deleteReview() {
+    public void getAvgScore() {
         restaurantReference.child(restaurantName).child("restorant_review").getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                restaurantReference.child(restaurantName).child("restorant_review").child(userName).setValue(null);
                 scoreList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     String score = dataSnapshot.child("review_rate").getValue(String.class);
                     scoreList.add(score);
 
-                    if (scoreList.size() < 1) {
-                        restaurantReference.child(restaurantName).child("restorant_score").setValue("평가없음");
-                    }
-                    else {
                         float avgScore;
                         float totRate = 0;
 
@@ -168,6 +165,26 @@ public class FullReviewActivity extends AppCompatActivity {
 
                         avgScore = totRate/Float.parseFloat(String.valueOf(scoreList.size()));
                         restaurantReference.child(restaurantName).child("restorant_score").setValue(Float.toString(avgScore));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void isNoReview() {
+        restaurantReference.child(restaurantName).child("restorant_review").getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                scoreList.clear();
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    String score = dataSnapshot.child("review_rate").getValue(String.class);
+                    scoreList.add(score);
+                    Log.v("ccc", ""+scoreList);
+                    if(scoreList.get(0) == null) {
+                        restaurantReference.child(restaurantName).child("restorant_score").setValue("0.0");
                     }
                 }
             }
