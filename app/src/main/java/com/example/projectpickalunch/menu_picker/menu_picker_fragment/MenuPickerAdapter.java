@@ -12,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.projectpickalunch.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -57,7 +60,8 @@ public class MenuPickerAdapter extends ArrayAdapter implements AdapterView.OnIte
 
         final MenuPickerItem menuPickerItem = (MenuPickerItem) list.get(position);
         viewHolder.menu_picker_restorant_name.setText(menuPickerItem.getRestorant_name());
-        viewHolder.menu_picker_restorant_score.setText(menuPickerItem.getRestorant_score());
+        viewHolder.menu_picker_restorant_score.setText(String.format("%.1f", Float.parseFloat(menuPickerItem.getRestorant_score())));
+
 
         //FireStore에서 이미지 가져와서 뷰에 출력
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -76,8 +80,8 @@ public class MenuPickerAdapter extends ArrayAdapter implements AdapterView.OnIte
                 public void onSuccess(Uri uri) {
                     Glide.with(context.getApplicationContext())
                             .load(uri)
-                            .override(300,300)
-                            .centerCrop()
+                            .override(200,200)
+                            .transform(new CenterCrop(), new RoundedCorners(35))
                             .into(viewHolder.menu_picker_restorant_image);
                 }
             });

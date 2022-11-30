@@ -38,9 +38,12 @@ public class MenuPicker extends AppCompatActivity {
     private boolean isMenuSelected = false; //메뉴선택 변수
 
     //카테고리 버튼
-    CheckBox kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, etcFoodButton, EjrButton, xkdButton;
-
+    CheckBox kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, etcFoodButton, EjrButton, xkdButton, ghlButton;
     CheckBox[] categorySelectButton = {kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, fastFoodButton, EjrButton, xkdButton};
+
+    //키워드 버튼
+    CheckBox aozhaButton, emsemsButton, zkfzkfButton, djfzmsButton, rhthButton, ekfzhaButton, tldtldButton, RnejrButton,
+            qktkrButton, rksvusButton, wjfuaButton, tldnjsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,21 @@ public class MenuPicker extends AppCompatActivity {
         etcFoodButton = (CheckBox) findViewById(R.id.etc_food_button);
         EjrButton = findViewById(R.id.EjrButton);
         xkdButton = findViewById(R.id.xkdButton);
+        ghlButton = findViewById(R.id.ghlButton);
+
+        //키워드 버튼 인플레이팅
+        aozhaButton = (CheckBox) findViewById(R.id.aozhaButton);
+        emsemsButton = (CheckBox) findViewById(R.id.emsemsButton);
+        zkfzkfButton = (CheckBox) findViewById(R.id.zkfzkfButton);
+        djfzmsButton = (CheckBox) findViewById(R.id.djfzmsButton);
+        rhthButton = (CheckBox) findViewById(R.id.rhthButton);
+        ekfzhaButton = (CheckBox) findViewById(R.id.ekfzhaButton);
+        tldtldButton = (CheckBox) findViewById(R.id.tldtldButton);
+        RnejrButton = (CheckBox) findViewById(R.id.RnejrButton);
+        qktkrButton = (CheckBox) findViewById(R.id.qktkrButton);
+        rksvusButton = (CheckBox) findViewById(R.id.rksvusButton);
+        wjfuaButton = (CheckBox) findViewById(R.id.wjfuaButton);
+        tldnjsButton = (CheckBox) findViewById(R.id.tldnjsButton);
 
         //메인화면으로 돌아가기
         menuPickerReturnButton = (ImageButton) findViewById(R.id.menuPickerReturnButton);
@@ -123,6 +141,81 @@ public class MenuPicker extends AppCompatActivity {
             }
         });
 
+        //KeyWordButton 인플레이팅
+        aozhaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        emsemsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        zkfzkfButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        djfzmsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        rhthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        ekfzhaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        tldtldButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        RnejrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        qktkrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        rksvusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        wjfuaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        tldnjsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+
+
         //반복문 적용시 널포인터 오류생김
 /*        for(int i=0; i<categorySelectButton.length; i++){
             categorySelectButton[i].setOnClickListener(new View.OnClickListener() {
@@ -176,11 +269,18 @@ public class MenuPicker extends AppCompatActivity {
         Fragment fr;
         //Bundle로 Fragment에 값 전달을 위한 boolean변수
        boolean[] selectCategoryCheck = {kFoodButton.isChecked(),jFoodButton.isChecked(),cFoodButton.isChecked(),aFoodButton.isChecked()
-               ,fastFoodButton.isChecked(),etcFoodButton.isChecked(), EjrButton.isChecked(), xkdButton.isChecked()};
+               ,fastFoodButton.isChecked(),etcFoodButton.isChecked(), EjrButton.isChecked(), xkdButton.isChecked(), ghlButton.isChecked()};
+
+       boolean[] selectKeywordCheck = {aozhaButton.isChecked(), emsemsButton.isChecked(), zkfzkfButton.isChecked(), djfzmsButton.isChecked(), rhthButton.isChecked(),
+                ekfzhaButton.isChecked(), tldtldButton.isChecked(), RnejrButton.isChecked(),
+                qktkrButton.isChecked(), rksvusButton.isChecked(), wjfuaButton.isChecked(), tldnjsButton.isChecked()};
+
 
         if(kFoodButton.isChecked() || jFoodButton.isChecked() || cFoodButton.isChecked() ||
                 aFoodButton.isChecked() || fastFoodButton.isChecked() || etcFoodButton.isChecked()
-        || EjrButton.isChecked()|| xkdButton.isChecked()){
+        || EjrButton.isChecked()|| xkdButton.isChecked() || ghlButton.isChecked() || aozhaButton.isChecked() || emsemsButton.isChecked()|| zkfzkfButton.isChecked()|| djfzmsButton.isChecked()|| rhthButton.isChecked()||
+                ekfzhaButton.isChecked()|| tldtldButton.isChecked()|| RnejrButton.isChecked()||
+                qktkrButton.isChecked()|| rksvusButton.isChecked()|| wjfuaButton.isChecked()|| tldnjsButton.isChecked()){
             fr = new MenuPickerAfterSelectedFragment();
         }
         else{
@@ -193,8 +293,27 @@ public class MenuPicker extends AppCompatActivity {
         //Bundle로 값 전달
         Bundle bundle = new Bundle();
         bundle.putBooleanArray("selectCategoryCheck", selectCategoryCheck);
+        bundle.putBooleanArray("selectKeywordCheck", selectKeywordCheck);
         fr.setArguments(bundle);
         menuPickerFragmentTransaction.replace(R.id.menuPickerFragment, fr);
+        menuPickerFragmentTransaction.commit();
+
+    }
+    public void switchFragmentForAfter(){
+        Fragment fr2;
+
+        if(aozhaButton.isChecked() || emsemsButton.isChecked()|| zkfzkfButton.isChecked()|| djfzmsButton.isChecked()|| rhthButton.isChecked()||
+                ekfzhaButton.isChecked()|| tldtldButton.isChecked()|| RnejrButton.isChecked()||
+                qktkrButton.isChecked()|| rksvusButton.isChecked()|| wjfuaButton.isChecked()|| tldnjsButton.isChecked()){
+            fr2 = new MenuPickerAfterSelectedFragment();
+        }
+        else{
+            fr2 = new MenuPickerBeforeSelectedFragment();
+        }
+        fr2 = new MenuPickerAfterSelectedFragment();
+        menuPickerFragmentManager = getSupportFragmentManager();
+        menuPickerFragmentTransaction = menuPickerFragmentManager.beginTransaction();
+        menuPickerFragmentTransaction.replace(R.id.menuPickerFragment, fr2);
         menuPickerFragmentTransaction.commit();
 
     }

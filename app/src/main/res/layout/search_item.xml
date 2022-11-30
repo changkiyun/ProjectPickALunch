@@ -15,33 +15,42 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <!--식당 이름 텍스트뷰-->
-    <TextView
-        android:id="@+id/menu_picker_restorant_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="180sp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
 
-        android:text="1. 가타쯔무리"
-        android:textSize="20sp"
-        android:textStyle="bold"
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu_picker_restorant_image" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menu_picker_restorant_image">
+        <!--식당 이름 텍스트뷰-->
+        <TextView
+            android:id="@+id/menu_picker_restorant_name"
+            android:layout_width="100sp"
+            android:layout_height="35sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="식당이름"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever" />
 
-    <!--식당 평점 텍스트뷰-->
-    <TextView
-        android:id="@+id/menu_picker_restorant_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
 
-        android:text="5.0"
-        android:textColor="@color/mainColor"
-        android:textSize="25sp"
-        android:textStyle="bold"
-
-        app:layout_constraintStart_toEndOf="@+id/menu_picker_restorant_name"
-        app:layout_constraintTop_toBottomOf="@+id/menu_picker_restorant_image" />
+        <TextView
+            android:id="@+id/menu_picker_restorant_score"
+            android:layout_width="40sp"
+            android:layout_height="35sp"
+            android:layout_marginStart="20sp"
+            android:text="점수"
+            android:textAlignment="center"
+            android:textColor="@color/mainColor"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
