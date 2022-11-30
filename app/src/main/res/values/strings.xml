@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Project PickALunch</string>
+    <string name="main_menu_picker_txt"><b><font color='#292929'>아래버튼</font>으로\n<font color='#292929'>원하는 메뉴</font>를 찾아보세요!</b></string>
 </resources>

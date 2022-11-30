@@ -60,7 +60,7 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
         fastFoodButton = (CheckBox) parentView.findViewById(R.id.fast_food_button);
         etcFoodButton = (CheckBox) parentView.findViewById(R.id.etc_food_button);
 
-        menuPickerApplyButton = parentView.findViewById(R.id.menuPickerApplyButton);
+//        menuPickerApplyButton = parentView.findViewById(R.id.menuPickerApplyButton);
 
         //Firebase
         arrayList = new ArrayList<>();
@@ -88,7 +88,6 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                         for (int j = 0; j < arrayList.size(); j++) {
                             if (arrayList.get(j).getRestorant_category().equals(category[i])) {
                                 pickedMenuList.add(arrayList.get(j));
-
                             }
                         }
                     }
