@@ -55,7 +55,6 @@ public class ReviewAdd extends AppCompatActivity {
     private final DatabaseReference restaurantDatabase = root.getReference("식당");   //식당 db
     private final DatabaseReference restaurantReference = root.getReference().child("식당"); //식당 db Child
     private final FirebaseStorage storage = FirebaseStorage.getInstance();  //스토리지
-    private DatabaseReference imgReference;
     private StorageReference restaurantStorage;
 
     //뷰 선언
@@ -81,6 +80,8 @@ public class ReviewAdd extends AppCompatActivity {
     private float priceRate;
     private float avgRate;
     private String comment;
+    private String key;
+    private long UID;
 
     private static ArrayList<MenuReviewItem> menuReviewItems;
     private static MenuDetailReviewAdapter menuDetailReviewAdapter;
@@ -101,6 +102,7 @@ public class ReviewAdd extends AppCompatActivity {
         Intent intent = getIntent();
         restaurantName = intent.getStringExtra("restorant_name");
         userName = KakaoLoginActivity.userNickName;
+        UID = KakaoLoginActivity.userID;
 
         review_add_return_button = findViewById(R.id.review_add_return_button);
         review_add_button = findViewById(R.id.review_add_button);
@@ -116,6 +118,7 @@ public class ReviewAdd extends AppCompatActivity {
         commentEditText = findViewById(R.id.commentEditText);
         progressBar = findViewById(R.id.progressBar);
 
+        review_add_button.setEnabled(true);
         menuReviewCount = 0;
         progressBar.setVisibility(View.INVISIBLE);
         restaurantNameTextView.setText(restaurantName);
@@ -126,15 +129,19 @@ public class ReviewAdd extends AppCompatActivity {
         imageReviewRecyclerView.setHasFixedSize(true);
         imageReviewRecyclerView.setLayoutManager(new LinearLayoutManager(ReviewAdd.this, LinearLayoutManager.HORIZONTAL, true));
 
+
+
         //리뷰추가 버튼 TODO : 수정전
         review_add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                review_add_button.setEnabled(false);
                 tasteRate = tasteRatingBar.getRating();
                 cleanRate = cleanRatingBar.getRating();
                 kindRate = kindnessRatingBar.getRating();
                 priceRate = priceRatingBar.getRating();
                 comment = commentEditText.getText().toString();
+                key = restaurantReference.push().getKey();
                 avgRate = getAvg(new float[]{tasteRate, cleanRate, kindRate, priceRate});
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HHmmss");
                 Date now = new Date();
@@ -146,7 +153,9 @@ public class ReviewAdd extends AppCompatActivity {
                         String.valueOf(kindRate),
                         String.valueOf(cleanRate),
                         String.valueOf(priceRate),
-                        String.valueOf(avgRate)
+                        String.valueOf(avgRate),
+                        key,
+                        UID
                 );
                 uploadToFireBase(uriList, reviewItem);
                 setAvgScore();
@@ -198,15 +207,15 @@ public class ReviewAdd extends AppCompatActivity {
     private void uploadToFireBase(ArrayList<Uri> uriList, ReviewItem reviewItem) {
         //imgReference = restaurantDatabase.child(restaurantName).child("restorant_detail_image");
         restaurantStorage = storage.getReference(restaurantName);
-        String id = restaurantReference.push().getKey();
+
 
         //리뷰 등록
-        restaurantReference.child(restaurantName).child("restorant_review").child(id).setValue(reviewItem);
+        restaurantReference.child(restaurantName).child("restorant_review").child(key).setValue(reviewItem);
 
         for (int i = 0; i < menuReviewCount; i++)
         {
             for (int j = 0; j < menuReviewItems.get(i).menuRatingItems.size(); j++) {
-                restaurantReference.child(restaurantName).child("restorant_review").child(id).child("menu_review")
+                restaurantReference.child(restaurantName).child("restorant_review").child(key).child("menu_review")
                         .child(menuReviewItems.get(i).getMenuName()).child(menuReviewItems.get(i).menuRatingItems.get(j).getRateName())
                         .setValue(menuReviewItems.get(i).menuRatingItems.get(j).getRate());
             }
@@ -220,17 +229,24 @@ public class ReviewAdd extends AppCompatActivity {
             {
                 //사진 이름을 "식당이름_유저이름_날짜.확장자"로 저장
                 Date now = new Date();
-                StorageReference fileRef = restaurantStorage.child(userName)
+                StorageReference fileRef = restaurantStorage.child(userName + ":" + UID)
                         .child(restaurantName + "_" + userName + "_" + dateFormat.format(now)+ "_"+ i + "." + getFileExtension(uriList.get(i)));
+                int finalI = i;
+                int finalI1 = i;
                 fileRef.putFile(uriList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                restaurantReference.child(restaurantName).child("restorant_review").child(id).child("ImageSrc").push()
+                                String imgKey =  restaurantReference.child(restaurantName).child("restorant_review").child(key).child("ImageSrc").push().getKey();
+                                restaurantReference.child(restaurantName).child("restorant_review").child(key).child("ImageSrc").child(imgKey)
                                         .child("imageUrl").setValue(uri.toString());
+                                restaurantReference.child(restaurantName).child("restorant_review").child(key).child("ImageSrc").child(imgKey)
+                                        .child("fileName").setValue(restaurantName + "_" + userName + "_" + dateFormat.format(now)+ "_"+ finalI + "." + getFileExtension(uriList.get(finalI1)));
                                 progressBar.setVisibility(View.INVISIBLE);
+                                progressBar.bringToFront();
+
                                 finish();
                             }
                         });

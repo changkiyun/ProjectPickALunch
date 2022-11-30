@@ -126,6 +126,9 @@ public class MenuDetailReviewAdapter extends RecyclerView.Adapter<MenuDetailRevi
                     ReviewAdd.deleteMenu(getAdapterPosition());
                     ReviewAdd.review_add_button.setEnabled(true);
                     ReviewAdd.menuPlusButton.setEnabled(true);
+                    menuNameEditText.setEnabled(true);
+                    menuNameEditText.setText(null);
+                    menuDetailReviewLayout.setVisibility(View.INVISIBLE);
                 }
             });
 

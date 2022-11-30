@@ -20,19 +20,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.login_api.KakaoLoginActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class FullReviewActivity extends AppCompatActivity {
 
     private final FirebaseDatabase root = FirebaseDatabase.getInstance();
     private final DatabaseReference restaurantReference = root.getReference().child("식당");
     private DatabaseReference detail_images;
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();  //스토리지
+    private StorageReference restaurantStorage;
 
     ImageButton returnBtn;
     ImageButton deleteBtn;
@@ -51,6 +57,9 @@ public class FullReviewActivity extends AppCompatActivity {
     String mainText;
     String reviewDate;
     String restaurantName;
+    long UID;
+    String key;
+    ArrayList<String> fileName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +67,9 @@ public class FullReviewActivity extends AppCompatActivity {
         setContentView(R.layout.full_review);
 
         Intent intent = getIntent();
+        fileName = intent.getStringArrayListExtra("fileName");
+        key = intent.getStringExtra("key");
+        UID = intent.getLongExtra("UID", 0);
         userName = intent.getStringExtra("userName");
         score = intent.getStringExtra("score");
         mainText = intent.getStringExtra("mainText");
@@ -85,14 +97,14 @@ public class FullReviewActivity extends AppCompatActivity {
         imageAdapter = new ImageRecyclerAdapter(FullReviewActivity.this, imageList);
         imageRecyclerView.setAdapter(imageAdapter);
 
-        detail_images = restaurantReference.child(restaurantName).child("restorant_detail_image").getRef();
+        detail_images = restaurantReference.child(restaurantName).child("restorant_review").getRef();
         detail_images.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 imageList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    RecyclerImageItem model = dataSnapshot.getValue(RecyclerImageItem.class);
-                    imageList.add(model);
+                for (DataSnapshot dataSnapshot : snapshot.child(key).child("ImageSrc").getChildren()) {
+                    RecyclerImageItem reviewImgSrc = dataSnapshot.getValue(RecyclerImageItem.class);
+                    imageList.add(reviewImgSrc);
                 }
                 imageAdapter.notifyDataSetChanged();
             }
@@ -114,6 +126,15 @@ public class FullReviewActivity extends AppCompatActivity {
         
         //TODO : 유저정보와 일치할경우에만 삭제 가능하도록 변경예정
         deleteBtn = findViewById(R.id.deleteBtn);
+        Log.e("uid", String.valueOf(UID));
+        if (KakaoLoginActivity.userID == UID)
+            deleteBtn.setVisibility(View.VISIBLE);
+        else
+            deleteBtn.setVisibility(View.INVISIBLE);
+
+        restaurantStorage = storage.getReference(restaurantName);
+
+        Log.e("filename", fileName.toString());
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +146,9 @@ public class FullReviewActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //리뷰 삭제및 토스트메시지 출력
                         Toast.makeText(FullReviewActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                        restaurantReference.child(restaurantName).child("restorant_review").child(userName).setValue(null);
+                        restaurantReference.child(restaurantName).child("restorant_review").child(key).setValue(null);
+                        for (int j = 0; j < fileName.size(); j++)
+                            restaurantStorage.child(userName + ":" + UID).child(fileName.get(j)).delete();
                         getAvgScore();
                         //isNoReview();
                         finish();
@@ -152,7 +175,7 @@ public class FullReviewActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 scoreList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    String score = dataSnapshot.child("review_rate").getValue(String.class);
+                    String score = dataSnapshot.child("avgRate").getValue(String.class);
                     scoreList.add(score);
 
                         float avgScore;
@@ -174,7 +197,7 @@ public class FullReviewActivity extends AppCompatActivity {
             }
         });
     }
-    public void isNoReview() {
+    /*public void isNoReview() {
         restaurantReference.child(restaurantName).child("restorant_review").getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -194,5 +217,5 @@ public class FullReviewActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 }

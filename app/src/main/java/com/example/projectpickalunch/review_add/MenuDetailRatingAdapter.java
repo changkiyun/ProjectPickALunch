@@ -38,6 +38,7 @@ public class MenuDetailRatingAdapter extends RecyclerView.Adapter<MenuDetailRati
     @Override
     public void onBindViewHolder(@NonNull MenuDetailRatingAdapter.ReviewHolder holder, int position) {
         holder.rateName.setText(menuRatingItems.get(position).getRateName());
+        menuRatingItems.get(position).setRate(5.0F);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class MenuDetailRatingAdapter extends RecyclerView.Adapter<MenuDetailRati
             thirdRbtn = itemView.findViewById(R.id.Thirdadio);
 
             radioGroup.check(thirdRbtn.getId());
-            menuRatingItems.get(getAdapterPosition()).setRate(5.0F);
+
 
             firstRBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

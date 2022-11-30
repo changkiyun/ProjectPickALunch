@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -88,6 +89,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     ArrayList<RecyclerImageItem> imageList;
     ArrayList<ReviewRecyclerItem> reviewList;
     ArrayList<RecyclerImageItem> reviewImageList;
+    ArrayList<ReviewImageItem> reviewImageItemList;
 
     ImageRecyclerAdapter imageAdapter;
     ReviewRecyclerAdapter reviewRecyclerAdapter;
@@ -204,25 +206,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         imageAdapter = new ImageRecyclerAdapter(Sickdang_Jeongbo.this, imageList);
         imageRecyclerView.setAdapter(imageAdapter);
 
-        detail_images = restaurantReference.child(sickdang_title).child("restorant_detail_image").getRef();
-
-        detail_images.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                imageList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    RecyclerImageItem model = dataSnapshot.getValue(RecyclerImageItem.class);
-                    imageList.add(model);
-                }
-                imageAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         //리뷰
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
         reviewRecyclerView = findViewById(R.id.reviewRecyclerView);
@@ -231,45 +214,50 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
         reviewList = new ArrayList<>();
         reviewImageList = new ArrayList<>();
+        reviewImageItemList = new ArrayList<>();
 
-        reviewImageAdapter = new ImageRecyclerAdapter(Sickdang_Jeongbo.this, reviewImageList);
-        reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageAdapter);
-        reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
 
-        reviewReference = restaurantReference.child(sickdang_title).child("restorant_review").getRef();
-        review_images = restaurantReference.child(sickdang_title).child("restorant_detail_image").getRef();
 
-        /*reviewReference.addValueEventListener(new ValueEventListener() {
+        reviewReference = restaurantReference.child(sickdang_title).child("restorant_review");
+
+        reviewReference.getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 reviewList.clear();
+                reviewImageItemList.clear();
+                imageList.clear();
+                String key = null;
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    reviewImageList.clear();
+                    key  = dataSnapshot.getKey();
                     ReviewRecyclerItem model = dataSnapshot.getValue(ReviewRecyclerItem.class);
                     reviewList.add(model);
+
+                    for (DataSnapshot imageSrc : dataSnapshot.child("ImageSrc").getChildren()) {
+                        RecyclerImageItem totImgSrc = imageSrc.getValue(RecyclerImageItem.class);
+                        imageList.add(totImgSrc);
+                    }
+                    imageAdapter.notifyDataSetChanged();
+
+                    for (DataSnapshot imageSrc : snapshot.child(key).child("ImageSrc").getChildren()) {
+                        RecyclerImageItem reviewImgSrc = imageSrc.getValue(RecyclerImageItem.class);
+                        reviewImageList.add(reviewImgSrc);
+                        Log.e("test", key +  reviewImgSrc.getFileName());
+                    }
+                    reviewImageItemList.add(new ReviewImageItem(key, reviewImageList, new ImageRecyclerAdapter(Sickdang_Jeongbo.this, new ArrayList<RecyclerImageItem>(reviewImageList))));
+
                 }
+
+                reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageItemList);
                 reviewRecyclerAdapter.notifyDataSetChanged();
+
+                reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });*/
-
-        review_images.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                reviewImageList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    RecyclerImageItem model = dataSnapshot.getValue(RecyclerImageItem.class);
-                    reviewImageList.add(model);
-                }
-                reviewImageAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                reviewImageList.clear();
             }
         });
 
