@@ -55,6 +55,14 @@
         android:text="테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세."
        />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detailItemRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="60sp"
+            app:layout_constraintTop_toBottomOf="@id/mainText"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewImageRecyclerView"
         android:layout_marginTop = "20sp"
@@ -62,7 +70,7 @@
         android:layout_height="wrap_content"
         android:scrollbars="horizontal"
         android:scrollbarFadeDuration="@integer/material_motion_duration_short_1"
-        app:layout_constraintTop_toBottomOf="@id/mainText" />
+        app:layout_constraintTop_toBottomOf="@id/detailItemRecyclerView" />
 
     <TextView
         android:id="@+id/reviewDate"

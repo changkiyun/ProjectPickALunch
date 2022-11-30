@@ -1,17 +1,35 @@
 package com.example.projectpickalunch.review_add;
 
+import android.net.Uri;
+
+import java.util.ArrayList;
+
 public class ReviewItem {
 
     private String user_name;
     private String restaurant_review;
-    private String review_rate;
+    private String tasteRate;
+    private String kindRate;
+    private String cleanRate;
+    private String priceRate;
+    private String avgRate;
     private String review_date;
+    private String key;
+    private long UID;
 
-    ReviewItem(String user_name, String restaurant_review, String review_rate, String review_date){
+    ReviewItem(String user_name, String restaurant_review, String review_date,
+               String tasteRate, String kindRate, String cleanRate, String priceRate, String avgRate, String key, long UID)
+    {
         this.user_name = user_name;
         this.restaurant_review = restaurant_review;
-        this.review_rate = review_rate;
+        this.tasteRate = tasteRate;
+        this.cleanRate = cleanRate;
+        this.kindRate = kindRate;
+        this.priceRate = priceRate;
+        this.avgRate = avgRate;
         this.review_date = review_date;
+        this.key = key;
+        this.UID = UID;
     }
 
     public String getUser_name() {
@@ -30,17 +48,67 @@ public class ReviewItem {
         this.restaurant_review = restaurant_review;
     }
 
-    public String getReview_rate() {
-        return review_rate;
+    public String getTasteRate() {
+        return tasteRate;
     }
 
-    public void setReview_rate(String review_rate) {
-        this.review_rate = review_rate;
+    public void setTasteRate(String tasteRate) {
+        this.tasteRate = tasteRate;
     }
 
-    public String getReview_date() { return review_date; }
+    public String getKindRate() {
+        return kindRate;
+    }
+
+    public void setKindRate(String kindRate) {
+        this.kindRate = kindRate;
+    }
+
+    public String getCleanRate() {
+        return cleanRate;
+    }
+
+    public void setCleanRate(String cleanRate) {
+        this.cleanRate = cleanRate;
+    }
+
+    public String getPriceRate() {
+        return priceRate;
+    }
+
+    public void setPriceRate(String priceRate) {
+        this.priceRate = priceRate;
+    }
+
+    public String getAvgRate() {
+        return avgRate;
+    }
+
+    public void setAvgRate(String avgRate) {
+        this.avgRate = avgRate;
+    }
+
+    public String getReview_date() {
+        return review_date;
+    }
 
     public void setReview_date(String review_date) {
         this.review_date = review_date;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public long getUID() {
+        return UID;
+    }
+
+    public void setUID(long UID) {
+        this.UID = UID;
     }
 }

@@ -11,9 +11,8 @@ dependencyResolutionManagement {
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
 
         //naverMap
-        maven {
-            url 'https://naver.jfrog.io/artifactory/maven/'
-        }
+        maven { url 'https://naver.jfrog.io/artifactory/maven/' }
+
     }
 }
 rootProject.name = "Project PickALunch"
