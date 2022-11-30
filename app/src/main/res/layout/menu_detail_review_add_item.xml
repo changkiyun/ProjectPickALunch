@@ -56,35 +56,35 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="간"/>
+                android:text="매콤함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_2"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="맵기"/>
+                android:text="든든함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_3"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="양"/>
+                android:text="칼칼함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_4"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="기타"/>
+                android:text="얼큰함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_5"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="등등"/>
+                android:text="고소함"/>
         </LinearLayout>
 
         <LinearLayout
@@ -95,35 +95,47 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="여러"/>
+                android:text="달콤함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_7"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가지"/>
+                android:text="싱싱함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_8"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="선택"/>
+                android:text="꾸덕함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_9"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="평가"/>
+                android:text="바삭함"/>
 
             <CheckBox
                 android:id="@+id/checkbox_10"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="사항들"/>
+                android:text="간편함"/>
+            <CheckBox
+                android:id="@+id/checkbox_11"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가성비"/>
+            <CheckBox
+                android:id="@+id/checkbox_12"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시원함"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
