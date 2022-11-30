@@ -71,4 +71,8 @@ dependencies {
 
     //TedPermission 위치권한 요청
     implementation 'io.github.ParkSangGwon:tedpermission-rx3:3.3.0'
+
+    //Algolia 검색 API
+    implementation 'com.algolia:algoliasearch-android:3.+'
+
 }

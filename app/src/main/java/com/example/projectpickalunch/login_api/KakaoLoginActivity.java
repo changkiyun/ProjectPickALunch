@@ -34,6 +34,8 @@ public class KakaoLoginActivity extends AppCompatActivity {
     public static String userEmail;
     public static String userNickName;
 
+    public static String userId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,7 @@ public class KakaoLoginActivity extends AppCompatActivity {
                     updateKakaoLoginUi();
                     Log.v("aaa", "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
                 }
+
                 if (throwable != null) {
                     //updateKakaoLoginUi();
                     Log.v("aaa", "로그인 실패 " + throwable.getLocalizedMessage());
@@ -81,6 +84,7 @@ public class KakaoLoginActivity extends AppCompatActivity {
                     //유저정보 정상 전달시
                     // 유저의 아이디
                     Log.d(TAG, "invoke: id" + user.getId());
+                    userId = user.getKakaoAccount().getProfile().getNickname();
                     // 유저의 어카운트정보에 이메일
                     Log.d(TAG, "invoke: email : " + user.getKakaoAccount().getEmail());
                     // 유저의 어카운트 정보의 프로파일에 닉네임

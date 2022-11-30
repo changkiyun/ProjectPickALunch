@@ -1,6 +1,5 @@
 package com.example.projectpickalunch.restorant_info;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -8,22 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -31,32 +21,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.restorant_add.RestorantAdd;
+import com.example.projectpickalunch.review_add.MenuRatingItem;
+import com.example.projectpickalunch.review_add.MenuReviewItem;
 import com.example.projectpickalunch.review_add.ReviewAdd;
-import com.example.projectpickalunch.user_information.NickName;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.common.collect.ArrayTable;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Sickdang_Jeongbo extends AppCompatActivity {
     //파이어베이스 참조
@@ -88,6 +68,10 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     ArrayList<RecyclerImageItem> imageList;
     ArrayList<ReviewRecyclerItem> reviewList;
     ArrayList<RecyclerImageItem> reviewImageList;
+    ArrayList<ReviewImageItem> reviewImageItemList;
+    ArrayList<MenuRatingItem> menuRatingItemList;
+    ArrayList<MenuReviewItem> menuReviewItemList;
+    ArrayList<MenuRecyclerAdapter> menuRecyclerAdapterList;
 
     ImageRecyclerAdapter imageAdapter;
     ReviewRecyclerAdapter reviewRecyclerAdapter;
@@ -179,13 +163,13 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
-        //
+        
+        //TODO : 액티비티 실행시 맵뷰 꺼지는거
         mapView = new MapView(this);
 
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.kakaoMapView);
         mapViewContainer.addView(mapView);
-        //
-
+        
         marker = new MapPOIItem();
 
 
@@ -204,25 +188,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         imageAdapter = new ImageRecyclerAdapter(Sickdang_Jeongbo.this, imageList);
         imageRecyclerView.setAdapter(imageAdapter);
 
-        detail_images = restaurantReference.child(sickdang_title).child("restorant_detail_image").getRef();
-
-        detail_images.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                imageList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    RecyclerImageItem model = dataSnapshot.getValue(RecyclerImageItem.class);
-                    imageList.add(model);
-                }
-                imageAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         //리뷰
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
         reviewRecyclerView = findViewById(R.id.reviewRecyclerView);
@@ -231,23 +196,61 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
         reviewList = new ArrayList<>();
         reviewImageList = new ArrayList<>();
+        reviewImageItemList = new ArrayList<>();
+        menuRatingItemList = new ArrayList<>();
+        menuReviewItemList = new ArrayList<>();
+        menuRecyclerAdapterList = new ArrayList<>();
 
-        reviewImageAdapter = new ImageRecyclerAdapter(Sickdang_Jeongbo.this, reviewImageList);
-        reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageAdapter);
-        reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
+        reviewReference = restaurantReference.child(sickdang_title).child("restorant_review");
 
-        reviewReference = restaurantReference.child(sickdang_title).child("restorant_review").getRef();
-        review_images = restaurantReference.child(sickdang_title).child("restorant_detail_image").getRef();
-
-        reviewReference.addValueEventListener(new ValueEventListener() {
+        reviewReference.getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 reviewList.clear();
+                reviewImageItemList.clear();
+                menuRecyclerAdapterList.clear();
+                imageList.clear();
+                String key = null;
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    reviewImageList.clear();
+                    menuReviewItemList.clear();
+                    key  = dataSnapshot.getKey();
                     ReviewRecyclerItem model = dataSnapshot.getValue(ReviewRecyclerItem.class);
                     reviewList.add(model);
+
+                    for (DataSnapshot imageSrc : dataSnapshot.child("ImageSrc").getChildren()) {
+                        RecyclerImageItem totImgSrc = imageSrc.getValue(RecyclerImageItem.class);
+                        imageList.add(totImgSrc);
+                    }
+                    imageAdapter.notifyDataSetChanged();
+
+                    for (DataSnapshot imageSrc : snapshot.child(key).child("ImageSrc").getChildren()) {
+                        RecyclerImageItem reviewImgSrc = imageSrc.getValue(RecyclerImageItem.class);
+                        reviewImageList.add(reviewImgSrc);
+                        Log.e("test", key +  reviewImgSrc.getFileName());
+                    }
+
+                    for (DataSnapshot snapshot1 : snapshot.child(key).child("menu_review").getChildren()) {
+                        String menuName = snapshot1.getKey();
+                        menuRatingItemList.clear();
+                        for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                            String rateName = snapshot2.getKey();
+                            float rate = snapshot2.getValue(float.class);
+                            menuRatingItemList.add(new MenuRatingItem(rateName, rate));
+                        }
+                        menuReviewItemList.add(new MenuReviewItem(menuName, menuRatingItemList));
+                    }
+                    Log.e("test1" , menuRatingItemList.toString());
+                    menuRecyclerAdapterList.add(new MenuRecyclerAdapter(Sickdang_Jeongbo.this, new ArrayList<MenuReviewItem>(menuReviewItemList)));
+                    reviewImageItemList.add(new ReviewImageItem(key, reviewImageList, new ImageRecyclerAdapter(Sickdang_Jeongbo.this, new ArrayList<RecyclerImageItem>(reviewImageList))));
+
                 }
+
+                reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageItemList, menuRecyclerAdapterList);
                 reviewRecyclerAdapter.notifyDataSetChanged();
+
+                reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
             }
 
             @Override
@@ -256,54 +259,6 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             }
         });
 
-        review_images.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                reviewImageList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    RecyclerImageItem model = dataSnapshot.getValue(RecyclerImageItem.class);
-                    reviewImageList.add(model);
-                }
-                reviewImageAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                reviewImageList.clear();
-            }
-        });
-
-
-        //사진 업로드 테스트
-        //TODO: 리뷰 및 이미지 업로드 기능 정식으로 추가할 떄 사용할 가능성 있음
-        Button testUploadBtn = findViewById(R.id.testBtn);
-        Button testSelectBtn = findViewById(R.id.testSelectBtn);
-        testImg = findViewById(R.id.testImg);
-        progressBar = findViewById(R.id.testbar);
-        progressBar.setVisibility(View.INVISIBLE);
-
-        //사진 선택 버튼 리스너
-        testSelectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent gallaryIntent = new Intent();
-                gallaryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                gallaryIntent.setType("image/");
-                activityResult.launch(gallaryIntent);
-            }
-        });
-
-        //사진 업로드 버튼 리스너
-        testUploadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (imageUri != null) {
-                    uploadToFireBase(imageUri);
-                } else {
-                    Toast.makeText(Sickdang_Jeongbo.this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         //뒤로가기 버튼
         ImageButton btnReturn = (ImageButton) findViewById(R.id.returnBtn);
@@ -353,64 +308,4 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         return TestName;
     }
 
-    //사진을 데이터베이스와 스토리지에 저장하는 메소드
-    private void uploadToFireBase(Uri uri) {
-        imgReference = restaurantDatabase.child(sickdang_title).child("restorant_detail_image");
-        restaurantStorage = storage.getReference(sickdang_title);
-
-        //현재 시간
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'_'HHmmss");
-        Date now = new Date();
-
-        //사진 이름을 "식당이름_유저이름_날짜.확장자"로 저장
-        StorageReference fileRef = restaurantStorage.child(getUserName())
-                .child(sickdang_title + "_" + getUserName() + "_" + dateFormat.format(now) + "." + getFileExtension(uri));
-        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        RecyclerImageItem model = new RecyclerImageItem(uri.toString());
-                        String modelid = imgReference.push().getKey();
-                        imgReference.child(modelid).setValue(model);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(Sickdang_Jeongbo.this, "업로드 성공", Toast.LENGTH_SHORT).show();
-                        testImg.setImageResource(0);
-                    }
-                });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Sickdang_Jeongbo.this, "업로드 실패", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //파일 타입을 가져오는 메소드
-    private String getFileExtension(Uri uri) {
-        ContentResolver cr = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-
-        return mime.getExtensionFromMimeType(cr.getType(uri));
-    }
-
-    //사진 가져오기
-    private ActivityResultLauncher<Intent> activityResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        imageUri = result.getData().getData();
-                        testImg.setImageURI(imageUri);
-                    }
-                }
-            });
 }

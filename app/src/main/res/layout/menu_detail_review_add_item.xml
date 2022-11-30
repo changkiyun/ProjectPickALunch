@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:text="메뉴 이름"
+            />
+        <EditText
+            android:id="@+id/menuNameEditText"
+            android:layout_weight="2"
+            android:hint="ex) 김치찌개"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_marginLeft="20sp"
+            android:padding="5sp"
+            android:id="@+id/menuConfirmButton"
+            android:layout_weight="0.5"
+            android:text="확인"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_marginLeft="10sp"
+            android:padding="5sp"
+            android:id="@+id/menuDeleteButton"
+            android:layout_weight="0.5"
+            android:text="삭제"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/menuDetailReviewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkbox_1"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="매콤함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"
+                />
+
+            <CheckBox
+                android:id="@+id/checkbox_2"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="든든함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_3"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="칼칼함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_4"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="얼큰함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkbox_5"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="고소함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+            <CheckBox
+                android:id="@+id/checkbox_6"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="달콤함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+            <CheckBox
+                android:id="@+id/checkbox_7"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="싱싱함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_8"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="꾸덕함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox_9"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="바삭함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_10"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="간편함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+            <CheckBox
+                android:id="@+id/checkbox_11"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="가성비"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+            <CheckBox
+                android:id="@+id/checkbox_12"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="시원함"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize ="1px"
+                android:singleLine="false"
+                android:paddingVertical="5sp"
+                android:layout_margin="5sp"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/selector_category_korea_food"
+                android:textColor="@drawable/selector_category_txt_color"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menuRatingRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/menuReviewSaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="저장"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

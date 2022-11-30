@@ -58,6 +58,7 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
     }
 
     @Override
+    //TODO : 사진 밖에서 가져오기
     public void onBindViewHolder(@NonNull RankingGridAdapter.RankingViewHolder holder, int position) {
         score = Float.parseFloat(restauranatlist.get(position).getRestorant_score());
         StorageReference getRestorantImage = storageReference.child(restauranatlist.get(position).getRestorant_image_src());
@@ -75,6 +76,7 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
         holder.nameTextView.setText(restauranatlist.get(position).getRestorant_name());
         holder.scoreTextView.setText(String.format("%.1f", score));
         holder.rankTextView.setText(position+1 + ".");
+        holder.nameTextView.setSelected(true);
     }
 
     @Override
@@ -98,6 +100,8 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
             mImageView = rankingView.findViewById(R.id.restorant_image);
             nameTextView = rankingView.findViewById(R.id.restorant_name);
             scoreTextView = rankingView.findViewById(R.id.restorant_score);
+
+            nameTextView.setSelected(true);
 
             rankingView.setOnClickListener(new View.OnClickListener() {
                 @Override
