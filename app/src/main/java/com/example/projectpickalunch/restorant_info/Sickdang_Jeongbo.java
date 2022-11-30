@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.review_add.MenuRatingItem;
 import com.example.projectpickalunch.review_add.MenuReviewItem;
@@ -118,6 +120,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             public void onSuccess(Uri uri) {
                 Glide.with(Sickdang_Jeongbo.this)
                         .load(uri)
+                        .transform(new CenterCrop(), new RoundedCorners(35))
                         .centerCrop()
                         .into(mainImg);
             }

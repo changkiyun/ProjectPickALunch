@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10sp"
+    android:paddingHorizontal="20sp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingVertical="10sp"
         android:id="@+id/btnLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,18 +20,20 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10sp"
             android:background="#ffffff"
-            android:src="@drawable/return_button"
+            android:src="@drawable/return_cmong"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/returnBtn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:text="뒤로가기"
             />
 
@@ -69,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="점수"
+            android:drawableStart="@drawable/ic_star"
             android:textColor="@color/mainColor"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -76,6 +80,12 @@
             app:layout_constraintRight_toRightOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginVertical="12dp"
+        android:background="#EEEEEE" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -87,6 +97,7 @@
             android:layout_height="wrap_content"
             >
             <TextView
+                android:layout_marginVertical="10sp"
                 android:id="@+id/mainText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,14 +108,19 @@
                 android:text="테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.테스트 문장입니다. 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세. 남산위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세."
                 />
 
+
             <LinearLayout
+                android:layout_marginTop="50sp"
+                android:layout_marginBottom ="10sp"
                 android:id="@+id/rateLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/mainText">
 
+
                 <LinearLayout
+                    android:layout_marginVertical="5sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -130,6 +146,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginVertical="5sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -155,6 +172,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginVertical="5sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -180,6 +198,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginVertical="5sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -202,11 +221,20 @@
                         android:textSize="20sp"
                         android:text=""/>
 
+
+
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginVertical="12dp"
+                    android:background="#EEEEEE" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginVertical="10sp"
                 android:id="@+id/detailItemRecyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
