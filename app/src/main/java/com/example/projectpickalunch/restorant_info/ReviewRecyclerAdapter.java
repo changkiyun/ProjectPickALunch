@@ -29,15 +29,14 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
 
     Context context;
     ArrayList<ReviewRecyclerItem> reviewlist = new ArrayList<>();
-
-    ImageRecyclerAdapter reviewImageAdapter;
+    ArrayList<ReviewImageItem> itemList = new ArrayList<>();
     String sickdang_title;
 
-    public ReviewRecyclerAdapter(Context context, ArrayList<ReviewRecyclerItem> reviewlist, String sickdang_title, ImageRecyclerAdapter reviewImageAdapter) {
+    public ReviewRecyclerAdapter(Context context, ArrayList<ReviewRecyclerItem> reviewlist, String sickdang_title, ArrayList<ReviewImageItem> itemList) {
         this.context = context;
         this.reviewlist = reviewlist;
         this.sickdang_title = sickdang_title;
-        this.reviewImageAdapter = reviewImageAdapter;
+        this.itemList = itemList;
     }
 
     @NonNull
@@ -51,11 +50,16 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull ReviewRecyclerAdapter.ReviewViewHolder holder, int pos) {
         holder.userName.setText(reviewlist.get(pos).getUser_name());
-        holder.score.setText(reviewlist.get(pos).getReview_rate());
+        holder.score.setText(String.format("%.1f", Float.parseFloat(reviewlist.get(pos).getAvgRate())));
         holder.reviewDate.setText(reviewlist.get(pos).getReview_date().substring(0, reviewlist.get(pos).getReview_date().indexOf(":")));
         holder.mainText.setText(reviewlist.get(pos).getRestaurant_review());
 
-        holder.reviewImageRecyclerView.setAdapter(reviewImageAdapter);
+        ImageRecyclerAdapter adapter = itemList.get(pos).getAdapter();
+
+
+
+        holder.reviewImageRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -69,6 +73,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
         TextView reviewDate;
         TextView mainText;
         RecyclerView reviewImageRecyclerView;
+        RecyclerView detailItemRecyclerView;
 
         public ReviewViewHolder(@NonNull View reviewView) {
             super(reviewView);
@@ -79,23 +84,37 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
             reviewDate = reviewView.findViewById(R.id.reviewDate);
             mainText = reviewView.findViewById(R.id.mainText);
             reviewImageRecyclerView = reviewView.findViewById(R.id.reviewImageRecyclerView);
+            detailItemRecyclerView = reviewView.findViewById(R.id.detailItemRecyclerView);
+
 
             LinearLayoutManager layoutManager3 = new LinearLayoutManager(context);
+            LinearLayoutManager layoutManager4 = new LinearLayoutManager(context);
             reviewImageRecyclerView.setLayoutManager(layoutManager3);
+            detailItemRecyclerView.setLayoutManager(layoutManager4);
             reviewImageRecyclerView.setHasFixedSize(true);
+            detailItemRecyclerView.setHasFixedSize(true);
             layoutManager3.setOrientation(RecyclerView.HORIZONTAL);
+            layoutManager4.setOrientation(RecyclerView.HORIZONTAL);
 
             reviewView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition() ;
                     if (pos != RecyclerView.NO_POSITION) {
+                        ArrayList<String> fileName = new ArrayList<>();
                         Intent fullReview = new Intent(context, FullReviewActivity.class);
+                            for (int i = 0; i < itemList.get(pos).getImageList().size(); i++) {
+                                fileName.add(itemList.get(pos).getImageList().get(i).getFileName());
+                            }
+
+                        fullReview.putExtra("fileName", fileName);
+                        fullReview.putExtra("UID", reviewlist.get(pos).getUID());
                         fullReview.putExtra("userName",reviewlist.get(pos).getUser_name());
-                        fullReview.putExtra("score",reviewlist.get(pos).getReview_rate());
+                        fullReview.putExtra("score",reviewlist.get(pos).getAvgRate());
                         fullReview.putExtra("mainText",reviewlist.get(pos).getRestaurant_review());
                         fullReview.putExtra("reviewDate", reviewlist.get(pos).getReview_date());
                         fullReview.putExtra("restaurantName", sickdang_title);
+                        fullReview.putExtra("key", reviewlist.get(pos).getKey());
                         context.startActivity(fullReview);
                     }
                 }

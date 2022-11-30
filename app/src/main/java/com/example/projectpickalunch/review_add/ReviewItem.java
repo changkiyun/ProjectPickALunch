@@ -14,9 +14,11 @@ public class ReviewItem {
     private String priceRate;
     private String avgRate;
     private String review_date;
+    private String key;
+    private long UID;
 
     ReviewItem(String user_name, String restaurant_review, String review_date,
-               String tasteRate, String kindRate, String cleanRate, String priceRate, String avgRate)
+               String tasteRate, String kindRate, String cleanRate, String priceRate, String avgRate, String key, long UID)
     {
         this.user_name = user_name;
         this.restaurant_review = restaurant_review;
@@ -26,6 +28,8 @@ public class ReviewItem {
         this.priceRate = priceRate;
         this.avgRate = avgRate;
         this.review_date = review_date;
+        this.key = key;
+        this.UID = UID;
     }
 
     public String getUser_name() {
@@ -90,5 +94,21 @@ public class ReviewItem {
 
     public void setReview_date(String review_date) {
         this.review_date = review_date;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public long getUID() {
+        return UID;
+    }
+
+    public void setUID(long UID) {
+        this.UID = UID;
     }
 }
