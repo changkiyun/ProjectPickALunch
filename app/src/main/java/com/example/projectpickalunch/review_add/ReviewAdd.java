@@ -157,9 +157,8 @@ public class ReviewAdd extends AppCompatActivity {
                         key,
                         UID
                 );
-                uploadToFireBase(uriList, reviewItem);
                 setAvgScore();
-
+                uploadToFireBase(uriList, reviewItem);
             }
         });
 
@@ -245,9 +244,6 @@ public class ReviewAdd extends AppCompatActivity {
                                 restaurantReference.child(restaurantName).child("restorant_review").child(key).child("ImageSrc").child(imgKey)
                                         .child("fileName").setValue(restaurantName + "_" + userName + "_" + dateFormat.format(now)+ "_"+ finalI + "." + getFileExtension(uriList.get(finalI1)));
                                 progressBar.setVisibility(View.INVISIBLE);
-                                progressBar.bringToFront();
-
-                                finish();
                             }
                         });
                     }
@@ -263,6 +259,7 @@ public class ReviewAdd extends AppCompatActivity {
                 });
             }
         }
+        finish();
     }
 
     private String getFileExtension(Uri uri) {

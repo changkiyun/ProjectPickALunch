@@ -16,11 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.login_api.KakaoLoginActivity;
+import com.example.projectpickalunch.review_add.MenuRatingItem;
+import com.example.projectpickalunch.review_add.MenuReviewItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,10 +46,15 @@ public class FullReviewActivity extends AppCompatActivity {
     ImageButton returnBtn;
     ImageButton deleteBtn;
     RecyclerView imageRecyclerView;
+    RecyclerView detailRecyclerView;
     TextView userNameView;
     TextView userScoreView;
     TextView mainTextView;
     TextView reviewDateView;
+    TextView taste;
+    TextView kind;
+    TextView clean;
+    TextView price;
 
     ArrayList<String> scoreList = new ArrayList<String>();
     ArrayList<RecyclerImageItem> imageList;
@@ -57,9 +65,16 @@ public class FullReviewActivity extends AppCompatActivity {
     String mainText;
     String reviewDate;
     String restaurantName;
+    String tasteS;
+    String kindS;
+    String cleanS;
+    String priceS;
     long UID;
     String key;
     ArrayList<String> fileName;
+
+    ArrayList<MenuReviewItem> reviewList;
+    ArrayList<MenuRatingItem> ratingList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +82,10 @@ public class FullReviewActivity extends AppCompatActivity {
         setContentView(R.layout.full_review);
 
         Intent intent = getIntent();
+        tasteS = intent.getStringExtra("taste");
+        cleanS = intent.getStringExtra("clean");
+        kindS = intent.getStringExtra("kind");
+        priceS = intent.getStringExtra("price");
         fileName = intent.getStringArrayListExtra("fileName");
         key = intent.getStringExtra("key");
         UID = intent.getLongExtra("UID", 0);
@@ -81,10 +100,26 @@ public class FullReviewActivity extends AppCompatActivity {
         mainTextView = findViewById(R.id.mainText);
         reviewDateView = findViewById(R.id.reviewDate);
 
+        taste = findViewById(R.id.taste);
+        kind = findViewById(R.id.kind);
+        clean = findViewById(R.id.clean);
+        price = findViewById(R.id.price);
+
+        taste.setText(tasteS);
+        kind.setText(kindS);
+        clean.setText(cleanS);
+        price.setText(priceS);
+
         userNameView.setText(userName);
         userScoreView.setText(score);
         mainTextView.setText(mainText);
         reviewDateView.setText(reviewDate.substring(0, reviewDate.indexOf(":")));
+
+        detailRecyclerView = findViewById(R.id.detailItemRecyclerView);
+        LinearLayoutManager layoutManager5 = new LinearLayoutManager(this);
+        layoutManager5.setOrientation(RecyclerView.HORIZONTAL);
+        detailRecyclerView.setLayoutManager(layoutManager5);
+        detailRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager4 = new LinearLayoutManager(this);
         layoutManager4.setOrientation(RecyclerView.HORIZONTAL);
@@ -93,6 +128,8 @@ public class FullReviewActivity extends AppCompatActivity {
         imageRecyclerView.setHasFixedSize(true);
 
         imageList = new ArrayList<>();
+        ratingList = new ArrayList<>();
+        reviewList = new ArrayList<>();
 
         imageAdapter = new ImageRecyclerAdapter(FullReviewActivity.this, imageList);
         imageRecyclerView.setAdapter(imageAdapter);
@@ -102,11 +139,26 @@ public class FullReviewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 imageList.clear();
+                reviewList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.child(key).child("ImageSrc").getChildren()) {
                     RecyclerImageItem reviewImgSrc = dataSnapshot.getValue(RecyclerImageItem.class);
                     imageList.add(reviewImgSrc);
                 }
                 imageAdapter.notifyDataSetChanged();
+
+                for (DataSnapshot dataSnapshot : snapshot.child(key).child("menu_review").getChildren()) {
+                    ratingList.clear();
+                    String menuName = dataSnapshot.getKey();
+                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        String rateName = dataSnapshot1.getKey();
+                        float rate = dataSnapshot1.getValue(float.class);
+                        ratingList.add(new MenuRatingItem(rateName, rate));
+                    }
+                    reviewList.add(new MenuReviewItem(menuName, new ArrayList<MenuRatingItem>(ratingList)));
+                }
+                MenuRecyclerAdapter menuRecyclerAdapter = new MenuRecyclerAdapter(FullReviewActivity.this, reviewList);
+                detailRecyclerView.setAdapter(menuRecyclerAdapter);
+                menuRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override

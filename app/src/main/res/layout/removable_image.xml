@@ -3,23 +3,34 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5sp"
-    android:background="@drawable/squar_border"
+    android:background="@drawable/ic_item_border"
     android:padding="10sp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
         android:id="@+id/item_image"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <ImageView
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:background="@drawable/ellipse_9"
+        android:backgroundTint="#656565"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
         <ImageButton
+            android:layout_margin="4sp"
             android:id="@+id/deleteBtn"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:background="@color/black"
+            android:layout_width="12sp"
+            android:layout_height="12sp"
+            android:background="@drawable/ic_cross"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 

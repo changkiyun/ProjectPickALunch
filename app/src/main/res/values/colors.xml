@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="mainColor">#FFC94C</color>
+    <color name="kmongColor">#EAAE1E</color>
+    <color name="nonSelected">#656565</color>
 </resources>
