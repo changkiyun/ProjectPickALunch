@@ -1,6 +1,5 @@
 package com.example.projectpickalunch.restorant_info;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -8,23 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -32,32 +21,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.restorant_add.RestorantAdd;
+import com.example.projectpickalunch.review_add.MenuRatingItem;
+import com.example.projectpickalunch.review_add.MenuReviewItem;
 import com.example.projectpickalunch.review_add.ReviewAdd;
-import com.example.projectpickalunch.user_information.NickName;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.common.collect.ArrayTable;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Sickdang_Jeongbo extends AppCompatActivity {
     //파이어베이스 참조
@@ -90,6 +69,9 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
     ArrayList<ReviewRecyclerItem> reviewList;
     ArrayList<RecyclerImageItem> reviewImageList;
     ArrayList<ReviewImageItem> reviewImageItemList;
+    ArrayList<MenuRatingItem> menuRatingItemList;
+    ArrayList<MenuReviewItem> menuReviewItemList;
+    ArrayList<MenuRecyclerAdapter> menuRecyclerAdapterList;
 
     ImageRecyclerAdapter imageAdapter;
     ReviewRecyclerAdapter reviewRecyclerAdapter;
@@ -215,8 +197,9 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         reviewList = new ArrayList<>();
         reviewImageList = new ArrayList<>();
         reviewImageItemList = new ArrayList<>();
-
-
+        menuRatingItemList = new ArrayList<>();
+        menuReviewItemList = new ArrayList<>();
+        menuRecyclerAdapterList = new ArrayList<>();
 
         reviewReference = restaurantReference.child(sickdang_title).child("restorant_review");
 
@@ -225,6 +208,8 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 reviewList.clear();
                 reviewImageItemList.clear();
+                menuRecyclerAdapterList.clear();
+                menuReviewItemList.clear();
                 imageList.clear();
                 String key = null;
 
@@ -245,11 +230,24 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                         reviewImageList.add(reviewImgSrc);
                         Log.e("test", key +  reviewImgSrc.getFileName());
                     }
+
+                    for (DataSnapshot snapshot1 : snapshot.child(key).child("menu_review").getChildren()) {
+                        String menuName = snapshot1.getKey();
+                        menuRatingItemList.clear();
+                        for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                            String rateName = snapshot2.getKey();
+                            float rate = snapshot2.getValue(float.class);
+                            menuRatingItemList.add(new MenuRatingItem(rateName, rate));
+                        }
+                        menuReviewItemList.add(new MenuReviewItem(menuName, menuRatingItemList));
+                    }
+                    Log.e("test1" , menuRatingItemList.toString());
+                    menuRecyclerAdapterList.add(new MenuRecyclerAdapter(Sickdang_Jeongbo.this, new ArrayList<MenuReviewItem>(menuReviewItemList)));
                     reviewImageItemList.add(new ReviewImageItem(key, reviewImageList, new ImageRecyclerAdapter(Sickdang_Jeongbo.this, new ArrayList<RecyclerImageItem>(reviewImageList))));
 
                 }
 
-                reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageItemList);
+                reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageItemList, menuRecyclerAdapterList);
                 reviewRecyclerAdapter.notifyDataSetChanged();
 
                 reviewRecyclerView.setAdapter(reviewRecyclerAdapter);
