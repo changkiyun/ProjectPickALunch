@@ -8,6 +8,7 @@
     android:layout_margin="5sp">
 
     <TextView
+        android:layout_margin="10sp"
         android:id="@+id/menuName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

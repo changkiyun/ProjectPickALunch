@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5sp"
-    android:background="@drawable/squar_border"
+    android:background="@drawable/ic_item_border"
     android:padding="5sp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

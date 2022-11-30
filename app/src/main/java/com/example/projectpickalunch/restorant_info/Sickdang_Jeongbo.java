@@ -20,10 +20,12 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.review_add.MenuRatingItem;
 import com.example.projectpickalunch.review_add.MenuReviewItem;
 import com.example.projectpickalunch.review_add.ReviewAdd;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,6 +60,7 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
 
     //식당 정보를 저장할 변수
     String sickdang_title;
+    String imgSrc;
 
     //상단,하단 리사이클러뷰에 사용될 변수 :YJW
     RecyclerView imageRecyclerView;
@@ -106,6 +109,20 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
         //인텐트 받아오기 가게 이름
         Intent intent = getIntent();
         sickdang_title = intent.getStringExtra("restorant_name");
+        imgSrc = intent.getStringExtra("imgSrc");
+
+        ImageView mainImg = findViewById(R.id.mainImg);
+        StorageReference getRestorantImage = storage.getReference().child(imgSrc);
+        getRestorantImage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(Sickdang_Jeongbo.this)
+                        .load(uri)
+                        .centerCrop()
+                        .into(mainImg);
+            }
+        });
+        mainImg.setClipToOutline(true);
 
         //가게 정보
         TextView sickdanTitle = (TextView) findViewById(R.id.sicdangTitle);

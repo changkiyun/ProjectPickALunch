@@ -111,6 +111,7 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
                         Toast.makeText(context ,restauranatlist.get(pos).getRestorant_name(), Toast.LENGTH_SHORT).show();
                         Intent restorant_information = new Intent(context, Sickdang_Jeongbo.class);
                         restorant_information.putExtra("restorant_name",restauranatlist.get(pos).getRestorant_name());
+                        restorant_information.putExtra("imgSrc", restauranatlist.get(pos).getRestorant_image_src());
                         context.startActivity(restorant_information);
                     }
                 }
