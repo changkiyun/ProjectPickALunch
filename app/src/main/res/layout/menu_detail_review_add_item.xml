@@ -54,7 +54,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="visible"
+        android:visibility="invisible"
         android:id="@+id/menuDetailReviewLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

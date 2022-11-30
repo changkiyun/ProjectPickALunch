@@ -353,7 +353,11 @@ public class ReviewAdd extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 scoreList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+
+                    }
                     String score = dataSnapshot.child("avgRate").getValue(String.class);
+                    Log.e("avg", score);
                     scoreList.add(score);
 
                     float avgScore;
