@@ -9,6 +9,11 @@ public class MenuRatingItem {
         this.rateName = rateName;
     }
 
+    public MenuRatingItem(String rateName, float rate){
+        this.rateName = rateName;
+        this.rate = rate;
+    }
+
     public void setRateName(String rateName) {
         this.rateName = rateName;
     }

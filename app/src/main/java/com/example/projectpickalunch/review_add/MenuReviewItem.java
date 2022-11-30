@@ -9,7 +9,7 @@ public class MenuReviewItem {
 
     MenuReviewItem(){}
 
-    MenuReviewItem(String menuName, ArrayList<MenuRatingItem> menuRatingItems){
+    public MenuReviewItem(String menuName, ArrayList<MenuRatingItem> menuRatingItems){
         this.menuName = menuName;
         this.menuRatingItems = menuRatingItems;
     }

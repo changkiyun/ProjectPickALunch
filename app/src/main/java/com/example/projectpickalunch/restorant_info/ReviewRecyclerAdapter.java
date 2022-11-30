@@ -30,13 +30,15 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
     Context context;
     ArrayList<ReviewRecyclerItem> reviewlist = new ArrayList<>();
     ArrayList<ReviewImageItem> itemList = new ArrayList<>();
+    ArrayList<MenuRecyclerAdapter> adapters;
     String sickdang_title;
 
-    public ReviewRecyclerAdapter(Context context, ArrayList<ReviewRecyclerItem> reviewlist, String sickdang_title, ArrayList<ReviewImageItem> itemList) {
+    public ReviewRecyclerAdapter(Context context, ArrayList<ReviewRecyclerItem> reviewlist, String sickdang_title, ArrayList<ReviewImageItem> itemList, ArrayList<MenuRecyclerAdapter> adapters) {
         this.context = context;
         this.reviewlist = reviewlist;
         this.sickdang_title = sickdang_title;
         this.itemList = itemList;
+        this.adapters = adapters;
     }
 
     @NonNull
@@ -55,9 +57,9 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
         holder.mainText.setText(reviewlist.get(pos).getRestaurant_review());
 
         ImageRecyclerAdapter adapter = itemList.get(pos).getAdapter();
+        MenuRecyclerAdapter menuAdapter = adapters.get(pos);
 
-
-
+        holder.detailItemRecyclerView.setAdapter(menuAdapter);
         holder.reviewImageRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
