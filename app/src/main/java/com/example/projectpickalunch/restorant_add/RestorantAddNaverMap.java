@@ -55,7 +55,6 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
     List<Address> address=null;
 
 
-
     private  NaverMap naverMap;
     private  FusedLocationSource locationSource;
     private  static  final  int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -101,16 +100,7 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
                 }
             }
         });
-
-
-
-
     }
-
-
-
-
-
 
 
 
@@ -121,37 +111,7 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
         naverMap.setLocationSource(locationSource); //현재위치 표시
         ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE);
 
-        Marker marker = new Marker();
-        LatLng latLng = new LatLng(
-                naverMap.getCameraPosition().target.latitude,
-                naverMap.getCameraPosition().target.longitude
-        );
-        marker.setIcon(OverlayImage.fromResource(R.drawable.ic_baseline_add_location_24));
-        marker.setPosition(latLng);
-
-
-        NaverMap.OnCameraChangeListener onCameraChangeListener = new NaverMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(int i, boolean b) {
-                Marker marker = new Marker();
-                LatLng latLng = new LatLng(
-                        naverMap.getCameraPosition().target.latitude,
-                        naverMap.getCameraPosition().target.longitude
-                );
-                marker.setIcon(OverlayImage.fromResource(R.drawable.ic_baseline_add_location_24));
-                marker.setPosition(latLng);
-                marker.setMap(naverMap);
-            }
-        };
-        naverMap.addOnCameraChangeListener(onCameraChangeListener);
-
-
-
-
-
-
-
-
+        //지오코딩 좌표 변환
         Geocoder g = new Geocoder(this);
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
