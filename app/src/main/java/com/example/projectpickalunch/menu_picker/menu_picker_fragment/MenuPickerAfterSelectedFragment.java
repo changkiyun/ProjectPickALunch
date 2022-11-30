@@ -88,7 +88,6 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                         for (int j = 0; j < arrayList.size(); j++) {
                             if (arrayList.get(j).getRestorant_category().equals(category[i])) {
                                 pickedMenuList.add(arrayList.get(j));
-
                             }
                         }
                     }

@@ -1,22 +1,48 @@
 package com.example.projectpickalunch.restaurant_search;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
+import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
+import com.algolia.search.saas.Query;
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.menu_picker.MenuPickerBeforeSelectedFragment;
+import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerAfterSelectedFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Search extends AppCompatActivity {
     EditText searchEdt;
 
     String searchText;
     String hits = "hits";
+    ArrayList<String> list;
+
+
+    //Fragment
+    Fragment fragment;
+    FragmentManager searchFragmentManager;
+    FragmentTransaction searchFragmentTransaction;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,66 +50,59 @@ public class Search extends AppCompatActivity {
 
         searchEdt = findViewById(R.id.search_editText);
 
-        Client client = new Client("49JNIHFN0A", "2083bbdd34fe14f3ce84ea94897e0a59");
+        //Fragment
+        //메뉴피커 프래그먼트
+        searchFragmentManager = getSupportFragmentManager();
+        searchFragmentTransaction = searchFragmentManager.beginTransaction();
+        searchFragmentTransaction.add(R.id.search_Fragment, new SearchBeforeFragment());
+        searchFragmentTransaction.commit();
 
-        Index index = client.initIndex("test");
+        //Algolia
+        Client client = new Client("49JNIHFN0A", "6ef6ce72016a3ff5695d2a1fcfd80afa");
+        Index index = client.getIndex("restorantName");
+        CompletionHandler completionHandler = new CompletionHandler() {
+            @Override
+            public void requestCompleted(@Nullable JSONObject jsonObject, @Nullable AlgoliaException e) {
+                    JSONArray jsonArray = new JSONArray();
+                    ArrayList<SearchRestorantName> listItem = new ArrayList<SearchRestorantName>();
+                    list = new ArrayList<String>();
+                try {
+                    if(jsonObject != null) {
+                        jsonArray = jsonObject.getJSONArray("hits");
+                    }
+                    if(jsonArray != null){
+                        for(int i=0; i<jsonArray.length(); i++){
+                            JSONObject json = jsonArray.getJSONObject(i);
+                            String jsonlist = json.getString("name");
+                            list.add(jsonlist);
+                        }
+                    }
+                }catch (JSONException ex){
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                switchFragment();
+            }
+        };
 
-
-//        var handler = CompletionHandler{content , error ->
-//                println(content)
-//
-//            var list = ArrayList<Apt>()
-//
-//            var jsonArray  = content?.getJSONArray("hits")
-//            if (jsonArray != null) {
-//                for(i in 1 until jsonArray.length()) {
-//                    var json = jsonArray?.getJSONObject(i)
-//                    var apt = Apt(json.getString("aptName"),json.getString("doroJuso"))
-//                    list.add(apt)
-//                }
-//                adapter.list = list
-//                adapter.resetting()
-//            }
-//
-//        }
-
-//        try {
-//        CompletionHandler completionHandler = new CompletionHandler() {
-//            @Override
-//            public void requestCompleted(@Nullable JSONObject jsonObject, @Nullable AlgoliaException e) {
-//                Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
-//
-//                    JSONArray jsonArray = jsonObject.getJSONArray(hits);
-//
-//            }
-//        };
-//        }catch (JSONException ex){
-//            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//        catch (AlgoliaException e){
-//            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
 
         //index.searchAsync(new Query("t"),completionHandler);
 
 
-//        searchEdt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                index.searchAsync(new Query(searchText), completionHandler);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
+        searchEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                index.searchAsync(new Query(searchEdt.getText().toString())
+                        .setAttributesToRetrieve("name")
+                        .setHitsPerPage(50), completionHandler);
+                List<JSONObject> array = new ArrayList<JSONObject>();
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
 
+            }
+        });
 
         //뒤로가기 버튼
         ImageButton searchReturnButton = findViewById(R.id.search_return_button);
@@ -94,5 +113,29 @@ public class Search extends AppCompatActivity {
             }
         });
     }
+
+    //프래그먼트 변경 함수
+    public void switchFragment(){
+
+        //Bundle로 Fragment에 값 전달을 위한 boolean변수
+        if(searchEdt != null){
+            fragment = new SearchAfterFragment();
+        }
+        else{
+            fragment = new SearchBeforeFragment();
+        }
+
+        searchFragmentManager = getSupportFragmentManager();
+        searchFragmentTransaction = searchFragmentManager.beginTransaction();
+
+        //Bundle로 값 전달
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("selectedRestorantName", list);
+        fragment.setArguments(bundle);
+        searchFragmentTransaction.replace(R.id.search_Fragment, fragment);
+        searchFragmentTransaction.commit();
+
+    }
+
 }
 
