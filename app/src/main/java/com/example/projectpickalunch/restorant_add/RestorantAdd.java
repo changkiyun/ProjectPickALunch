@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -47,6 +48,10 @@ public class RestorantAdd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restorant_add);
 
+
+
+
+
         //테스트공간
 
         //뷰 인플레이팅
@@ -60,6 +65,12 @@ public class RestorantAdd extends AppCompatActivity {
 
         //RealtimeDatabase 초기화
         RestorantAddReference = FirebaseDatabase.getInstance().getReference();
+
+        //재명
+        Intent receive_intent = getIntent();
+        String temp = receive_intent.getStringExtra("key01");
+        restorant_tel_edit_text.setText(temp);
+
 
         //식당 이름 미 입력 시 등록버튼 비활성화
         restorant_name_edit_text.addTextChangedListener(new TextWatcher() {
