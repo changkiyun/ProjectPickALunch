@@ -59,8 +59,8 @@ public class MenuDetailReviewAdapter extends RecyclerView.Adapter<MenuDetailRevi
         Button menuReviewSaveButton;
         RecyclerView menuRatingRecyclerView;
         LinearLayout menuDetailReviewLayout;
-        CheckBox checkBoxes[] = new CheckBox[10];
-        MenuRatingItem models[] = new MenuRatingItem[10];
+        CheckBox checkBoxes[] = new CheckBox[12];
+        MenuRatingItem models[] = new MenuRatingItem[12];
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +81,8 @@ public class MenuDetailReviewAdapter extends RecyclerView.Adapter<MenuDetailRevi
             checkBoxes[7] = itemView.findViewById(R.id.checkbox_8);
             checkBoxes[8] = itemView.findViewById(R.id.checkbox_9);
             checkBoxes[9] = itemView.findViewById(R.id.checkbox_10);
+            checkBoxes[10] = itemView.findViewById(R.id.checkbox_11);
+            checkBoxes[11] = itemView.findViewById(R.id.checkbox_12);
 
             menuRatingItems = new ArrayList<MenuRatingItem>();
             MenuDetailRatingAdapter menuDetailRatingAdapter = new MenuDetailRatingAdapter(context.getApplicationContext(), menuRatingItems);

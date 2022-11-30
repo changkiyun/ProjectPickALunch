@@ -209,12 +209,12 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                 reviewList.clear();
                 reviewImageItemList.clear();
                 menuRecyclerAdapterList.clear();
-                menuReviewItemList.clear();
                 imageList.clear();
                 String key = null;
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     reviewImageList.clear();
+                    menuReviewItemList.clear();
                     key  = dataSnapshot.getKey();
                     ReviewRecyclerItem model = dataSnapshot.getValue(ReviewRecyclerItem.class);
                     reviewList.add(model);
