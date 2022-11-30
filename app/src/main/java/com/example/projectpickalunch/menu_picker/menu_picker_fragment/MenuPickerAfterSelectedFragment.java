@@ -37,9 +37,10 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
 
     //랜덤 추천 알고리즘
     ArrayList<MenuPickerItem> pickedMenuList;
-    CheckBox kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, etcFoodButton;
+    CheckBox kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, etcFoodButton, EjrButton, xkdButton;
+    CheckBox aozhaButton, emsemsButton, zkfzkfButton, djfzmsButton, rhthButton, ekfzhaButton, tldtldButton, RnejrButton, qktkrButton, rksvusButton, wjfuaButton, tldnjsButton;
     ImageButton menuPickerApplyButton;
-    String[] category = {"한식", "중식", "일식", "양식", "간편식", "기타"};
+    String[] category = {"한식", "중식", "일식", "양식", "간편식", "기타", "떡", "빵"};
 
     //그리드 아이템 별로 다른 정보를 표시하기위한 String형 ArrayList
     ArrayList<String> itemname;
@@ -52,13 +53,27 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
         //Bundle값 받아오기
         Bundle bundle = getArguments();
         boolean[] selectCategoryCheck = bundle.getBooleanArray("selectCategoryCheck");
-
+        //카테고리버튼 인플레이팅
         kFoodButton = (CheckBox) parentView.findViewById(R.id.k_food_button);
         jFoodButton = (CheckBox) parentView.findViewById(R.id.j_food_button);
         cFoodButton = (CheckBox) parentView.findViewById(R.id.c_food_button);
         aFoodButton = (CheckBox) parentView.findViewById(R.id.a_food_button);
         fastFoodButton = (CheckBox) parentView.findViewById(R.id.fast_food_button);
         etcFoodButton = (CheckBox) parentView.findViewById(R.id.etc_food_button);
+        EjrButton = (CheckBox) parentView.findViewById(R.id.EjrButton);
+        xkdButton = (CheckBox) parentView.findViewById(R.id.xkdButton);
+        //키워드 버튼 인플레이팅
+        aozhaButton = (CheckBox) parentView.findViewById(R.id.aozhaButton);
+        emsemsButton = (CheckBox) parentView.findViewById(R.id.emsemsButton);
+        zkfzkfButton = (CheckBox) parentView.findViewById(R.id.zkfzkfButton);
+        djfzmsButton = (CheckBox) parentView.findViewById(R.id.djfzmsButton);
+        rhthButton = (CheckBox) parentView.findViewById(R.id.rhthButton);
+        ekfzhaButton = (CheckBox) parentView.findViewById(R.id.ekfzhaButton);
+        aozhaButton = (CheckBox) parentView.findViewById(R.id.aozhaButton);
+        aozhaButton = (CheckBox) parentView.findViewById(R.id.aozhaButton);
+        aozhaButton = (CheckBox) parentView.findViewById(R.id.aozhaButton);
+        aozhaButton = (CheckBox) parentView.findViewById(R.id.aozhaButton);
+        aozhaButton = (CheckBox) parentView.findViewById(R.id.aozhaButton);
 
 //        menuPickerApplyButton = parentView.findViewById(R.id.menuPickerApplyButton);
 
@@ -78,9 +93,6 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                     MenuPickerItem menuPickerItem = snapshot.getValue(MenuPickerItem.class);
                     arrayList.add(menuPickerItem);
                 }
-
-
-
                 // 카테고리의 개수만큼 반복
                 for(int i=0; i<selectCategoryCheck.length; i++) {
                     if (selectCategoryCheck[i]) {
@@ -92,9 +104,6 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                         }
                     }
                 }
-
-                
-
                 for(int i=0; i<pickedMenuList.size(); i++){
                     //아이템 별 다른 식당 출력을 위한 식당이름 입력
                     itemname.add(arrayList.get(i).getRestorant_name());
@@ -103,17 +112,14 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                 }
                 menuPickerAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("MenuPicker", String.valueOf(error.toException()));
             }
         });
 
-
         menuPickerGridView = (GridView) rootView.findViewById(R.id.menu_picker_grid_view);
         menuPickerAdapter = new MenuPickerAdapter(rootView.getContext(), pickedMenuList);
-
         menuPickerGridView.setAdapter(menuPickerAdapter);
 
         //그리드뷰 아이템 리스너

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -39,9 +38,9 @@ public class MenuPicker extends AppCompatActivity {
     private boolean isMenuSelected = false; //메뉴선택 변수
 
     //카테고리 버튼
-    CheckBox kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, etcFoodButton;
+    CheckBox kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, etcFoodButton, EjrButton, xkdButton;
 
-    CheckBox[] categorySelectButton = {kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, fastFoodButton};
+    CheckBox[] categorySelectButton = {kFoodButton, jFoodButton, cFoodButton, aFoodButton, fastFoodButton, fastFoodButton, EjrButton, xkdButton};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +53,8 @@ public class MenuPicker extends AppCompatActivity {
         aFoodButton = (CheckBox) findViewById(R.id.a_food_button);
         fastFoodButton = (CheckBox) findViewById(R.id.fast_food_button);
         etcFoodButton = (CheckBox) findViewById(R.id.etc_food_button);
+        EjrButton = findViewById(R.id.EjrButton);
+        xkdButton = findViewById(R.id.xkdButton);
 
         //메인화면으로 돌아가기
         menuPickerReturnButton = (ImageButton) findViewById(R.id.menuPickerReturnButton);
@@ -104,6 +105,18 @@ public class MenuPicker extends AppCompatActivity {
             }
         });
         etcFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        EjrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFragment();
+            }
+        });
+        xkdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switchFragment();
@@ -163,10 +176,11 @@ public class MenuPicker extends AppCompatActivity {
         Fragment fr;
         //Bundle로 Fragment에 값 전달을 위한 boolean변수
        boolean[] selectCategoryCheck = {kFoodButton.isChecked(),jFoodButton.isChecked(),cFoodButton.isChecked(),aFoodButton.isChecked()
-               ,fastFoodButton.isChecked(),etcFoodButton.isChecked()};
+               ,fastFoodButton.isChecked(),etcFoodButton.isChecked(), EjrButton.isChecked(), xkdButton.isChecked()};
 
         if(kFoodButton.isChecked() || jFoodButton.isChecked() || cFoodButton.isChecked() ||
-                aFoodButton.isChecked() || fastFoodButton.isChecked() || etcFoodButton.isChecked()){
+                aFoodButton.isChecked() || fastFoodButton.isChecked() || etcFoodButton.isChecked()
+        || EjrButton.isChecked()|| xkdButton.isChecked()){
             fr = new MenuPickerAfterSelectedFragment();
         }
         else{
