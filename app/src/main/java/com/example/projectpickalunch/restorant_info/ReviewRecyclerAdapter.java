@@ -2,6 +2,8 @@ package com.example.projectpickalunch.restorant_info;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAdapter.ReviewViewHolder> {
@@ -59,9 +62,12 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
         ImageRecyclerAdapter adapter = itemList.get(pos).getAdapter();
         MenuRecyclerAdapter menuAdapter = adapters.get(pos);
 
+        Log.e("reviewListc", pos + adapters.get(pos).reviewList.toString());
+
         holder.detailItemRecyclerView.setAdapter(menuAdapter);
         holder.reviewImageRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        menuAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -105,10 +111,13 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
                     if (pos != RecyclerView.NO_POSITION) {
                         ArrayList<String> fileName = new ArrayList<>();
                         Intent fullReview = new Intent(context, FullReviewActivity.class);
-                            for (int i = 0; i < itemList.get(pos).getImageList().size(); i++) {
-                                fileName.add(itemList.get(pos).getImageList().get(i).getFileName());
-                            }
-
+                        for (int i = 0; i < itemList.get(pos).getImageList().size(); i++) {
+                            fileName.add(itemList.get(pos).getImageList().get(i).getFileName());
+                        }
+                        fullReview.putExtra("taste", reviewlist.get(pos).getTasteRate());
+                        fullReview.putExtra("clean", reviewlist.get(pos).getCleanRate());
+                        fullReview.putExtra("kind", reviewlist.get(pos).getKindRate());
+                        fullReview.putExtra("price", reviewlist.get(pos).getPriceRate());
                         fullReview.putExtra("fileName", fileName);
                         fullReview.putExtra("UID", reviewlist.get(pos).getUID());
                         fullReview.putExtra("userName",reviewlist.get(pos).getUser_name());

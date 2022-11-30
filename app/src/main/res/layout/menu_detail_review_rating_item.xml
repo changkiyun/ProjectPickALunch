@@ -1,48 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="50sp">
 
     <TextView
         android:id="@+id/RateName"
-        android:layout_weight="1"
-        android:layout_width="0sp"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="평가 요소"/>
+        android:layout_width="60sp"
+        android:layout_height="match_parent"
+        android:singleLine="false"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:text="평가요"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
+        android:layout_width="0sp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/RateName"
+        app:layout_constraintRight_toRightOf="parent">
 
             <RadioButton
-                android:layout_weight="1"
+                android:layout_marginHorizontal="5sp"
                 android:gravity="center"
                 android:id="@+id/FirstRadio"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:text="별로에요"/>
+                android:layout_weight="1"
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:button="@null"
+                android:background="@drawable/selector_radio"
+                android:drawable="@drawable/ic_bad_img"
+                />
             <RadioButton
+                android:layout_marginHorizontal="5sp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:id="@+id/SecondRadio"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:text="좋아요"/>
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:button="@null"
+                android:background="@drawable/selector_radio"/>
             <RadioButton
+                android:layout_marginHorizontal="5sp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/Thirdadio"
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:text="최고에요"/>
+                android:id="@+id/ThirdRadio"
+                android:layout_width="0sp"
+                android:layout_height="40sp"
+                android:button="@null"
+                android:background="@drawable/selector_radio"/>
     </RadioGroup>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="0sp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/RateName"
+        app:layout_constraintRight_toRightOf="parent">
+        <ImageView
+            android:padding="10sp"
+            android:id="@+id/badimg"
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="40sp"
+            android:src="@drawable/ic_bad_img"/>
+        <ImageView
+            android:padding="10sp"
+            android:id="@+id/notbadimg"
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="40sp"
+            android:src="@drawable/ic_notbad_img"/>
+        <ImageView
+            android:padding="10sp"
+            android:id="@+id/goodimg"
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="40sp"
+            android:src="@drawable/ic_good_img"
+            app:tint="@color/kmongColor" />
+    </LinearLayout>
 
 
     <!--<com.willy.ratingbar.ScaleRatingBar
@@ -54,4 +101,4 @@
         app:srb_starPadding="4dp"
         app:srb_stepSize="1"
         />-->
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

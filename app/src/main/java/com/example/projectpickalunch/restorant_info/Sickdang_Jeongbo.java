@@ -238,15 +238,18 @@ public class Sickdang_Jeongbo extends AppCompatActivity {
                             String rateName = snapshot2.getKey();
                             float rate = snapshot2.getValue(float.class);
                             menuRatingItemList.add(new MenuRatingItem(rateName, rate));
+                            Log.e("test4",   menuName + " : " + rateName + " : " + rate);
                         }
-                        menuReviewItemList.add(new MenuReviewItem(menuName, menuRatingItemList));
+                        menuReviewItemList.add(new MenuReviewItem(menuName, new ArrayList<MenuRatingItem>(menuRatingItemList)));
+
                     }
-                    Log.e("test1" , menuRatingItemList.toString());
+
                     menuRecyclerAdapterList.add(new MenuRecyclerAdapter(Sickdang_Jeongbo.this, new ArrayList<MenuReviewItem>(menuReviewItemList)));
                     reviewImageItemList.add(new ReviewImageItem(key, reviewImageList, new ImageRecyclerAdapter(Sickdang_Jeongbo.this, new ArrayList<RecyclerImageItem>(reviewImageList))));
 
                 }
-
+                Log.e("menuRatingList", "메뉴레이팅" + menuRatingItemList.toString());
+                Log.e("test3", menuRecyclerAdapterList.toString());
                 reviewRecyclerAdapter = new ReviewRecyclerAdapter(Sickdang_Jeongbo.this, reviewList, sickdang_title, reviewImageItemList, menuRecyclerAdapterList);
                 reviewRecyclerAdapter.notifyDataSetChanged();
 

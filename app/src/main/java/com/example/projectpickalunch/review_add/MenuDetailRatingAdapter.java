@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -52,6 +53,9 @@ public class MenuDetailRatingAdapter extends RecyclerView.Adapter<MenuDetailRati
         RadioButton firstRBtn;
         RadioButton secondRbtn;
         RadioButton thirdRbtn;
+        ImageView badimg;
+        ImageView nbadimg;
+        ImageView goodimg;
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,27 +64,39 @@ public class MenuDetailRatingAdapter extends RecyclerView.Adapter<MenuDetailRati
             rateName = itemView.findViewById(R.id.RateName);
             firstRBtn = itemView.findViewById(R.id.FirstRadio);
             secondRbtn = itemView.findViewById(R.id.SecondRadio);
-            thirdRbtn = itemView.findViewById(R.id.Thirdadio);
+            thirdRbtn = itemView.findViewById(R.id.ThirdRadio);
+            badimg = itemView.findViewById(R.id.badimg);
+            nbadimg = itemView.findViewById(R.id.notbadimg);
+            goodimg = itemView.findViewById(R.id.goodimg);
 
             radioGroup.check(thirdRbtn.getId());
-
+            goodimg.setColorFilter(context.getResources().getColor(R.color.kmongColor));
 
             firstRBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     menuRatingItems.get(getAdapterPosition()).setRate(1.0F);
+                    badimg.setColorFilter(context.getResources().getColor(R.color.kmongColor));
+                    nbadimg.setColorFilter(context.getResources().getColor(R.color.nonSelected));
+                    goodimg.setColorFilter(context.getResources().getColor(R.color.nonSelected));
                 }
             });
             secondRbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     menuRatingItems.get(getAdapterPosition()).setRate(3.0F);
+                    badimg.setColorFilter(context.getResources().getColor(R.color.nonSelected));
+                    nbadimg.setColorFilter(context.getResources().getColor(R.color.kmongColor));
+                    goodimg.setColorFilter(context.getResources().getColor(R.color.nonSelected));
                 }
             });
             thirdRbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     menuRatingItems.get(getAdapterPosition()).setRate(5.0F);
+                    badimg.setColorFilter(context.getResources().getColor(R.color.nonSelected));
+                    nbadimg.setColorFilter(context.getResources().getColor(R.color.nonSelected));
+                    goodimg.setColorFilter(context.getResources().getColor(R.color.kmongColor));
                 }
             });
         }

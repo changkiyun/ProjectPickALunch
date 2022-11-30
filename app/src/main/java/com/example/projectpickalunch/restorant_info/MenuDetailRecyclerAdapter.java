@@ -5,12 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectpickalunch.R;
+import com.example.projectpickalunch.review_add.MenuRatingItem;
 import com.example.projectpickalunch.review_add.MenuReviewItem;
 
 import java.util.ArrayList;
@@ -19,9 +21,9 @@ public class MenuDetailRecyclerAdapter extends RecyclerView.Adapter<MenuDetailRe
 
     Context context;
 
-    ArrayList<MenuReviewItem> reviewList = new ArrayList<>();
+    ArrayList<MenuRatingItem> reviewList = new ArrayList<>();
 
-    public MenuDetailRecyclerAdapter(Context context, ArrayList<MenuReviewItem> reviewList) {
+    public MenuDetailRecyclerAdapter(Context context, ArrayList<MenuRatingItem> reviewList) {
         this.context = context;
         this.reviewList = reviewList;
     }
@@ -30,16 +32,25 @@ public class MenuDetailRecyclerAdapter extends RecyclerView.Adapter<MenuDetailRe
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.menu_review_item, parent, false);
+        View view = inflater.inflate(R.layout.detail_review_item, parent, false);
 
         return new ViewHolder(view);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.e("menuname",reviewList.get(position).getMenuName());
-        holder.menuName.setText(reviewList.get(position).getMenuName());
+        holder.rateName.setText(reviewList.get(position).getRateName());
 
-        reviewList.get(position).getMenuRatingItems();
+        Log.e("reviewList", reviewList.get(position).getRateName());
+        switch (String.valueOf(reviewList.get(position).getRate()))
+        {
+            case "1.0" : holder.rateImg.setImageResource(R.drawable.ic_bad_img_selected);
+                break;
+            case "3.0" : holder.rateImg.setImageResource(R.drawable.ic_notbad_img_selected);
+                break;
+            case "5.0" : holder.rateImg.setImageResource(R.drawable.ic_good_img_selected);
+                break;
+        }
+
     }
 
     @Override
@@ -48,14 +59,14 @@ public class MenuDetailRecyclerAdapter extends RecyclerView.Adapter<MenuDetailRe
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        TextView menuName;
-        RecyclerView detailReviewRecycler;
+        TextView rateName;
+        ImageView rateImg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            menuName = itemView.findViewById(R.id.menuName);
-            detailReviewRecycler = itemView.findViewById(R.id.detailItemRecyclerView);
+            rateName = itemView.findViewById(R.id.rateName);
+            rateImg = itemView.findViewById(R.id.rateImg);
         }
     }
 }
