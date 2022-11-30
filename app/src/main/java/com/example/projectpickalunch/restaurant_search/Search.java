@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -21,8 +20,6 @@ import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.menu_picker.MenuPickerBeforeSelectedFragment;
-import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerAfterSelectedFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,11 +115,11 @@ public class Search extends AppCompatActivity {
     public void switchFragment(){
 
         //Bundle로 Fragment에 값 전달을 위한 boolean변수
-        if(searchEdt != null){
-            fragment = new SearchAfterFragment();
+        if(searchEdt.getText().toString().isEmpty()){
+            fragment = new SearchBeforeFragment();
         }
         else{
-            fragment = new SearchBeforeFragment();
+            fragment = new SearchAfterFragment();
         }
 
         searchFragmentManager = getSupportFragmentManager();
