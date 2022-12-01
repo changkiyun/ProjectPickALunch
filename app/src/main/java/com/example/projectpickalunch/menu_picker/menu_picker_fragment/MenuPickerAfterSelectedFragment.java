@@ -1,6 +1,5 @@
 package com.example.projectpickalunch.menu_picker.menu_picker_fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,15 +18,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.menu_picker.MenuPicker;
-import com.example.projectpickalunch.menu_picker.MenuPickerBeforeSelectedFragment;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.naver.maps.map.overlay.Marker;
 
 import java.util.ArrayList;
 
@@ -70,7 +66,7 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
         //Bundle값 받아오기
         Bundle bundle = getArguments();
         boolean[] selectCategoryCheck = bundle.getBooleanArray("selectCategoryCheck");
-        boolean[] selectKeywordCheck = bundle.getBooleanArray(("selectKeywordCheck"));
+        boolean[] selectKeywordCheck = bundle.getBooleanArray("selectKeywordCheck");
 
         //카테고리버튼 인플레이팅
         kFoodButton = (CheckBox) parentView.findViewById(R.id.k_food_button);
@@ -177,12 +173,10 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                 selectKeywordCheck[5] || selectKeywordCheck[6] || selectKeywordCheck[7] ||
                 selectKeywordCheck[8] || selectKeywordCheck[9] || selectKeywordCheck[10] || selectKeywordCheck[11]) {
             menuPickerAdapter = new MenuPickerAdapter(rootView.getContext(), keywordPickedList);
-            menuPickerGridView.setAdapter(menuPickerAdapter);
         } else {
             menuPickerAdapter = new MenuPickerAdapter(rootView.getContext(), pickedMenuList);
-            menuPickerGridView.setAdapter(menuPickerAdapter);
         }
-
+        menuPickerGridView.setAdapter(menuPickerAdapter);
 
         //그리드뷰 아이템 리스너
         menuPickerGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -192,6 +186,13 @@ public class MenuPickerAfterSelectedFragment extends Fragment {
                 Intent restorant_information = new Intent(getContext(), Sickdang_Jeongbo.class);
                 restorant_information.putExtra("itemname.get(i)", itemname.get(i));
                 startActivity(restorant_information);
+            }
+        });
+
+        menuPickerGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
             }
         });
 

@@ -15,8 +15,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerAdapter;
-import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerItem;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;

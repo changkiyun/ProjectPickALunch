@@ -15,8 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.projectpickalunch.R;
-import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerAdapter;
-import com.example.projectpickalunch.menu_picker.menu_picker_fragment.MenuPickerItem;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -97,9 +95,10 @@ public class SearchAfterFragment extends Fragment {
         searchGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("fragTest", "touched");
                 Toast.makeText(getContext(),itemname.get(i), Toast.LENGTH_SHORT).show();
                 Intent restorant_information = new Intent(getContext(), Sickdang_Jeongbo.class);
-                restorant_information.putExtra("itemname.get(i)",itemname.get(i));
+                restorant_information.putExtra("restorant_name",itemname.get(i));
                 startActivity(restorant_information);
             }
         });

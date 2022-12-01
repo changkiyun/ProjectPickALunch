@@ -3,6 +3,7 @@ package com.example.projectpickalunch.restaurant_search;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,7 +38,7 @@ public class Search extends AppCompatActivity {
 
 
     //Fragment
-    Fragment fragment;
+
     FragmentManager searchFragmentManager;
     FragmentTransaction searchFragmentTransaction;
     @Override
@@ -113,12 +114,14 @@ public class Search extends AppCompatActivity {
 
     //프래그먼트 변경 함수
     public void switchFragment(){
-
+        Fragment fragment;
         //Bundle로 Fragment에 값 전달을 위한 boolean변수
         if(searchEdt.getText().toString().isEmpty()){
             fragment = new SearchBeforeFragment();
+            Log.e("fragTest", "before");
         }
         else{
+            Log.e("fragTest", "after");
             fragment = new SearchAfterFragment();
         }
 
