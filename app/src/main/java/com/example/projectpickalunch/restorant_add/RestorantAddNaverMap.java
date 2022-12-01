@@ -73,7 +73,6 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restorant_add_naver_map);
 
-
         FragmentManager fm = getSupportFragmentManager();
         MapFragment mapFragment = (MapFragment)fm.findFragmentById(R.id.map_fragment);
         if (mapFragment == null){
@@ -101,18 +100,7 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
                 }
             }
         });
-
-
-
-
     }
-
-
-
-
-
-
-
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
@@ -126,7 +114,6 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
                 naverMap.getCameraPosition().target.latitude,
                 naverMap.getCameraPosition().target.longitude
         );
-        marker.setIcon(OverlayImage.fromResource(R.drawable.ic_baseline_add_location_24));
         marker.setPosition(latLng);
 
 
@@ -138,31 +125,19 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
                         naverMap.getCameraPosition().target.latitude,
                         naverMap.getCameraPosition().target.longitude
                 );
-                marker.setIcon(OverlayImage.fromResource(R.drawable.ic_baseline_add_location_24));
                 marker.setPosition(latLng);
                 marker.setMap(naverMap);
             }
         };
-        naverMap.addOnCameraChangeListener(onCameraChangeListener);
-
-
-
-
-
-
+//        naverMap.addOnCameraChangeListener(onCameraChangeListener);
 
 
         Geocoder g = new Geocoder(this);
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
             public void onLocationChange(@NonNull Location location) {
-
-
                 lat = location.getLatitude();
                 lon = location.getLongitude();
-
-
-
                 txt = (TextView) findViewById(R.id.test1);
 
                 try {
@@ -178,17 +153,10 @@ public class RestorantAddNaverMap extends AppCompatActivity implements
 
                     }
                 }
-
             }
-
-
-
         });
 
     }
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

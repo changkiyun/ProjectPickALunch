@@ -69,7 +69,7 @@ public class RestorantAdd extends AppCompatActivity {
         //재명
         Intent receive_intent = getIntent();
         String temp = receive_intent.getStringExtra("key01");
-        restorant_tel_edit_text.setText(temp);
+        restorant_address_edit_text.setText(temp);
 
 
         //식당 이름 미 입력 시 등록버튼 비활성화

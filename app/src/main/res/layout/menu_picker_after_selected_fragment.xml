@@ -9,13 +9,14 @@
         android:id="@+id/menu_picker_recomend_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-
-        android:text="여기 어때요?"
-        android:textSize="30sp"
-        android:textStyle="bold"
-
         android:layout_alignParentTop="true"
+
+        android:layout_marginLeft="20sp"
+        android:text="여기 어때요?"
+        android:textColor="#292929"
+        android:textSize="20sp"
+
+        android:textStyle="bold"
 
         />
 

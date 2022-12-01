@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.projectpickalunch.R;
 import com.example.projectpickalunch.restorant_info.RecyclerImageItem;
 import com.example.projectpickalunch.restorant_info.Sickdang_Jeongbo;
@@ -68,7 +70,7 @@ public class RankingGridAdapter  extends RecyclerView.Adapter<RankingGridAdapter
                 Glide.with(context)
                         .load(uri)
                         .override(300,300)
-                        .centerCrop()
+                        .transform(new CenterCrop(), new RoundedCorners(35))
                         .into(holder.mImageView);
             }
         });
