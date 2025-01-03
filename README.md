@@ -1,7 +1,7 @@
 # Pick A Lunch
 <a href="https://club-project-one.vercel.app/" target="_blank">
   
-![랜딩페이지](https://github.com/user-attachments/assets/75381c4a-ea41-4b6a-a859-94b03803e8ac)
+![PickALunch](https://github.com/user-attachments/assets/b7658f11-c0e9-4b98-8100-602e2767a4d5)
 </a>
 
 <br/>
