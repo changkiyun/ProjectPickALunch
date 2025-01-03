@@ -67,9 +67,6 @@ Java 기반으로 개발된 Android Native 어플리케이션과 Firebase로 만
 <img src="https://github.com/user-attachments/assets/c6ed08a8-3da0-439e-8c9f-93772dcd8864" width="500"/>
 <p>매장 이름으로 식당을 검색할 수 있습니다.
 
-### 리뷰
-<img src="https://github.com/user-attachments/assets/08d8f25c-22b4-49cd-b327-11d283452e80" width="250"/>
-<p>매장별 리뷰를 작성할 수 있습니다.
 
 ### 리뷰쓰기
 <img src="https://github.com/user-attachments/assets/d83b3247-3cca-457e-af78-748cd941319c" width="500"/>
@@ -77,6 +74,7 @@ Java 기반으로 개발된 Android Native 어플리케이션과 Firebase로 만
 
 ### 매장 상세
 <img src="https://github.com/user-attachments/assets/0e74ad29-7392-4bac-bbfc-b757e51cb37e" width="250"/>
+<img src="https://github.com/user-attachments/assets/08d8f25c-22b4-49cd-b327-11d283452e80" width="250"/>
 <img src="https://github.com/user-attachments/assets/a071d863-5369-4e23-834c-f81bbec15a7d" width="250"/>
 <p> 등록된 매장 사진과 길찾기 기능을 제공합니다.
 
