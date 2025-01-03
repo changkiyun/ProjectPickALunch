@@ -77,30 +77,21 @@ Java 기반으로 개발된 Android Native 어플리케이션과 Firebase로 만
 
 ### 매장 상세
 <img src="https://github.com/user-attachments/assets/0e74ad29-7392-4bac-bbfc-b757e51cb37e" width="250"/>
-<p> 우측 하단의 플로팅버튼으로 서비스 어디서든 채팅기능에 접근이 가능합니다.
-
-### 식당등록
-<img src="https://github.com/user-attachments/assets/3eeb1a98-05c2-49a3-be84-c28afc167e69" width="250"/>
-<p> 홈 탭에서 개설된 채팅방에 입장하면 오픈채팅 탭에서 참여한 채팅방을 확인할 수 있습니다.
-
-### 주소변환
-<img src="https://github.com/user-attachments/assets/89f0a228-4ee4-482e-aa07-0a86fd35634e" width="250"/>
-<p> 채팅방에서 퇴장하면 참여중인 채팅방 목록에서 삭제되고 홈 탭에서 확인할 수 있습니다.
-
-### 카카오지도
 <img src="https://github.com/user-attachments/assets/a071d863-5369-4e23-834c-f81bbec15a7d" width="250"/>
-<p> 채팅방에서 퇴장하면 참여중인 채팅방 목록에서 삭제되고 홈 탭에서 확인할 수 있습니다.
+<p> 등록된 매장 사진과 길찾기 기능을 제공합니다.
 
 ### 카테고리
 <img src="https://github.com/user-attachments/assets/8eb50c92-4e17-42d5-9a27-21abe0cf31d1" width="250"/>
-<p> 채팅방에서 퇴장하면 참여중인 채팅방 목록에서 삭제되고 홈 탭에서 확인할 수 있습니다.
+<p> 카테고리, 당기는 맛을 선택해서 식당을 필터링할 수 있습니다.
+
+### 식당등록
+<img src="https://github.com/user-attachments/assets/3eeb1a98-05c2-49a3-be84-c28afc167e69" width="250"/>
+<img src="https://github.com/user-attachments/assets/89f0a228-4ee4-482e-aa07-0a86fd35634e" width="250"/>
+<p> 사용자가 식당을 등록할 수 있습니다.
 
 ### 학생인증하기
 <img src="https://github.com/user-attachments/assets/21b15baa-2c37-434c-aae3-f1f7628109dd" width="250"/>
-<p> 채팅방에서 퇴장하면 참여중인 채팅방 목록에서 삭제되고 홈 탭에서 확인할 수 있습니다.
-
-### 학생인증하기2
 <img src="https://github.com/user-attachments/assets/fff2ddca-e7a1-407b-a337-36df9b75d4aa" width="250"/>
-<p> 채팅방에서 퇴장하면 참여중인 채팅방 목록에서 삭제되고 홈 탭에서 확인할 수 있습니다.
+<p> 재학생 인증 기능입니다.
 
 
